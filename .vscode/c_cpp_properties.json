@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "Arduino",
             "includePath": [
                 "C:\\Users\\Bert\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\**",
                 "C:\\Users\\Bert\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\sam\\1.6.11\\**"
