@@ -7,6 +7,7 @@
   /****************************************/
   void calcStats() {
     avgWindSpeed = windSpeedStats.average();
+    windGust = windSpeedStats.maximum();
     avgWindDirection = windDirectionStats.average();
     avgTempAir = tempAirStats.average();
     avgRHAir = RHAirStats.average();

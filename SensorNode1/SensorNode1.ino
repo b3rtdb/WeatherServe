@@ -6,7 +6,7 @@
  * UV SENSOR: A6 [3V supply]
  * FAN CURRENT SENSOR: A8
  * RAIN SENSOR: D2 (interrupt 4)
- * FAN FARS: D5 ON/OFF control (6,5V)
+ * FAN FARS: D5 ON/OFF control [6V5 supply]
  * XBEE: Serial1 on pins D19 (RX) and D18 (TX)
  * DEBUG: Serial on pins D0 (RX) and D1 (TX)
 */
@@ -21,6 +21,7 @@
   /****************************************/
   const int windspeedPin = A0;
   float windSpeed = 0;
+  float windGust = 0;
 
   const float voltageMin = 0.02;    // Mininum output voltage from anemometer in mV.
   const float windSpeedMin = 0;     // Wind speed in meters/sec corresponding to minimum voltage
@@ -51,7 +52,7 @@
   /* Read the FAN current Sensor          */
   /****************************************/
   const int fanCurrentPin = A8;
-  int currentLow = 10;
+  int currentLow = 30;
   int currentHigh = 227;
   float fanCurrent = 0;
   
@@ -74,7 +75,7 @@
   XBee xbee = XBee();
   byte arrayOffset = 1;              // used to shift values in the Tx array
   
-  uint8_t payload[27];               // array of length 27, 0-26, to send the sensor values as a nmea string
+  uint8_t payload[31];               // array of length 31, 0-30, to send the sensor values as a nmea string
   // SH + SL Address of receiving XBee (Coordinator)
   XBeeAddress64 addr64 = XBeeAddress64(0x0013a200, 0x40f748cb); // Coordinator Address
   ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));

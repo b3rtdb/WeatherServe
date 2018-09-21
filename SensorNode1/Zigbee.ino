@@ -13,16 +13,18 @@
     f2b();      // RHAir pos 5-8
     u.fval = avgWindSpeed;
     f2b();      // avgWindSpeed pos 9-12
+    u.fval = windGust;
+    f2b();      // windGust pos 13-16
     u.fval = avgWindDirection;
-    f2b();      // avgWindDir pos 13-16
+    f2b();      // avgWindDir pos 17-20
     u.fval = avgSolarRad;
-    f2b();      // avgSolarRad pos 17-20
+    f2b();      // avgSolarRad pos 21-24
     u.fval = avgUVRad;
-    f2b();      // avgUVRad pos 21-24
+    f2b();      // avgUVRad pos 25-28
 
-    payload[arrayOffset] = rainCount;       // this is a byte (pos 25)
+    payload[arrayOffset] = rainCount;       // this is a byte (pos 29)
     arrayOffset++;
-    payload[arrayOffset] = error;           // this is a byte (pos 26)
+    payload[arrayOffset] = error;           // this is a byte (pos 30)
    
     xbee.send(zbTx);
     flashLed(1, 100);
