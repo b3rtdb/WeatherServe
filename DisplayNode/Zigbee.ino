@@ -25,134 +25,120 @@ void getDueData() {                        // Due status pos 0
     arrayOffset++;
     onlineFlagWSN2 = rx.getData(arrayOffset);   // WSN 2 status pos 2
     arrayOffset++;
-    onlineFlagWSN3 = rx.getData(arrayOffset);   // WSN 3 status pos 3
-    arrayOffset++;
             
     b2f();
     floatStore = u.fval;
-    tempAir = floatStore;              // tempAir at pos 4-7
+    tempAir = floatStore;              // tempAir at pos 3-6
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    maxTempAir = floatStore;           // Max tempAir at pos 8-11
+    maxTempAir = floatStore;           // Max tempAir at pos 7-10
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    minTempAir = floatStore;           // Min tempAir at pos 12-15
+    minTempAir = floatStore;           // Min tempAir at pos 11-14
     arrayOffset+= 4;
     
-    RHAir = rx.getData(arrayOffset);        // RHAir at pos 16
+    RHAir = rx.getData(arrayOffset);        // RHAir at pos 15
     arrayOffset++;
-    windRunKm = rx.getData(arrayOffset);    // windRunKm at pos 17
+    windRunKm = rx.getData(arrayOffset);    // windRunKm at pos 16
     arrayOffset++;
-    sunHoursDec = rx.getData(arrayOffset);  // sunHoursDec at pos 18
+    sunHoursDec = rx.getData(arrayOffset);  // sunHoursDec at pos 17
     sunHoursDec /= 10;
     arrayOffset++;
-    ETday = rx.getData(arrayOffset);        // ETday at pos 19
+    ETday = rx.getData(arrayOffset);        // ETday at pos 18
     ETday /= 10;
     arrayOffset++;
     
     b2f();
     floatStore = u.fval;
-    windSpeed = floatStore;            // windspeed at pos 20-23
+    windSpeed = floatStore;            // windspeed at pos 19-22
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    maxWindSpeed = floatStore;         // wind gust at pos 24-27
+    maxWindSpeed = floatStore;         // wind gust at pos 23-26
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    windDir = floatStore;              // winddir at pos 28-31
+    windDir = floatStore;              // winddir at pos 27-30
     windDir += 180;
     if(windDir > 360) windDir -= 360;
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    avgWindDir = floatStore;           // avg winddir at pos 32-35
+    avgWindDir = floatStore;           // avg winddir at pos 31-34
     avgWindDir += 180;
     if(avgWindDir > 360) avgWindDir -= 360;
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    pressure = floatStore;             // pressure at pos 36-39
+    pressure = floatStore;             // pressure at pos 35-38
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    avgPm25_24h = floatStore;          // avg PM2,5 at pos 40-43
+    avgPm25_24h = floatStore;          // avg PM2,5 at pos 39-42
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    avgPm10_24h = floatStore;          // avg PM10 at pos 44-47
+    avgPm10_24h = floatStore;          // avg PM10 at pos 43-46
     arrayOffset+= 4;
 
-    lightningDetected = rx.getData(arrayOffset);       // Lightning Detected 1/0 pos 48
+    lightningDetected = rx.getData(arrayOffset);       // Lightning Detected 1/0 pos 47
+    arrayOffset++;
+
+    lightningDetected = rx.getData(arrayOffset);       // Lightning Distance at pos 48
     arrayOffset++;
 
     b2f();
     floatStore = u.fval;
-    lightningDistance = floatStore;      // Lightning Distance at pos 49-52
-    arrayOffset+= 4;
-
-    b2f();
-    floatStore = u.fval;
-    rainIntensity = floatStore;             // Rain Intensity at pos 53-56
+    rainIntensity = floatStore;             // Rain Intensity at pos 49-52
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    totalRain24h = floatStore;              // Total Rain Today at pos 57-60
+    totalRain24h = floatStore;              // Total Rain Today at pos 53-56
     arrayOffset+= 4;
 
     b2f();
     floatStore = u.fval;
-    tempFeelslike = floatStore;             // feelslike temp at pos 61-64
+    tempFeelslike = floatStore;             // feelslike temp at pos 57-60
     arrayOffset+= 4;
 
     b2f();
     floatStore = u.fval;
-    solarRad = floatStore;                  // Solar Rad at pos 65-68
+    solarRad = floatStore;                  // Solar Rad at pos 61-64
     arrayOffset+= 4;
 
-    uvIndex = rx.getData(arrayOffset);          // uvIndex at pos 69
+    uvIndex = rx.getData(arrayOffset);          // uvIndex at pos 65
     uvIndex /= 10;
     arrayOffset++;
 
-    zambrettiNumber = rx.getData(arrayOffset);  // Zambretti Forecast Number pos 70
+    zambrettiNumber = rx.getData(arrayOffset);  // Zambretti Forecast Number pos 66
     arrayOffset++;
     
-    moonPhase = rx.getData(arrayOffset);        // Moon phase (illuminated) pos 71
+    moonPhase = rx.getData(arrayOffset);        // Moon phase (illuminated) pos 67
     arrayOffset++;
 
-    moonPhaseNumber = rx.getData(arrayOffset);  // Moon phase number pos 72
+    moonPhaseNumber = rx.getData(arrayOffset);  // Moon phase number pos 68
     arrayOffset++;
     
-    hRising = rx.getData(arrayOffset);       // sunrise hour pos 73
+    hRising = rx.getData(arrayOffset);       // sunrise hour pos 69
     arrayOffset++;
-    mRising = rx.getData(arrayOffset);       // sunrise minute pos 74
+    mRising = rx.getData(arrayOffset);       // sunrise minute pos 70
     arrayOffset++;
-    hSetting = rx.getData(arrayOffset);      // sunset hour pos 75
+    hSetting = rx.getData(arrayOffset);      // sunset hour pos 71
     arrayOffset++;
-    mSetting = rx.getData(arrayOffset);      // sunset minute pos 76
+    mSetting = rx.getData(arrayOffset);      // sunset minute pos 72
     arrayOffset++;
-    trend = rx.getData(arrayOffset);         // air pressure trend pos 77
-    arrayOffset++;
-    year = rx.getData(arrayOffset);          // current year pos 78
-    arrayOffset++;
-    month = rx.getData(arrayOffset);         // current month pos 79
-    arrayOffset++;
-    day = rx.getData(arrayOffset);           // current day pos 80
-    arrayOffset++;
-    hour = rx.getData(arrayOffset);          // current hour pos 81
-    arrayOffset++;
-    minute = rx.getData(arrayOffset);        // current minutes pos 82
+    trend = rx.getData(arrayOffset);         // air pressure trend pos 73
 }
 
 

@@ -270,14 +270,12 @@ void refreshDisplay() {
   switch(onlineFlagDue) {
     case 0:
       CleO.StringExt(FONT_TINY, 340, 260, GRAY, MM, 0, 0, "1");
-      CleO.StringExt(FONT_TINY, 349, 260, GRAY, MM, 0, 0, "2");
-      CleO.StringExt(FONT_TINY, 358, 260, GRAY, MM, 0, 0, "3");
+      CleO.StringExt(FONT_TINY, 355, 260, GRAY, MM, 0, 0, "2");
     break;
 
     case 1:
       CleO.StringExt(FONT_TINY, 340, 260, YELLOW, MM, 0, 0, "1");
-      CleO.StringExt(FONT_TINY, 349, 260, YELLOW, MM, 0, 0, "2");
-      CleO.StringExt(FONT_TINY, 358, 260, YELLOW, MM, 0, 0, "3");
+      CleO.StringExt(FONT_TINY, 355, 260, YELLOW, MM, 0, 0, "2");
     break;
 
     case 2:
@@ -291,20 +289,11 @@ void refreshDisplay() {
       }
 
       switch(onlineFlagWSN2) {
-        case 0: CleO.StringExt(FONT_TINY, 349, 260, GRAY, MM, 0, 0, "2");
+        case 0: CleO.StringExt(FONT_TINY, 355, 260, GRAY, MM, 0, 0, "2");
         break;
-        case 1: CleO.StringExt(FONT_TINY, 349, 260, RED, MM, 0, 0, "2");
+        case 1: CleO.StringExt(FONT_TINY, 355, 260, RED, MM, 0, 0, "2");
         break;
-        case 2: CleO.StringExt(FONT_TINY, 349, 260, GREEN, MM, 0, 0, "2");
-        break;
-      }
-
-      switch(onlineFlagWSN3) {
-        case 0: CleO.StringExt(FONT_TINY, 358, 260, GRAY, MM, 0, 0, "3");
-        break;
-        case 1: CleO.StringExt(FONT_TINY, 358, 260, RED, MM, 0, 0, "3");
-        break;
-        case 2: CleO.StringExt(FONT_TINY, 358, 260, GREEN, MM, 0, 0, "3");
+        case 2: CleO.StringExt(FONT_TINY, 355, 260, GREEN, MM, 0, 0, "2");
         break;
       }
     break;
