@@ -42,7 +42,6 @@
   #define onboardLed 13
   Process date;
 
-
 /****************************************/
 /*                                      */
 /* Variable declarations                */
