@@ -9,22 +9,17 @@ void getXbeeData() {
   if (xbee.getResponse().isAvailable()) {
     if (xbee.getResponse().getApiId() == ZB_RX_RESPONSE) {
       xbee.getResponse().getZBRxResponse(rx);
+      if (rx.getOption() == ZB_PACKET_ACKNOWLEDGED) {  // the sender got an ACK
 
-      nodeIdent = rx.getData(0);    // identifier at pos 0
-      arrayOffsetRX = 1;
-      
-      if (nodeIdent == 1) {   // WSN 1
-        onlineFlagWSN1 = 2;
-        lastupdateWSN1 = millis();
-        getNode1Data();
-        flashLed(onboardLed, 1, 50);
-      }
-
-      if (nodeIdent == 2) {   // WSN 2
-        onlineFlagWSN2 = 2;
-        lastupdateWSN2 = millis();
-        getNode2Data();
-        flashLed(onboardLed, 2, 50);
+        nodeIdent = rx.getData(0);    // identifier at pos 0
+        arrayOffsetRX = 1;
+  
+        switch(nodeIdent) {
+          case 1: getNode1Data();
+            break;
+          case 2: getNode2Data();
+            break;
+        }
       }
     }
   }
@@ -34,6 +29,9 @@ void getXbeeData() {
   /* Get Data of Wireless Sensor Node 1   */
   /****************************************/
 void getNode1Data() {
+    onlineFlagWSN1 = 2;
+    lastupdateWSN1 = millis();
+    
     float floatValue = 0;
          
     b2f();
@@ -68,7 +66,7 @@ void getNode1Data() {
     arrayOffsetRX+= 4;
     b2f();
     floatValue = u.fval;
-    solarRad = (int)floatValue;             // solarrad at pos 21
+    solarRad = (int)floatValue;        // solarrad at pos 21
 
     arrayOffsetRX+= 4;
     b2f();
@@ -80,6 +78,8 @@ void getNode1Data() {
 
     arrayOffsetRX++;
     errorWSN1 = rx.getData(arrayOffsetRX);          // errorbyte WSN1 at pos 30
+
+    flashLed(onboardLed, 1, 50);
 }
 
   
@@ -87,6 +87,9 @@ void getNode1Data() {
   /* Get Data of Wireless Sensor Node 2   */
   /****************************************/
 void getNode2Data() {
+    onlineFlagWSN2 = 2;
+    lastupdateWSN2 = millis();
+    
     float floatValue = 0;
   
     b2f();
@@ -124,6 +127,8 @@ void getNode2Data() {
 
     arrayOffsetRX++;
     errorWSN2 = rx.getData(arrayOffsetRX);          // errorbyte WSN2 at pos 22
+
+    flashLed(onboardLed, 2, 50);
 }
 
   /****************************************/

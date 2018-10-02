@@ -7,7 +7,11 @@ void refreshDisplay() {
   /****************************************/
   char bufTempAir[lengthOfFloat+1];
   dtostrf(tempAir, lengthOfFloat, 1, bufTempAir);
-  CleO.StringExt(FONT_MEDIUM, 67, 55, colors2[7], MM, 0, 0, bufTempAir);
+  CleO.StringExt(FONT_SANS_2, 52, 42, colors2[7], MM, 0, 0, bufTempAir);
+
+  char bufTempFeel[lengthOfFloat+1];
+  dtostrf(tempFeelslike, lengthOfFloat, 1, bufTempFeel);
+  CleO.StringExt(FONT_SANS_2, 52, 72, colors2[5], MM, 0, 0, bufTempFeel);
 
   char bufMinTempAir[lengthOfFloat+1];
   dtostrf(minTempAir, lengthOfFloat, 1, bufMinTempAir);
@@ -49,7 +53,24 @@ void refreshDisplay() {
   
   char bufRainIntensity[3];
   dtostrf(rainIntensity, 4, 1, bufRainIntensity);
-  CleO.StringExt(FONT_SANS_2, 272, 42, colors2[6], MM, 0, 0, bufRainIntensity);
+  
+
+  switch(RIR) {
+    case 0: CleO.StringExt(FONT_SANS_2, 272, 42, colors[1], MM, 0, 0, bufRainIntensity);
+      break;
+    case 1: CleO.StringExt(FONT_SANS_2, 272, 42, colors[2], MM, 0, 0, bufRainIntensity);
+      break;
+    case 2: CleO.StringExt(FONT_SANS_2, 272, 42, colors[4], MM, 0, 0, bufRainIntensity);
+      break;
+    case 3: CleO.StringExt(FONT_SANS_2, 272, 42, colors[5], MM, 0, 0, bufRainIntensity);
+      break;
+    case 4: CleO.StringExt(FONT_SANS_2, 272, 42, colors[6], MM, 0, 0, bufRainIntensity);
+      break;
+    case 5: CleO.StringExt(FONT_SANS_2, 272, 42, colors[8], MM, 0, 0, bufRainIntensity);
+      break;
+    case 6: CleO.StringExt(FONT_SANS_2, 272, 42, colors[9], MM, 0, 0, bufRainIntensity);
+      break;
+  }
 
   /****************************************/
   /* Display Pressure, trend & prediction */

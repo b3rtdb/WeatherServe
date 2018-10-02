@@ -59,7 +59,7 @@
   /****************************************/
   /* Calculated Variables                 */
   /****************************************/
-  float minTempAir,maxTempAir,windGust,avgWindSpeed10m,avgPm10_24h,avgPm25_24h,totalRain24h,rainIntensity, apparentT, windchillT, dewPoint, maxUV, avgUV10m, sunHoursDec, windRunKm = 0.0;
+  float minTempAir,maxTempAir,windGust,avgWindSpeed10m,avgPm10_24h,avgPm25_24h,totalRain24h,rainIntensity, apparentT, dewPoint, maxUV, avgUV10m, sunHoursDec, windRunKm = 0.0;
   byte totalRain24hTicks,rainArrayCounter,windDirArrayCounter,windSpeedArrayCounter,uvArrayCounter,windSpeedCounter,pressureArrayCounter,pressure3hCounter,pmArrayCounter,pm10mCounter,radTRHWSArrayCounter,trend,moonPhaseNumber, zambrettiNumber = 0;
   signed long pdif = 0;
   int mRising, mSetting, hRising, hSetting, hDaylength, mDaylength, sunHoursMinCounter, hSunHours, mSunHours, maxSolarRad, windRun, avgWindDir = 0;
@@ -103,7 +103,7 @@
   const float Gsc = 4.92;                       /* Solar constant MJ/m2/h */
   const float Cn = 37.5;                        /* numerator constant for reference crop */
   const signed int pressCorrection = -645;      /* pressure correction in Pascal */
-  const int windDirOffset = 102;                /* Wind Direction correction in Degrees (WSN1 station rotation to true North) */
+  const int windDirOffset = 0;                  /* Wind Direction correction in Degrees (WSN1 station rotation to true North) */
   const unsigned long onlineRate = 120000UL;    /* in milliseconds, 2min, every Sensornode sends data every minute, so if it does not respond after 2 minutes, it's offline */
   const unsigned long refreshRate = 60000UL;    /* in milliseconds, 1min, Refresh the values & send all via Zigbee every minute */
   const double Lstm = -15;                      /* Local Standard Time Meridian, degr west */

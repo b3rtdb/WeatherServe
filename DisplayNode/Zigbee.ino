@@ -183,5 +183,13 @@ void processData() {
   else if ((uvIndex > 5.5) && (uvIndex <= 7.5)) AQIuv=2;
   else if ((uvIndex > 7.5) && (uvIndex <= 10.5)) AQIuv=3;
   else if (uvIndex > 10.5) AQIuv=4;
+
+  if (rainIntensity = 0) RIR=0; // none
+  else if ((rainIntensity > 0) && (rainIntensity < 0.25)) RIR=1; // very light
+  else if ((rainIntensity >= 0.25) && (rainIntensity < 1)) RIR=2; // light
+  else if ((rainIntensity >= 1) && (rainIntensity < 4)) RIR=3; // moderate
+  else if ((rainIntensity >= 4) && (rainIntensity < 16)) RIR=4; // heavy
+  else if ((rainIntensity >= 16) && (rainIntensity < 50)) RIR=5; // very heavy
+  else if (rainIntensity >= 50) RIR=6; // extreme
 }
 
