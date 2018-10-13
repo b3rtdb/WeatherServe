@@ -22,7 +22,9 @@
     u.fval = avgUVRad;
     f2b();      // avgUVRad pos 25-28
 
+    noInterrupts(); //rainCount is set by interrupt, so interrupt needs to be disabled to read it
     payload[arrayOffset] = rainCount;       // this is a byte (pos 29)
+    interrupts();
     arrayOffset++;
     payload[arrayOffset] = error;           // this is a byte (pos 30)
    

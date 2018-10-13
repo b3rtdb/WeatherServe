@@ -16,7 +16,9 @@
   }
 
   void initStats() {
+    noInterrupts();
     rainCount = 0;
+    interrupts();
     windSpeedStats.clear();        // clear the array for the windspeed statistics
     windDirectionStats.clear();    // clear the array for the wind direction statistics
     tempAirStats.clear();          // clear the array for the Air Temperature statistics

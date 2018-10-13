@@ -1,10 +1,10 @@
 /*
  * SHT25: I²C, D21 (SCL), D20 (SDA) [3V3 supply]
- * WINDSPEED: A0 [12V supply]
- * WINDDIRECTION: A2 [12V supply]
+ * WINDSPEED: D3 [5V supply] (interrupt 5)
+ * WINDDIRECTION: A2 [5V supply]
  * SOLAR RADIATION: A4 [3V supply]
  * UV SENSOR: A6 [3V supply]
- * FAN CURRENT SENSOR: A8
+ * FAN CURRENT SENSOR: A0
  * RAIN SENSOR: D2 (interrupt 4)
  * FAN FARS: D5 ON/OFF control [6V5 supply]
  * XBEE: Serial1 on pins D19 (RX) and D18 (TX)
@@ -15,53 +15,54 @@
 #include <SHT2x.h>
 #include <XBee.h>
 #include <Statistic.h>
+#include <TimerOne.h>
 
   /****************************************/
-  /* Windspeed Sensor  0-5V               */
+  /* Windspeed Sensor                     */
   /****************************************/
-  const int windspeedPin = A0;
-  float windSpeed = 0;
-  float windGust = 0;
-
-  const float voltageMin = 0.02;    // Mininum output voltage from anemometer in mV.
-  const float windSpeedMin = 0;     // Wind speed in meters/sec corresponding to minimum voltage
-  const float voltageMax = 2.0;     // Maximum output voltage from anemometer in mV.
-  const float windSpeedMax = 32.4;  // Wind speed in meters/sec corresponding to maximum voltage
-
+  const byte windSpeedInterruptPin = 3;
+  volatile unsigned long Rotations = 0; // cup rotation counter used in interrupt routine 
+  volatile unsigned int TimerCount = 0; // used to determine 2.5sec timer count
+  volatile bool windSampleRequired = false;
+  float windSpeedMph, windSpeed, windGust = 0.0;
+  const float speedConversion = 1.60934; // MPH -> KMH
 
   /****************************************/
-  /* WindDirection Sensor  0-5V           */
+  /* WindDirection Sensor                 */
   /****************************************/
   const int windDirectionPin = A2;
-  float windDirection = 0;
+  float windDirection = 0.0;
 
   /****************************************/
   /* Solar Radiation Sensor  0-3V         */
   /****************************************/
   const int solarRadiationPin = A4;
-  float solarRad = 0;
+  float solarRad = 0.0;
   const float refTemp = 25.0;
 
   /****************************************/
   /* UV Radiation Sensor  0-3V            */
   /****************************************/
   const int uvRadiationPin = A6;
-  float uvRad = 0;
+  float uvRad = 0.0;
 
   /****************************************/
   /* Read the FAN current Sensor          */
   /****************************************/
-  const int fanCurrentPin = A8;
-  int currentLow = 30;
-  int currentHigh = 227;
-  float fanCurrent = 0;
+  const int fanCurrentPin = A0;
+  float sensitivity = 50.0 / 500.0; //50mA per 500mV = 0.1
+  float Vref = 0; // Output voltage with no current: 0mV cause measuring DC
+  int fanCurrent = 0; // when fan is normally running, should be 66mA
+  int currentLow = 30; // below 30mA, fan is not running
+  int currentHigh = 100; // above 100mA, fan is blocked
+  
   
   
   /****************************************/
   /* Davis Rain Sensor                    */
   /****************************************/
   const byte rainInterruptPin = 2;
-  byte rainCount = 0;
+  volatile byte rainCount = 0;
   
   /****************************************/
   /* SHT25 Air T&H Sensor                 */
@@ -118,7 +119,7 @@
   /****************************************/
   byte state = 0;
   byte counter = 0;
-  #define REQUEST_RATE 6000          // in milliseconds - Sample rate, 6000 default (6s)
+  #define REQUEST_RATE 2500          // in milliseconds - Sample rate, 2500 default (2,5s)
   unsigned long lastupdate = 0;      // timer value when last measure update was done
 
 
@@ -144,11 +145,17 @@
       case 3: zigbeeTransmit(); break;
     }
     
-    if (counter > 10) {  // transition from state 2 -> 3
+    if (counter > 24) {  // transition from state 2 -> 3 (24x2,5 = 60sec)
       state = 3;
     }
     
     if ( ( millis()-lastupdate ) > REQUEST_RATE ) { // transition from state 2 -> 1
       state = 1;
+    }
+
+    if(windSampleRequired) { 
+      windSpeedMph = Rotations * 0.9; // V (mph) = P(2.25/2.5) = P * 0.9 
+      Rotations = 0; // Reset count for next sample 
+      windSampleRequired = false;
     }
   }

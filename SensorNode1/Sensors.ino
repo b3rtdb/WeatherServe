@@ -29,47 +29,28 @@
     statsUpdated = 0;
   }
   
-  /****************************************/
-  /* Interrupt routine for rainsensor     */
-  /* Count rain gauge bucket tips         */
-  /****************************************/
-  void rainIRQ() {
-    rainCount++;
-  }
+
 
 
   /***************************************************/
   /* Calculate routine for the Windspeed in km/h     */
   /***************************************************/
   float getWindSpeed() {
-    float voltageValue = 0.0;
-    float rawValue = 0.0;
-    float convertedValue = 0.0;
-    rawValue = analogRead(windspeedPin);        // Get a value between 0 and 1023 from the analog pin connected to the anemometer
-    voltageValue = (rawValue * 5) / 1024; // Convert sensor value to actual voltage
-  
-    //Convert voltage value to wind speed using range of max and min voltages and wind speed for the anemometer
-  
-    if (voltageValue <= voltageMin) {
-      convertedValue = 0;                            // Check if voltage is below minimum value. If so, set wind speed to zero.
-    }
-    else {
-      convertedValue = (voltageValue - voltageMin)* windSpeedMax / (voltageMax - voltageMin); //For voltages above minimum value, use the linear relationship to calculate wind speed.
-    }
-    convertedValue*= 3.6;                            // Convert from m/s to km/h
-    return convertedValue;
+    float tempVal = 0.0;
+    tempVal = windSpeedMph * speedConversion;
+    return tempVal;
   }
 
 
   /***************************************************/
   /* Calculate routine for the Wind Direction in °   */
   /***************************************************/
-  float getWindDirection() {
-    float rawValue = 0.0;
+  int getWindDirection() {
+    int rawValue = 0;
+    int Direction = 0;
     rawValue = analogRead(windDirectionPin);
-    rawValue /= 1024;
-    rawValue *= 360; // degrees
-    return rawValue;
+    Direction = map(rawValue, 0, 1023, 0, 359);
+    return Direction;
   }
 
   /****************************************/
@@ -112,11 +93,13 @@
   /***************************************************/
   /* Calculate routine for the FAN Current Sensor    */
   /***************************************************/
-  float getFanCurrent() {
+  int getFanCurrent() {
     float rawValue = 0.0;
-    float result = 0.0;
+    float voltage = 0.0; // 0-5V input corresponds with 0-1023 (10bit ADC), so 5/1024 = 4,883mV
+    float current = 0.0;
     rawValue = analogRead(fanCurrentPin);
-    result = rawValue;   // 185mV/A, gain (from 4.27 to 47 with potmeter), FAN = 1,8W = 150mA bij 12V. Set limit at 200mA = 37mV x gain=30 = 1110mV -> / 5000mV*1024 rawvalue = 227.
-    return result;
+    voltage = rawValue * 4.883;
+    current = (voltage - Vref) * sensitivity;
+    return (int)current;
   }
 

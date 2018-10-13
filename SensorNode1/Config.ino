@@ -13,8 +13,23 @@
     initStats();                  // Clear the statistics Arrays
     digitalWrite(fanPin,1);       // Set the Fars fan ON
     digitalWrite(errorPin,0);     // Set the error led OFF
-  
-    attachInterrupt(digitalPinToInterrupt(rainInterruptPin), rainIRQ, FALLING); // configure the Interrupt for the rainsensor
+
+    pinMode(rainInterruptPin, INPUT);
+    pinMode(windSpeedInterruptPin, INPUT); 
+    attachInterrupt(digitalPinToInterrupt(rainInterruptPin), rainIRQ, FALLING);   // configure the Interrupt for the rainsensor
+    attachInterrupt(digitalPinToInterrupt(windSpeedInterruptPin), windRotationIRQ, FALLING);  // configure the Interrupt for the windspeedsensor
+
+    // Setup the timer interupt 
+    Timer1.initialize(500000);    // µs (0,5s)
+    Timer1.attachInterrupt(windTimerIRQ);
+
+    windSampleRequired = false;
+    noInterrupts();
+    TimerCount = 0; 
+    Rotations = 0;
+    rainCount = 0;
+    interrupts();
+
   
     state = 1;
     flashLed(1, 50);
@@ -32,5 +47,33 @@
       if (i + 1 < times) {
         delay(wait);
       }
+    }
+  }
+
+  /****************************************/
+  /* Interrupt routine for rainsensor     */
+  /* Count rain gauge bucket tips         */
+  /****************************************/
+  void rainIRQ() {
+      rainCount++; 
+  } 
+
+  /****************************************/
+  /* Interrupt routine for windspeed      */
+  /* count ROTATIONS                      */
+  /****************************************/
+  void windRotationIRQ() {
+      Rotations++; 
+  }
+
+  /****************************************/
+  /* Interrupt routine for windspeed      */
+  /* count TIMER                          */
+  /****************************************/
+  void windTimerIRQ() {
+    TimerCount++;
+    if(TimerCount == 5)  {  //Timer interrupt every 2.5 seconds  5 x 0,5s = 2,5s
+      windSampleRequired = true;
+      TimerCount = 0;
     }
   }
