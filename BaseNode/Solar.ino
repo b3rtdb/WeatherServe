@@ -26,16 +26,8 @@ void calcSunHours() {
     rdif = (Rs/Csr)*100;
 
     if(rdif > 75) sunHoursMinCounter++;
-    tmp1 = sunHoursMinCounter;
+    tmp1 = sunHoursMinCounter/(60.0/logInterval);
     sunHoursDec = tmp1/60.0;
-    if(sunHoursMinCounter < 60) {
-      hSunHours = 0;
-      mSunHours = sunHoursMinCounter;
-    }
-    else {
-      hSunHours = sunHoursMinCounter/60;
-      mSunHours = sunHoursMinCounter - (hSunHours*60);
-    }
   }
   else rdif = 0;
 }
@@ -79,33 +71,33 @@ void fillArrayMeanRadTRHW() {
 }
 
 void calcMeanRadTRHW() {
-  for (byte i = 0; i<60; i++) {
+  for (byte i = 0; i<(60*(60.0/logInterval)); i++) {
       Rmean += *(radArray + i);
     }
 
-    for (byte i = 0; i<60; i++) {
+    for (byte i = 0; i<(60*(60.0/logInterval)); i++) {
       Tmean += *(TArray + i);
     }
 
-    for (byte i = 0; i<60; i++) {
+    for (byte i = 0; i<(60*(60.0/logInterval)); i++) {
       RHmean += *(RHArray + i);
     }
 
-    for (byte i = 0; i<60; i++) {
+    for (byte i = 0; i<(60*(60.0/logInterval)); i++) {
       WSmean += *(wsArray + i);
     }
 
-    Rmean /= 60;  // 1h
-    Tmean /= 60;  // 1h
-    RHmean /= 60;  // 1h
-    WSmean /= 60;  // 1h
+    Rmean /= (60*(60.0/logInterval));  // 1h
+    Tmean /= (60*(60.0/logInterval));  // 1h
+    RHmean /= (60*(60.0/logInterval));  // 1h
+    WSmean /= (60*(60.0/logInterval));  // 1h
 }
 
 // Calculate the Reference Evapotranspiration for Grass
 // Calculated every hour, and a dailty total is made
 void calcET() {
   fillArrayMeanRadTRHW();
-  if(radTRHWSArrayCounter == 60){
+  if(radTRHWSArrayCounter == (60*(60.0/logInterval))){
     radTRHWSArrayCounter = 0;
     calcMeanRadTRHW();
 
@@ -292,12 +284,12 @@ void calcUVAvg() {
   uvArray[uvArrayCounter] = uvIndex;
   uvArrayCounter++;
   
-  if(uvArrayCounter == 10) {
+  if(uvArrayCounter == (10*(60.0/logInterval))) {
     uvArrayCounter = 0;
   }
   avgUV10m = 0;
-  for (byte i = 0; i<10; i++) {
+  for (byte i = 0; i<(10*(60.0/logInterval)); i++) {
     avgUV10m += *(uvArray + i); // = uvArray[i]
   }
-  avgUV10m /= 10;
+  avgUV10m /= (10*(60.0/logInterval));
 }

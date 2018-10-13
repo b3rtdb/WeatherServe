@@ -1,10 +1,10 @@
 /*
- * SHT25: I²C, D21 (SCL), D20 (SDA) [3V3 supply]
+ * SHT25: I²C, D21 (SCL), D20 (SDA) [3V3 supply via converter]
  * WINDSPEED: D3 [5V supply] (interrupt 5)
  * WINDDIRECTION: A2 [5V supply]
  * SOLAR RADIATION: A4 [3V supply]
  * UV SENSOR: A6 [3V supply]
- * FAN CURRENT SENSOR: A0
+ * FAN CURRENT SENSOR: I²C, D21 (SCL), D20 (SDA) [5V supply]
  * RAIN SENSOR: D2 (interrupt 4)
  * FAN FARS: D5 ON/OFF control [6V5 supply]
  * XBEE: Serial1 on pins D19 (RX) and D18 (TX)
@@ -16,6 +16,7 @@
 #include <XBee.h>
 #include <Statistic.h>
 #include <TimerOne.h>
+#include <Adafruit_INA219.h>
 
   /****************************************/
   /* Windspeed Sensor                     */
@@ -31,7 +32,7 @@
   /* WindDirection Sensor                 */
   /****************************************/
   const int windDirectionPin = A2;
-  float windDirection = 0.0;
+  float windDir = 0.0;
 
   /****************************************/
   /* Solar Radiation Sensor  0-3V         */
@@ -47,22 +48,22 @@
   float uvRad = 0.0;
 
   /****************************************/
-  /* Read the FAN current Sensor          */
+  /* Read the FAN Power Sensor            */
   /****************************************/
-  const int fanCurrentPin = A0;
-  float sensitivity = 50.0 / 500.0; //50mA per 500mV = 0.1
-  float Vref = 0; // Output voltage with no current: 0mV cause measuring DC
-  int fanCurrent = 0; // when fan is normally running, should be 66mA
+  Adafruit_INA219 ina219;
+  int loadCurrent = 0; // when fan is normally running, should be 66mA
   int currentLow = 30; // below 30mA, fan is not running
   int currentHigh = 100; // above 100mA, fan is blocked
-  
-  
+  float loadvoltage = 0.0;
+  float voltageLow = 6.0; // below 6V or above 7V, something is wrong with the regulator (should be 6.5V)
+  float voltageHigh = 7.0;
   
   /****************************************/
   /* Davis Rain Sensor                    */
   /****************************************/
   const byte rainInterruptPin = 2;
   volatile byte rainCount = 0;
+  byte windDirArrayCounter = 0;
   
   /****************************************/
   /* SHT25 Air T&H Sensor                 */
@@ -98,13 +99,13 @@
   /* Statistics Declarations              */
   /****************************************/
   Statistic windSpeedStats;
-  Statistic windDirectionStats;
   Statistic tempAirStats;
   Statistic RHAirStats;
   Statistic solarRadiationStats;
   Statistic UVRadiationStats;
+  int windDirArray[24];
   float avgWindSpeed;
-  float avgWindDirection;
+  float avgWindDir;
   float avgTempAir;
   float avgRHAir;
   float avgSolarRad;
@@ -154,8 +155,10 @@
     }
 
     if(windSampleRequired) { 
-      windSpeedMph = Rotations * 0.9; // V (mph) = P(2.25/2.5) = P * 0.9 
-      Rotations = 0; // Reset count for next sample 
+      windSpeedMph = Rotations * 0.9; // V (mph) = P(2.25/2.5) = P * 0.9
+      noInterrupts(); //Rotations is set by interrupt, so interrupt needs to be disabled to read it
+      Rotations = 0; // Reset count for next sample
+      interrupts();
       windSampleRequired = false;
     }
   }

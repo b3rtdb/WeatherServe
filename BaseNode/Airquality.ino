@@ -4,9 +4,9 @@
  * which is used for a running 24h average  *
  ********************************************/
 void calcAirQuality() {
-  pm10mCounter++;
-  if(pm10mCounter == 10) {
-    pm10mCounter = 0;
+  pmCounter++;
+  if(pmCounter == (10*(60.0/logInterval))) {
+    pmCounter = 0;
     pm25Array[pmArrayCounter] = PM25;
     pm10Array[pmArrayCounter] = PM10;
     pmArrayCounter++;

@@ -7,10 +7,10 @@
     tempAir = SHT2x.GetTemperature();
     RHAir = SHT2x.GetHumidity();
     windSpeed = getWindSpeed();
-    windDirection = getWindDirection();
+    windDir = getWindDirection();
     solarRad = getSolarRadiation();
     uvRad = getUVRadiation();
-    fanCurrent = getFanCurrent();
+    loadCurrent = getFanCurrent();
 
     if(tempAir == -273 || RHAir == 0) {
       error = error | B00000001;
@@ -18,10 +18,16 @@
     }
     else error = error & B11111110;
     
-    if(fanCurrent < currentLow || fanCurrent > currentHigh) {
+    if(loadCurrent < currentLow || loadCurrent > currentHigh) {
       error = error | B00000010;
     }
-    else if(fanCurrent >= currentLow && fanCurrent <= currentHigh) {
+    else if(loadCurrent >= currentLow && loadCurrent <= currentHigh) {
+      error = error & B11111101;
+    }
+    if(loadvoltage < voltageLow || loadvoltage > voltageHigh) {
+      error = error | B00000010;
+    }
+    else if(loadvoltage >= voltageLow && loadvoltage <= voltageHigh) {
       error = error & B11111101;
     }
     
@@ -94,12 +100,13 @@
   /* Calculate routine for the FAN Current Sensor    */
   /***************************************************/
   int getFanCurrent() {
-    float rawValue = 0.0;
-    float voltage = 0.0; // 0-5V input corresponds with 0-1023 (10bit ADC), so 5/1024 = 4,883mV
-    float current = 0.0;
-    rawValue = analogRead(fanCurrentPin);
-    voltage = rawValue * 4.883;
-    current = (voltage - Vref) * sensitivity;
-    return (int)current;
+    float current_mA = 0.0;
+    float shuntvoltage = 0.0;
+    float busvoltage = 0.0;
+    current_mA = ina219.getCurrent_mA();
+    shuntvoltage = ina219.getShuntVoltage_mV();
+    busvoltage = ina219.getBusVoltage_V();
+    loadvoltage = busvoltage + (shuntvoltage / 1000);
+    return (int)current_mA;
   }
 

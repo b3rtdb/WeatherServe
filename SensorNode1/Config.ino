@@ -4,18 +4,20 @@
   void configHardware() {
     pinMode(fanPin, OUTPUT);      // sets the fanpin as output
     pinMode(errorPin, OUTPUT);    // sets the errorpin as output
+    pinMode(rainInterruptPin, INPUT);
+    pinMode(windSpeedInterruptPin, INPUT); 
     
     Wire.begin();                 // Setup the I2C
     Serial.begin(115200);         // Baudrate 115200 for debug HW serial to PC
     Serial1.begin(9600);          // Baudrate 9600 for Zigbee Wireless interface
     xbee.setSerial(Serial1);
+
+    ina219.begin();
+    ina219.setCalibration_16V_400mA();
   
-    initStats();                  // Clear the statistics Arrays
     digitalWrite(fanPin,1);       // Set the Fars fan ON
     digitalWrite(errorPin,0);     // Set the error led OFF
 
-    pinMode(rainInterruptPin, INPUT);
-    pinMode(windSpeedInterruptPin, INPUT); 
     attachInterrupt(digitalPinToInterrupt(rainInterruptPin), rainIRQ, FALLING);   // configure the Interrupt for the rainsensor
     attachInterrupt(digitalPinToInterrupt(windSpeedInterruptPin), windRotationIRQ, FALLING);  // configure the Interrupt for the windspeedsensor
 
@@ -30,7 +32,7 @@
     rainCount = 0;
     interrupts();
 
-  
+    initStats();                  // Clear the statistics Arrays
     state = 1;
     flashLed(1, 50);
   }
