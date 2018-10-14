@@ -106,7 +106,7 @@
   const float Gsc = 4.92;                       /* Solar constant MJ/m2/h */
   const float Cn = 37.5;                        /* numerator constant for reference crop */
   const signed int pressCorrection = -645;      /* pressure correction in Pascal */
-  const int windDirOffset = 90;                 /* Wind Direction correction in Degrees (WSN1 station rotation to true North) */
+  const int windDirOffset = 0;                  /* Wind Direction correction in Degrees (WSN1 station rotation to true North) */
   const unsigned long onlineRate = 120000UL;    /* in milliseconds, 2min, every Sensornode sends data every minute, so if it does not respond after 2 minutes, it's offline */
   const unsigned long refreshRate = 60000UL;    /* in milliseconds, 1min, Refresh the values & send all via Zigbee every minute */
   const double Lstm = -15;                      /* Local Standard Time Meridian, degr west */
