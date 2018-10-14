@@ -16,7 +16,7 @@ void calcPrediction() {
   
   pressure3hCounter++;
 
-  if(pressure3hCounter == (180*(60.0/logInterval))){
+  if(pressure3hCounter == 180){
     pressureArrayCounter++; // move up one position
     pressureArray[pressureArrayCounter] = pressure;
     pdif = pressureArray[pressureArrayCounter] - pressureArray[pressureArrayCounter-1];

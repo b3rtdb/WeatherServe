@@ -20,14 +20,12 @@ void calcMaxSolar() {
  ********************************************/
 void calcSunHours() {
   double Rs = solarRad;
-  double tmp1 = 0;
   Csr = calcClearSkyRad();
   if(Csr != 0) {
     rdif = (Rs/Csr)*100;
 
     if(rdif > 75) sunHoursMinCounter++;
-    tmp1 = sunHoursMinCounter/(60.0/logInterval);
-    sunHoursDec = tmp1/60.0;
+    sunHoursDec = sunHoursMinCounter/60.0;
   }
   else rdif = 0;
 }
@@ -71,33 +69,33 @@ void fillArrayMeanRadTRHW() {
 }
 
 void calcMeanRadTRHW() {
-  for (byte i = 0; i<(60*(60.0/logInterval)); i++) {
+  for (byte i = 0; i<60; i++) {
       Rmean += *(radArray + i);
     }
 
-    for (byte i = 0; i<(60*(60.0/logInterval)); i++) {
+    for (byte i = 0; i<60; i++) {
       Tmean += *(TArray + i);
     }
 
-    for (byte i = 0; i<(60*(60.0/logInterval)); i++) {
+    for (byte i = 0; i<60; i++) {
       RHmean += *(RHArray + i);
     }
 
-    for (byte i = 0; i<(60*(60.0/logInterval)); i++) {
+    for (byte i = 0; i<60; i++) {
       WSmean += *(wsArray + i);
     }
 
-    Rmean /= (60*(60.0/logInterval));  // 1h
-    Tmean /= (60*(60.0/logInterval));  // 1h
-    RHmean /= (60*(60.0/logInterval));  // 1h
-    WSmean /= (60*(60.0/logInterval));  // 1h
+    Rmean /= 60;  // 1h
+    Tmean /= 60;  // 1h
+    RHmean /= 60;  // 1h
+    WSmean /= 60;  // 1h
 }
 
 // Calculate the Reference Evapotranspiration for Grass
 // Calculated every hour, and a dailty total is made
 void calcET() {
   fillArrayMeanRadTRHW();
-  if(radTRHWSArrayCounter == (60*(60.0/logInterval))){
+  if(radTRHWSArrayCounter == 60){
     radTRHWSArrayCounter = 0;
     calcMeanRadTRHW();
 
@@ -284,12 +282,12 @@ void calcUVAvg() {
   uvArray[uvArrayCounter] = uvIndex;
   uvArrayCounter++;
   
-  if(uvArrayCounter == (10*(60.0/logInterval))) {
+  if(uvArrayCounter == 10) {
     uvArrayCounter = 0;
   }
   avgUV10m = 0;
-  for (byte i = 0; i<(10*(60.0/logInterval)); i++) {
+  for (byte i = 0; i<10; i++) {
     avgUV10m += *(uvArray + i); // = uvArray[i]
   }
-  avgUV10m /= (10*(60.0/logInterval));
+  avgUV10m /= 10;
 }

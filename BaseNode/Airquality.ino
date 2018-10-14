@@ -5,7 +5,7 @@
  ********************************************/
 void calcAirQuality() {
   pmCounter++;
-  if(pmCounter == (10*(60.0/logInterval))) {
+  if(pmCounter == 10) {
     pmCounter = 0;
     pm25Array[pmArrayCounter] = PM25;
     pm10Array[pmArrayCounter] = PM10;

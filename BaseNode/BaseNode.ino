@@ -60,16 +60,14 @@
   /* Calculated Variables                 */
   /****************************************/
   float minTempAir,maxTempAir,windGust,avgWindSpeed10m,avgPm10_24h,avgPm25_24h,totalRain24h,rainIntensity, apparentT, dewPoint, maxUV, avgUV10m, sunHoursDec, windRunKm = 0.0;
-  byte totalRain24hTicks,rainArrayCounter,windDirArrayCounter,windSpeedArrayCounter,uvArrayCounter,windSpeedCounter,pressureArrayCounter,pmArrayCounter,pmCounter,radTRHWSArrayCounter,trend,moonPhaseNumber, zambrettiNumber = 0;
+  byte totalRain24hTicks,rainArrayCounter,windDirArrayCounter,windSpeedArrayCounter,uvArrayCounter,windSpeedCounter,pressureArrayCounter,pmArrayCounter,pmCounter,radTRHWSArrayCounter,trend,moonPhaseNumber, zambrettiNumber, pressure3hCounter = 0;
   signed long pdif = 0;
-  int mRising, mSetting, hRising, hSetting, hDaylength, mDaylength, sunHoursMinCounter, maxSolarRad, windRun, avgWindDir, pressure3hCounter = 0;
+  int mRising, mSetting, hRising, hSetting, hDaylength, mDaylength, sunHoursMinCounter, maxSolarRad, windRun, avgWindDir = 0;
   double moonPhase, moonAge, Rmean, Tmean, RHmean, WSmean, ETday, EThour, rdif, Csr = 0;
   
   byte rainArray[10];
   int pm25Array[144], pm10Array[144];
   unsigned long pressureArray[8];
-
-  // CHANGE THESE ARRAY LENGTHS IF LOGINTERVAL IS CHANGED (length * 60/logInterval)
   float windSpeedArray[10], uvArray[10], radArray[60], TArray[60], RHArray[60], wsArray[60];
   int windDirArray[60];
 
@@ -112,7 +110,6 @@
   const double Lstm = -15;                      /* Local Standard Time Meridian, degr west */
   const double latitude = 51.0406778;           /* coordinates of Schorsemolenstraat 75, Sint-Katelijne-Waver */
   const double longitude = 4.5093139;
-  const float logInterval = 60.0;               /* interval of 60 seconds, IF THIS VALUE IS CHANGED FROM 60MIN, ALSO CHANGE ARRAY LENGTHS !!!! */
 
 /**********************************************************************
  *
