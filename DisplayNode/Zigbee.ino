@@ -139,6 +139,11 @@ void getDueData() {                        // Due status pos 0
     mSetting = rx.getData(arrayOffset);      // sunset minute pos 72
     arrayOffset++;
     trend = rx.getData(arrayOffset);         // air pressure trend pos 73
+    
+    arrayOffset++;
+    errorWSN1 = rx.getData(arrayOffset);     // Error byte of WSN1 pos 74
+    arrayOffset++;
+    errorWSN2 = rx.getData(arrayOffset);     // Error byte of WSN2 pos 75
 }
 
 

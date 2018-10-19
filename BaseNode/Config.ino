@@ -8,6 +8,13 @@ void configDue() {
   
   Serial1.begin(9600);          // xBee
   xbee.begin(Serial1);
+
+  Timer3.attachInterrupt(refreshIRQ);
+  Timer3.start(500000); // µs (0,5s)
+
+  noInterrupts();
+  refreshData = false;
+  interrupts();
 }
 
 
@@ -97,3 +104,14 @@ int runTimeCommand(String command) {
   return value;
 }
 
+/****************************************/
+  /* Interrupt routine for Refresh        */
+  /* sensor data TIMER                    */
+  /****************************************/
+  void refreshIRQ() {
+    timerCount++;
+    if(timerCount == 120)  {          // Timer interrupt every 60 seconds  120 x 0,5s = 60s
+      refreshData = true;
+      timerCount = 0;
+    }
+  }

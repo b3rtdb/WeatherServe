@@ -15,9 +15,7 @@
   /**************************************/
   /* Request data from all sensors      */
   /**************************************/
-  void requestSensorData() {
-    lastupdate = millis(); // reset the timer
-    
+  void requestSensorData() {  
     pressure = lps25hb.readPressure();
     AirqualityRead();
     mainRoutineAS3935();

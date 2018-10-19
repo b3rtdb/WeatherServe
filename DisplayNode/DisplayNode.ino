@@ -26,7 +26,7 @@
   /****************************************/
   /* Variable declarations                */
   /****************************************/ 
-  byte nodeIdent, lightningDetected, arrayOffset, AQI10, AQI25, AQIuv, RIR, zambrettiNumber, moonPhaseNumber, moonPhase, hRising, hSetting, mRising, mSetting, trend, lightningDistance = 0;
+  byte nodeIdent, lightningDetected, arrayOffset, AQI10, AQI25, AQIuv, RIR, zambrettiNumber, moonPhaseNumber, moonPhase, hRising, hSetting, mRising, mSetting, trend, lightningDistance, errorWSN1, errorWSN2 = 0;
   float floatStore, tempAir, RHAir, RHGnd, windSpeed, windDir, pressure, tempFeelslike, solarRad, minTempAir, maxTempAir, maxWindSpeed, avgWindDir, avgPm10_24h, avgPm25_24h, totalRain24h, rainIntensity, uvIndex, ETday, windRunKm, sunHoursDec= 0.0;
   double moonAge = 0;
   int intStore = 0;
@@ -58,6 +58,7 @@
   unsigned long backLightOnTimer = 0;            // timer value for the backlight when waved
   const unsigned long ONLINE_RATE = 300000UL;    // in milliseconds, 5min, Coordinator sends data every 1min, so after 5 minutes without data it's offline
   unsigned long lastUpdateDue = 0;               // timer value when last update was done of Due
+  unsigned long currentMillis = 0;
   byte onlineFlagWSN1,onlineFlagWSN2,onlineFlagDue= 0;               // 0 = undefined, 1 = offline, 2 = online
   boolean waved = false;
   #define torad(d) ((d) * (PI / 180.0))       /* Deg->Rad   */
@@ -87,16 +88,19 @@ void loop() {
     switchOnBacklight();
   }
 
-  if ( ( millis()-backLightOnTimer ) > BACKLIGHT_TIME ) {
+  /****************************************/
+  /* check some timers                    */
+  /****************************************/
+  currentMillis = millis();
+  if ((unsigned long)(currentMillis - backLightOnTimer) >= BACKLIGHT_TIME ) {
     switchOffBacklight();
   }
 
-  if ( ( millis()-lastUpdateDue ) > ONLINE_RATE ) {
+  if ((unsigned long)(currentMillis - lastUpdateDue) >= ONLINE_RATE ) {
     onlineFlagDue = 1;
   }
 
-  if ( ( millis()-lastUpdateRefresh ) > REFRESH_RATE ) {
+  if ((unsigned long)(currentMillis - lastUpdateRefresh) >= REFRESH_RATE ) {
     refreshDisplay();
   }
-  
 }

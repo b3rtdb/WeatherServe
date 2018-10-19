@@ -4,7 +4,7 @@
 #include <XBee.h>
 #include <Statistic.h>
 #include <ClosedCube_LPS25HB.h>
-
+#include <TimerOne.h>
 
   /****************************************/
   /* LPS25HB Pressure Sensor              */
@@ -69,14 +69,12 @@
   byte statsUpdated = 0;
 
   /****************************************/
-  /* State Machine Declarations           */
+  /* System Declarations                  */
   /****************************************/
-  byte state = 0;
   byte counter = 0;
-  #define REQUEST_RATE 6000          // in milliseconds - Sample rate, 6000 default (6s)
-  unsigned long lastupdate = 0;      // timer value when last measure update was done
-
-  byte error = B00000000;            // 1 = LPS25HB error, 2 = PMSensor Error, 4= AS3935 Tuning NOK, 8 = AS3935 Noise level too high, 16 = AS3935 Disturber detected
+  volatile byte state = 0;
+  volatile unsigned int timerCount = 0; // used to determine 2.5sec timer count
+  byte error = B00000000;               // 1 = LPS25HB error, 2 = PMSensor Error, 4= AS3935 Tuning NOK, 8 = AS3935 Noise level too high, 16 = AS3935 Disturber detected
 
 /**********************************************************************
  *
@@ -101,12 +99,8 @@ void loop(void) {
     case 3: zigbeeTransmit(); break;
   }
   
-  if (counter > 10) {  // transition from state 2 -> 3
+  if (counter > 24) {  // transition from state 2 -> 3
     state = 3;
-  }
-  
-  if ( ( millis()-lastupdate ) > REQUEST_RATE ) { // transition from state 2 -> 1
-    state = 1;
   }
 }
     

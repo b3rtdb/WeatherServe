@@ -11,6 +11,14 @@
     xbee.setSerial(Serial1);
     configAS3935();
     lps25hb.begin(0x5D);
+
+    // Setup the timer interupt for the windspeedsensor & request sensor data
+    Timer1.initialize(500000);    // µs (0,5s)
+    Timer1.attachInterrupt(TimerIRQ);
+
+    noInterrupts();
+    timerCount = 0; 
+    interrupts();
   
     state = 1;
     initStats();              // Clear the statistics Arrays
@@ -112,3 +120,14 @@
     Serial.println(minLightning,DEC);   
   }
 
+  /****************************************/
+  /* Interrupt routine for Request        */
+  /* sensor data TIMER                    */
+  /****************************************/
+  void TimerIRQ() {
+    timerCount++;
+    if(timerCount == 5)  {          // Timer interrupt every 2.5 seconds  5 x 0,5s = 2,5s
+      state = 1;                    // transition from state 2 -> 1
+      timerCount = 0;
+    }
+  }

@@ -21,14 +21,13 @@
     attachInterrupt(digitalPinToInterrupt(rainInterruptPin), rainIRQ, FALLING);   // configure the Interrupt for the rainsensor
     attachInterrupt(digitalPinToInterrupt(windSpeedInterruptPin), windRotationIRQ, FALLING);  // configure the Interrupt for the windspeedsensor
 
-    // Setup the timer interupt 
+    // Setup the timer interupt for the windspeedsensor & request sensor data
     Timer1.initialize(500000);    // µs (0,5s)
-    Timer1.attachInterrupt(windTimerIRQ);
+    Timer1.attachInterrupt(TimerIRQ);
 
-    windSampleRequired = false;
     noInterrupts();
-    TimerCount = 0; 
-    Rotations = 0;
+    timerCount = 0; 
+    rotations = 0;
     rainCount = 0;
     interrupts();
 
@@ -65,17 +64,17 @@
   /* count ROTATIONS                      */
   /****************************************/
   void windRotationIRQ() {
-      Rotations++; 
+      rotations++; 
   }
 
   /****************************************/
-  /* Interrupt routine for windspeed      */
-  /* count TIMER                          */
+  /* Interrupt routine for Request        */
+  /* sensor data TIMER                    */
   /****************************************/
-  void windTimerIRQ() {
-    TimerCount++;
-    if(TimerCount == 5)  {  //Timer interrupt every 2.5 seconds  5 x 0,5s = 2,5s
-      windSampleRequired = true;
-      TimerCount = 0;
+  void TimerIRQ() {
+    timerCount++;
+    if(timerCount == 5)  {          // Timer interrupt every 2.5 seconds  5 x 0,5s = 2,5s
+      state = 1;                    // transition from state 2 -> 1
+      timerCount = 0;
     }
   }

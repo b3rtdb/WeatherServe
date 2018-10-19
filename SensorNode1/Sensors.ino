@@ -1,9 +1,7 @@
   /**************************************/
   /* Request data from all sensors      */
   /**************************************/
-  void requestSensorData() {
-    lastupdate = millis(); // reset the timer
-    
+  void requestSensorData() {  
     tempAir = SHT2x.GetTemperature();
     RHAir = SHT2x.GetHumidity();
     windSpeed = getWindSpeed();
@@ -17,21 +15,18 @@
       SHT2x.resetSHT();
     }
     else error = error & B11111110;
-    
-    if(loadCurrent < currentLow || loadCurrent > currentHigh) {
-      error = error | B00000010;
-    }
-    else if(loadCurrent >= currentLow && loadCurrent <= currentHigh) {
+
+    if(loadCurrent >= currentLow && loadCurrent <= currentHigh) {
       error = error & B11111101;
     }
-    if(loadvoltage < voltageLow || loadvoltage > voltageHigh) {
-      error = error | B00000010;
+    else error = error | B00000010;
+
+    if(loadvoltage >= voltageLow && loadvoltage <= voltageHigh) {
+      error = error & B11111011;
     }
-    else if(loadvoltage >= voltageLow && loadvoltage <= voltageHigh) {
-      error = error & B11111101;
-    }
+    else error = error | B00000100;
     
-    state = 2;   // goto state 2  
+    state = 2;   // goto state 2
     statsUpdated = 0;
   }
   
@@ -42,9 +37,12 @@
   /* Calculate routine for the Windspeed in km/h     */
   /***************************************************/
   float getWindSpeed() {
-    float tempVal = 0.0;
-    tempVal = windSpeedMph * speedConversion;
-    return tempVal;
+    float windSpeedCalc = 0.0;
+    noInterrupts(); // Rotations is set by interrupt, so interrupt needs to be disabled to read it
+    windSpeedCalc = rotations * 0.9 * 1.60934; // V (mph) = P(2.25/2.5) = P * 0.9 * conv mph to kmh
+    rotations = 0;  // Reset count for next sample
+    interrupts();
+    return windSpeedCalc;
   }
 
 

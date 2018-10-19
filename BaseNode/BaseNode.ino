@@ -5,6 +5,7 @@
  ********************************************/
 #include <XBee.h>
 #include <Process.h>
+#include <DueTimer.h>
 
   /****************************************/
   /* Xbee Declarations                    */
@@ -14,14 +15,14 @@
   ZBRxResponse rx = ZBRxResponse();
   ModemStatusResponse msr = ModemStatusResponse();
 
-  uint8_t payloadXbee[74];                                                    /* array of length 74, 0-73, to broadcast all values */
+  uint8_t payloadXbee[76];                                                    /* array of length 74, 0-73, to broadcast all values */
   XBeeAddress64 addr64 = XBeeAddress64(0x0013A200, 0x40A9C935);               /* SH + SL Address of receiving XBee = CLEO  // BROADCAST ADDRESS (0x00000000, 0x0000FFFF) */
   ZBTxRequest zbTx = ZBTxRequest(addr64, payloadXbee, sizeof(payloadXbee));
   ZBTxStatusResponse txStatus = ZBTxStatusResponse();
 
   int arrayOffsetRX, arrayOffsetTX = 0;
   byte errorWSN1, errorWSN2 = 0B00000000;
-    /* errorWSN1: 1 = SHT Error, 2 = Fan Error */
+    /* errorWSN1: 1 = SHT Error, 2 = Fan current Error, 3 = Fan voltage Error */
     /* errorWSN2: 1 = LPS25HB Error, 2 = PMSensor Error, 4 = AS3935 Tuning NOK, 8 = AS3935 Noise level too high, 16 = AS3935 Disturber detected */
 
   
@@ -35,9 +36,10 @@
   /****************************************/
   /* System declarations                  */
   /****************************************/
-  unsigned long lastupdateREFRESH = 0;                        /* timer value when last update of values en xbee TX was done */
-  unsigned long lastupdateWSN1, lastupdateWSN2 = 0;           /* timer value when last measure update was done of WSNx */
-  byte onlineFlagWSN1, onlineFlagWSN2 = 0;                    /* 0 = undefined, 1 = offline, 2 = online */
+  volatile unsigned int timerCount = 0; // used to determine 60sec timer count
+  volatile bool refreshData; 
+  unsigned long currentMillis, lastupdateWSN1, lastupdateWSN2 = 0;           /* timer value when last measure update was done of WSNx */
+  byte onlineFlagWSN1, onlineFlagWSN2 = 0;                                   /* 0 = undefined, 1 = offline, 2 = online */
   int year, month, day, hour, minute, seconds, DST = 0;
   #define onboardLed 13
   Process date;
@@ -94,7 +96,7 @@
   const double boltzmann = 2.042E-10;                       /* constant of boltzmann, MJ/m2/h/K4 */
  
   /****************************************/
-  /* Variables                            */
+  /* Variables declared as constants      */
   /****************************************/
   const byte sunOffset = 24;                    /* 24min? */
   const unsigned long baroTop = 104080;
@@ -106,7 +108,6 @@
   const signed int pressCorrection = -645;      /* pressure correction in Pascal */
   const int windDirOffset = 0;                  /* Wind Direction correction in Degrees (WSN1 station rotation to true North) */
   const unsigned long onlineRate = 120000UL;    /* in milliseconds, 2min, every Sensornode sends data every minute, so if it does not respond after 2 minutes, it's offline */
-  const unsigned long refreshRate = 60000UL;    /* in milliseconds, 1min, Refresh the values & send all via Zigbee every minute */
   const double Lstm = -15;                      /* Local Standard Time Meridian, degr west */
   const double latitude = 51.0406778;           /* coordinates of Schorsemolenstraat 75, Sint-Katelijne-Waver */
   const double longitude = 4.5093139;
@@ -131,21 +132,20 @@ void loop() {
   /****************************************/
   /* Check Online Status WSN1, WSN2       */
   /****************************************/
-  if ( ( millis()-lastupdateWSN1 ) >= onlineRate ) {
+  currentMillis = millis();
+  if ((unsigned long)(currentMillis - lastupdateWSN1) >= onlineRate ) {
     onlineFlagWSN1 = 1;
   }
    
-  if ( ( millis()-lastupdateWSN2 ) >= onlineRate ) {
+  if ((unsigned long)(currentMillis - lastupdateWSN2) >= onlineRate ) {
     onlineFlagWSN2 = 1;
   }
 
 
   /****************************************/
-  /* Refresh values every minute          */
+  /* Refresh values every minute (Timer3) */
   /****************************************/
-  if ( ( millis()-lastupdateREFRESH ) >= refreshRate ) {
-    lastupdateREFRESH = millis();
-
+  if (refreshData) {
     getTimeDate();
     calcTempHum();
     calcWind();
@@ -155,5 +155,8 @@ void loop() {
     calcSun();
     calcSunMoon();
     xbeeTx();
+    noInterrupts();
+    refreshData = false;
+    interrupts();
   }
 }

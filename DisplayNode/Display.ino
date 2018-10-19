@@ -178,31 +178,24 @@ void refreshDisplay() {
 
 
   /****************************************/
-  /* Display Moon Phase                   */
+  /* Display Moon Illumination            */
   /****************************************/
   char bufmoonPhase[lengthOfFloat+1];
   dtostrf(moonPhase, lengthOfFloat, 0, bufmoonPhase);
   CleO.StringExt(FONT_TINY, 220, 305, colors2[10], MM, 0, 0, bufmoonPhase);
   CleO.StringExt(FONT_TINY, 240, 305, colors2[10], MM, 0, 0, "%");
 
-  switch(moonPhaseNumber) {
-    case 1: CleO.StringExt(FONT_TINY, mes2Cx, mes3Cy, GRAY, MM, 0, 0, "New Moon");
-      break;
-    case 2: CleO.StringExt(FONT_TINY, mes2Cx, mes3Cy, GRAY, MM, 0, 0, "Waxing Crescent");
-      break;
-    case 3: CleO.StringExt(FONT_TINY, mes2Cx, mes3Cy, GRAY, MM, 0, 0, "First Quarter");
-      break;
-    case 4: CleO.StringExt(FONT_TINY, mes2Cx, mes3Cy, GRAY, MM, 0, 0, "Waxing Gibbous");
-      break;
-    case 5: CleO.StringExt(FONT_TINY, mes2Cx, mes3Cy, GRAY, MM, 0, 0, "Full Moon");
-      break;
-    case 6: CleO.StringExt(FONT_TINY, mes2Cx, mes3Cy, GRAY, MM, 0, 0, "Waning Gibbous");
-      break;
-    case 7: CleO.StringExt(FONT_TINY, mes2Cx, mes3Cy, GRAY, MM, 0, 0, "Last Quarter");
-      break;
-    case 8: CleO.StringExt(FONT_TINY, mes2Cx, mes3Cy, GRAY, MM, 0, 0, "Waning Crescent");
-      break;
-  }
+  /****************************************/
+  /* Display Error of WSN nodes           */
+  /****************************************/
+  char bufError1[lengthOfFloat+1];
+  dtostrf(errorWSN1, lengthOfFloat, 0, bufError1);
+  char bufError2[lengthOfFloat+1];
+  dtostrf(errorWSN2, lengthOfFloat, 0, bufError2);
+
+  CleO.StringExt(FONT_TINY, mes1Cx, mes3Cy, GRAY, MM, 0, 0, "Err 1/2");
+  CleO.StringExt(FONT_TINY, mes3Cx-10, mes3Cy, colors2[1], MM, 0, 0, bufError1);
+  CleO.StringExt(FONT_TINY, mes3Cx+10, mes3Cy, colors2[1], MM, 0, 0, bufError2);
 
   /****************************************/
   /* Display Prediction                   */

@@ -207,7 +207,12 @@ void xbeeTx() {     // max payloadXbee without fragmentation is 84 bytes
     payloadXbee[arrayOffsetTX] = (byte)mSetting;  // sunset minute pos 72
     arrayOffsetTX++;
     
-    payloadXbee[arrayOffsetTX] = trend;  // air pressure trend pos 73
+    payloadXbee[arrayOffsetTX] = trend;           // air pressure trend pos 73
+
+    arrayOffsetTX++;
+    payloadXbee[arrayOffsetTX] = errorWSN1;       // Error byte of WSN1 pos 74
+    arrayOffsetTX++;
+    payloadXbee[arrayOffsetTX] = errorWSN2;       // Error byte of WSN1 pos 75
 
     xbee.send(zbTx);
     arrayOffsetTX = 0;
