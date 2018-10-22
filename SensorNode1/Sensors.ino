@@ -16,15 +16,15 @@
     }
     else error = error & B11111110;
 
-    if(loadCurrent >= currentLow && loadCurrent <= currentHigh) {
-      error = error & B11111101;
+    if(loadCurrent < currentLow || loadCurrent > currentHigh) {
+      error = error | B00000010;
     }
-    else error = error | B00000010;
+    else error = error & B11111101;
 
-    if(loadvoltage >= voltageLow && loadvoltage <= voltageHigh) {
-      error = error & B11111011;
+    if(loadvoltage < voltageLow || loadvoltage > voltageHigh) {
+      error = error | B00000100;
     }
-    else error = error | B00000100;
+    else error = error & B11111011;
     
     state = 2;   // goto state 2
     statsUpdated = 0;

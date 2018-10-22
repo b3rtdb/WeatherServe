@@ -19,9 +19,9 @@
       AS3935IrqTriggered = 0;
       delay(2);
       int irqSource = AS3935.interruptSource();
-      if (irqSource & 0b0001) error = error | B00001000;   //Noise level too high, try adjusting noise floor
-      if (irqSource & 0b0100) error = error | B00010000;   //Disturber detected
-      if (irqSource & 0b1000) {                            //Lightning
+      if (irqSource & 0b0001) error = error | B00001000;   // Noise level too high, try adjusting noise floor
+      if (irqSource & 0b0100) error = error | B00010000;   // Disturber detected
+      if (irqSource & 0b1000) {                            // Lightning
         lightningDetected=1;
         error = error & B11100111;
         strokeDistance = AS3935.lightningDistanceKm();

@@ -51,8 +51,8 @@
     recalibrate();
   
     AS3935.setNoiseFloor(2); // 0..7         (the higher, the higher the threshold will be, also depends on indoor/outdoor setting)
-    AS3935.setSpikeRejection(2); // 0..11    (the higher, the more robust for disturbers, but also less efficient for detection)
-    AS3935.setWatchdogThreshold(3); // 0..10 (the higher, the more robust for disturbers, but also less efficient for detection)
+    AS3935.setSpikeRejection(4); // 0..11    (the higher, the more robust for disturbers, but also less efficient for detection)
+    AS3935.setWatchdogThreshold(4); // 0..10 (the higher, the more robust for disturbers, but also less efficient for detection)
     AS3935.setMinimumLightnings(1); // 0..3  (values respectivily 1, 5, 9, 16)
     
     outputCalibrationValues();
@@ -138,10 +138,10 @@
   /**************************************/
   void checkLps25hb() {
     byte lpsIdent = 0x00;
-    if(lps25hb.whoAmI() == 0xBD) {
-      error = error & B11111110;
+    if(lps25hb.whoAmI() != 0xBD) {
+      error = error | B00000001;
     }
     else {
-      error = error | B00000001;
+      error = error & B11111110;
     }
   }
