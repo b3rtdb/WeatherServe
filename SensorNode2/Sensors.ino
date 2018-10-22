@@ -1,18 +1,4 @@
   /**************************************/
-  /* Check LPS25HB Sensor               */
-  /**************************************/
-  void checkLps25hb() {
-    byte lpsIdent = 0x00;
-    if(lps25hb.whoAmI() == 0xBD) {
-      error = error & B11111110;
-    }
-    else {
-      error = error | B00000001;
-    }
-  }
-  
-  
-  /**************************************/
   /* Request data from all sensors      */
   /**************************************/
   void requestSensorData() {  
@@ -25,6 +11,9 @@
   }
 
 
+  /****************************************/
+  /* Main routine for AS3935              */
+  /****************************************/
   void mainRoutineAS3935() {
     if(AS3935IrqTriggered) {
       AS3935IrqTriggered = 0;

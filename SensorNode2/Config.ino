@@ -12,7 +12,7 @@
     configAS3935();
     lps25hb.begin(0x5D);
 
-    // Setup the timer interupt for the windspeedsensor & request sensor data
+    // Setup the timer interupt to request sensor data
     Timer1.initialize(500000);    // µs (0,5s)
     Timer1.attachInterrupt(TimerIRQ);
 
@@ -129,5 +129,19 @@
     if(timerCount == 5)  {          // Timer interrupt every 2.5 seconds  5 x 0,5s = 2,5s
       state = 1;                    // transition from state 2 -> 1
       timerCount = 0;
+    }
+  }
+
+
+  /**************************************/
+  /* Check LPS25HB Sensor               */
+  /**************************************/
+  void checkLps25hb() {
+    byte lpsIdent = 0x00;
+    if(lps25hb.whoAmI() == 0xBD) {
+      error = error & B11111110;
+    }
+    else {
+      error = error | B00000001;
     }
   }

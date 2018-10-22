@@ -49,9 +49,9 @@
   /* Read the FAN Power Sensor            */
   /****************************************/
   Adafruit_INA219 ina219(0x41);
-  int loadCurrent = 0;          // when fan is normally running, should be 66mA
-  const int currentLow = 30;    // below 30mA, fan is not running
-  const int currentHigh = 100;  // above 100mA, fan is blocked
+  int loadCurrent = 0;          // when fan is normally running, should be 76mA
+  const int currentLow = 40;    // below 40mA, fan is not running
+  const int currentHigh = 110;  // above 110mA, fan is blocked
   float loadvoltage = 0.0;
   const float voltageLow = 6.0; // below 6V or above 7V, something is wrong with the regulator (should be 6.5V)
   const float voltageHigh = 7.0;
