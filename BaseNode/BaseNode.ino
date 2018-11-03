@@ -67,7 +67,7 @@
   int mRising, mSetting, hRising, hSetting, hDaylength, mDaylength, sunHoursMinCounter, maxSolarRad, windRun, avgWindDir = 0;
   double moonPhase, moonAge, Rmean, Tmean, RHmean, WSmean, ETday, EThour, rdif, Csr = 0;
   
-  byte rainArray[10];
+  byte rainArray[15];
   int pm25Array[144], pm10Array[144];
   unsigned long pressureArray[8];
   float windSpeedArray[10], uvArray[10], radArray[60], TArray[60], RHArray[60], wsArray[60];
