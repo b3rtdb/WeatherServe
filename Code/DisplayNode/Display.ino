@@ -193,9 +193,20 @@ void refreshDisplay() {
   char bufError2[lengthOfFloat+1];
   dtostrf(errorWSN2, lengthOfFloat, 0, bufError2);
 
-  CleO.StringExt(FONT_TINY, mes1Cx, mes3Cy, GRAY, MM, 0, 0, "Err 1/2");
-  CleO.StringExt(FONT_TINY, mes3Cx-10, mes3Cy, colors2[1], MM, 0, 0, bufError1);
-  CleO.StringExt(FONT_TINY, mes3Cx+10, mes3Cy, colors2[1], MM, 0, 0, bufError2);
+  CleO.StringExt(FONT_TINY, 35, mes3Cy, GRAY, ML, 0, 0, "Error WSN1:");
+  CleO.StringExt(FONT_TINY, 128, mes3Cy, GRAY, ML, 0, 0, ",WSN2:");
+  if(errorWSN1 == 0) {
+    CleO.StringExt(FONT_TINY, 120, mes3Cy, GREEN, MM, 0, 0, bufError1);
+  }
+  else {
+    CleO.StringExt(FONT_TINY, 120, mes3Cy, RED, MM, 0, 0, bufError1);
+  }
+  if(errorWSN2 == 0) {
+    CleO.StringExt(FONT_TINY, 182, mes3Cy, GREEN, MM, 0, 0, bufError2);
+  }
+  else {
+    CleO.StringExt(FONT_TINY, 182, mes3Cy, RED, MM, 0, 0, bufError2);
+  }
 
   /****************************************/
   /* Display Prediction                   */
@@ -255,7 +266,7 @@ void refreshDisplay() {
     case 19: CleO.StringExt(FONT_TINY, mes2Cx, mes1Cy, GRAY, MM, 0, 0, "Unsettled,");
             CleO.StringExt(FONT_TINY, mes2Cx, mes2Cy, GRAY, MM, 0, 0, "some rain (19)");
       break;
-    case 20: CleO.StringExt(FONT_TINY, mes2Cx, mes1Cy, GRAY, MM, 0, 0, "Mostly very,");
+    case 20: CleO.StringExt(FONT_TINY, mes2Cx, mes1Cy, GRAY, MM, 0, 0, "Mostly very");
             CleO.StringExt(FONT_TINY, mes2Cx, mes2Cy, GRAY, MM, 0, 0, "unsettled (20)");
       break;
     case 21: CleO.StringExt(FONT_TINY, mes2Cx, mes1Cy, GRAY, MM, 0, 0, "Occasional rain,");
@@ -264,7 +275,7 @@ void refreshDisplay() {
     case 22: CleO.StringExt(FONT_TINY, mes2Cx, mes1Cy, GRAY, MM, 0, 0, "Rain at times,");
             CleO.StringExt(FONT_TINY, mes2Cx, mes2Cy, GRAY, MM, 0, 0, "very unsettled (22)");
       break;
-    case 23: CleO.StringExt(FONT_TINY, mes2Cx, mes1Cy, GRAY, MM, 0, 0, "Rain at frequent,");
+    case 23: CleO.StringExt(FONT_TINY, mes2Cx, mes1Cy, GRAY, MM, 0, 0, "Rain at frequent");
             CleO.StringExt(FONT_TINY, mes2Cx, mes2Cy, GRAY, MM, 0, 0, "intervals (23)");
       break;
     case 24: CleO.StringExt(FONT_TINY, mes2Cx, mes1Cy, GRAY, MM, 0, 0, "Rain, very");
