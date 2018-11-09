@@ -12,6 +12,8 @@
     avgRHAir = RHAirStats.average();
     avgSolarRad = solarRadiationStats.average();
     avgUVRad = UVRadiationStats.average();
+    avgLoadCurrent = loadCurrentStats.average();
+    avgLoadVoltage = loadVoltageStats.average();
   }
 
   void initStats() {
@@ -23,6 +25,8 @@
     RHAirStats.clear();            // clear the array for the Air Humidity statistics
     solarRadiationStats.clear();   // clear the array for the Solar Radiation Statistics
     UVRadiationStats.clear();      // clear the array for the UV Radiation Statistics
+    loadCurrentStats.clear();      // clear the array for the Fan Load current Statistics
+    loadVoltageStats.clear();      // clear the array for the Fan Load voltage Statistics
   }
 
   void updateStats() {
@@ -33,6 +37,8 @@
       solarRadiationStats.add(solarRad);
       UVRadiationStats.add(uvRad);
       calcWindDirAvg(); // running avg 1 minute
+      loadCurrentStats.add(loadCurrent);
+      loadVoltageStats.add(loadVoltage);
       
       statsUpdated = 1;
       counter++;
@@ -64,4 +70,3 @@
     arctanMean += 360;
     avgWindDir = (int)arctanMean%360; // calculate arctanMeanResult
   }
-

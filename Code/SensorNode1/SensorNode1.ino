@@ -49,10 +49,10 @@
   /* Read the FAN Power Sensor            */
   /****************************************/
   Adafruit_INA219 ina219(0x41); // I2C address changed by jumper, normally has same address as SHT25
-  int loadCurrent = 0;          // when fan is normally running, should be 76mA
+  int loadCurrent = 0;          // when fan is normally running, should be around 80mA
   const int currentLow = 40;    // below 40mA, fan is not running
   const int currentHigh = 120;  // above 120mA, fan is blocked
-  float loadvoltage = 0.0;
+  float loadVoltage = 0.0;
   const float voltageLow = 6.0; // below 6V or above 7V, something is wrong with the regulator (should be 6.5V)
   const float voltageHigh = 7.0;
   
@@ -100,6 +100,8 @@
   Statistic RHAirStats;
   Statistic solarRadiationStats;
   Statistic UVRadiationStats;
+  Statistic loadCurrentStats;
+  Statistic loadVoltageStats;
   int windDirArray[24];
   float avgWindSpeed;
   float avgWindDir;
@@ -107,6 +109,8 @@
   float avgRHAir;
   float avgSolarRad;
   float avgUVRad;
+  float avgLoadCurrent;
+  float avgLoadVoltage;
   
   byte statsUpdated = 0;
 

@@ -3,6 +3,7 @@
   /****************************************************/
   void zigbeeTransmit() {
     calcStats();
+    checkErrors();
 
     // Header
     payload[0] = 1;   // wireless sensor node identifier, WSN1

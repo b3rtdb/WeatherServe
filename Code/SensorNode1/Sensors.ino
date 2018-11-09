@@ -8,29 +8,32 @@
     windDir = getWindDirection();
     solarRad = getSolarRadiation();
     uvRad = getUVRadiation();
-    loadCurrent = getFanCurrent();
-
-    if(tempAir == -273 || RHAir == 0) {
-      error = error | B00000001;
-      SHT2x.resetSHT();
-    }
-    else error = error & B11111110;
-
-    if(loadCurrent < currentLow || loadCurrent > currentHigh) {
-      error = error | B00000010;
-    }
-    else error = error & B11111101;
-
-    if(loadvoltage < voltageLow || loadvoltage > voltageHigh) {
-      error = error | B00000100;
-    }
-    else error = error & B11111011;
+    getFanPower();
     
     state = 2;   // goto state 2
     statsUpdated = 0;
   }
   
+  /**************************************/
+  /* check for Errors  (1x per minute)  */
+  /**************************************/
+  void checkErrors() {
+    if(avgTempAir == -273 || avgRHAir == 0) {
+      error = error | B00000001;
+      SHT2x.resetSHT();
+    }
+    else error = error & B11111110;
 
+    if(avgLoadCurrent < currentLow || avgLoadCurrent > currentHigh) {
+      error = error | B00000010;
+    }
+    else error = error & B11111101;
+
+    if(avgLoadVoltage < voltageLow || avgLoadVoltage > voltageHigh) {
+      error = error | B00000100;
+    }
+    else error = error & B11111011;
+  }
 
 
   /***************************************************/
@@ -97,14 +100,13 @@
   /***************************************************/
   /* Calculate routine for the FAN Current Sensor    */
   /***************************************************/
-  int getFanCurrent() {
+  void getFanPower() {
     float current_mA = 0.0;
     float shuntvoltage = 0.0;
     float busvoltage = 0.0;
     current_mA = ina219.getCurrent_mA();
     shuntvoltage = ina219.getShuntVoltage_mV();
     busvoltage = ina219.getBusVoltage_V();
-    loadvoltage = busvoltage + (shuntvoltage / 1000);
-    return (int)current_mA;
+    loadVoltage = busvoltage + (shuntvoltage / 1000);
+    loadCurrent = (int)current_mA;
   }
-
