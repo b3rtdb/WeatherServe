@@ -142,6 +142,7 @@
       case 1: requestSensorData(); break;
       case 2: updateStats(); break;
       case 3: zigbeeTransmit(); break;
+      default: state=1; break;
     }
     
     if (counter > 24) {  // transition from state 2 -> 3 (24x2,5 = 60sec)

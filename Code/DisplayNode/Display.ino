@@ -70,6 +70,7 @@ void refreshDisplay() {
       break;
     case 6: CleO.StringExt(FONT_SANS_2, 272, 42, colors[9], MM, 0, 0, bufRainIntensity);
       break;
+    default: break;
   }
 
   /****************************************/
@@ -86,6 +87,7 @@ void refreshDisplay() {
       break;
     case 2: CleO.StringExt(FONT_TINY, 59, 143, colors2[3], MM, 0, 0, "Rising");
       break;
+    default: break;
   }
   
 
@@ -287,6 +289,7 @@ void refreshDisplay() {
     case 26: CleO.StringExt(FONT_TINY, mes2Cx, mes1Cy, GRAY, MM, 0, 0, "Stormy,");
             CleO.StringExt(FONT_TINY, mes2Cx, mes2Cy, GRAY, MM, 0, 0, "much rain (26)");
       break;
+    default: break;
   }
 
   /****************************************/
@@ -322,6 +325,7 @@ void refreshDisplay() {
         break;
       }
     break;
+    default: break;
   }
 
   /* Display completed screen frame */

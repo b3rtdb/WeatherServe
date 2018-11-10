@@ -26,6 +26,10 @@ void refreshIRQ() {
   if((timerCount%2) == 0)  {        // Check Xbee data every 1s
     checkXbeeRx = true;
   }
+
+  if((timerCount%10) == 0)  {        // Check WSNx online modus every 5s
+    checkWsn = true;
+  }
   
   if(timerCount == 120)  {          // Timer interrupt every 60 seconds  120 x 0,5s = 60s
     refreshData = true;

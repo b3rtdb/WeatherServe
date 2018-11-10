@@ -37,7 +37,7 @@
   /* System declarations                  */
   /****************************************/
   volatile unsigned int timerCount = 0; // used to determine 60sec timer count
-  volatile bool refreshData, checkXbeeRx; 
+  volatile bool refreshData, checkXbeeRx, checkWsn; 
   unsigned long currentMillis, lastupdateWSN1, lastupdateWSN2 = 0;           /* timer value when last measure update was done of WSNx */
   byte onlineFlagWSN1, onlineFlagWSN2 = 0;                                   /* 0 = undefined, 1 = offline, 2 = online */
   int year, month, day, hour, minute, seconds, DST = 0;
@@ -132,22 +132,27 @@ void loop() {
   /* Check Xbee Rx every 1s               */
   /****************************************/
   if(checkXbeeRx) {
-    getXbeeData();
     noInterrupts();
     checkXbeeRx = false;
     interrupts();
+    getXbeeData();
   }
 
   /****************************************/
   /* Check Online Status WSN1, WSN2       */
   /****************************************/
-  currentMillis = millis();
-  if ((unsigned long)(currentMillis - lastupdateWSN1) >= onlineRate ) {
-    onlineFlagWSN1 = 1;
-  }
+  if(checkWsn) {
+    noInterrupts();
+    checkWsn = false;
+    interrupts();
+    currentMillis = millis();
+    if ((unsigned long)(currentMillis - lastupdateWSN1) >= onlineRate ) {
+      onlineFlagWSN1 = 1;
+    }
    
-  if ((unsigned long)(currentMillis - lastupdateWSN2) >= onlineRate ) {
-    onlineFlagWSN2 = 1;
+    if ((unsigned long)(currentMillis - lastupdateWSN2) >= onlineRate ) {
+      onlineFlagWSN2 = 1;
+    }
   }
 
 
@@ -155,6 +160,9 @@ void loop() {
   /* Refresh values every minute (Timer3) */
   /****************************************/
   if (refreshData) {
+    noInterrupts();
+    refreshData = false;
+    interrupts();
     getTimeDate();
     calcTempHum();
     calcWind();
@@ -164,8 +172,5 @@ void loop() {
     calcSun();
     calcSunMoon();
     xbeeTx();
-    noInterrupts();
-    refreshData = false;
-    interrupts();
   }
 }
