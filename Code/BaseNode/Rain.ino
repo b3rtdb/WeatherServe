@@ -14,7 +14,7 @@ void calcRain() {
   for (byte i = 0; i<15; i++) {
     rainIntensityTicks += *(rainArray + i);           // The rainIntensity is always the sum of all the values in the rainArray (15 minutes), this sum is done by a for loop (0->14)
   }
-  rainIntensity = rainIntensityTicks*4*0.2;           // Recalculate the rain gauge ticks per 15 minutes to actual mm/hour (15min * 4 = 60min * 0,2mm/tick)
+  rainIntensity = rainIntensityTicks*0.8;             // Recalculate the rain gauge ticks per 15 minutes to actual mm/hour (15min * 4 = 60min * 0,2mm/tick)
 
   if (rainArrayCounter == 15) {                       // Every 15min the counter is reset. The values stay in the array and are overwritten --> running sum
     rainArrayCounter = 0;

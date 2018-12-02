@@ -15,7 +15,6 @@
   XBee xbee = XBee();
   XBeeResponse response = XBeeResponse();
   ZBRxResponse rx = ZBRxResponse();
-  ModemStatusResponse msr = ModemStatusResponse();
   
   // union to convert float to byte string
   union u_tag {

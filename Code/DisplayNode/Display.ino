@@ -47,12 +47,12 @@ void refreshDisplay() {
   /****************************************/
   /* Display Rain                         */
   /****************************************/
-  char bufRainDay[3];
-  dtostrf(totalRain24h, 4, 1, bufRainDay);
+  char bufRainDay[lengthOfFloat+1];
+  dtostrf(totalRain24h, lengthOfFloat, 1, bufRainDay);
   CleO.StringExt(FONT_SANS_2, 217, 42, colors2[6], MM, 0, 0, bufRainDay);
   
-  char bufRainIntensity[3];
-  dtostrf(rainIntensity, 4, 1, bufRainIntensity);
+  char bufRainIntensity[lengthOfFloat+1];
+  dtostrf(rainIntensity, lengthOfFloat, 1, bufRainIntensity);
   
 
   switch(RIR) {

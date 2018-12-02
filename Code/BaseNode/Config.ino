@@ -1,6 +1,4 @@
 void configDue() {
-  checkForRemoteSketchUpdate(); // needed to wireless load sketches
-
   pinMode(onboardLed, OUTPUT);
   digitalWrite(onboardLed, LOW);
 

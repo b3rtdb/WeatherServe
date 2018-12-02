@@ -12,10 +12,6 @@ void getXbeeData() {
         processData();
       }
     }
-    
-    else if (xbee.getResponse().getApiId() == MODEM_STATUS_RESPONSE) {
-      xbee.getResponse().getModemStatusResponse(msr);
-    }
   }
 }
 
@@ -172,7 +168,7 @@ void processData() {
   else if ((avgPm25_24h > 60) && (avgPm25_24h <= 70)) AQI25=8;
   else if (avgPm25_24h > 70) AQI25=9;
 
-  if (avgPm10_24h <= 10) AQI25=0;
+  if (avgPm10_24h <= 10) AQI10=0;
   else if ((avgPm10_24h > 10) && (avgPm10_24h <= 20)) AQI10=1;
   else if ((avgPm10_24h > 20) && (avgPm10_24h <= 30)) AQI10=2;
   else if ((avgPm10_24h > 30) && (avgPm10_24h <= 40)) AQI10=3;
@@ -190,11 +186,10 @@ void processData() {
   else if (uvIndex > 10.5) AQIuv=4;
 
   if (rainIntensity = 0) RIR=0; // none
-  else if ((rainIntensity > 0) && (rainIntensity < 0.25)) RIR=1; // very light
-  else if ((rainIntensity >= 0.25) && (rainIntensity < 1)) RIR=2; // light
-  else if ((rainIntensity >= 1) && (rainIntensity < 4)) RIR=3; // moderate
-  else if ((rainIntensity >= 4) && (rainIntensity < 16)) RIR=4; // heavy
-  else if ((rainIntensity >= 16) && (rainIntensity < 50)) RIR=5; // very heavy
-  else if (rainIntensity >= 50) RIR=6; // extreme
+  else if ((rainIntensity > 0) && (rainIntensity <= 0.25)) RIR=1; // very light
+  else if ((rainIntensity > 0.25) && (rainIntensity <= 1)) RIR=2; // light
+  else if ((rainIntensity > 1) && (rainIntensity <= 4)) RIR=3; // moderate
+  else if ((rainIntensity > 4) && (rainIntensity <= 16)) RIR=4; // heavy
+  else if ((rainIntensity > 16) && (rainIntensity <= 50)) RIR=5; // very heavy
+  else if (rainIntensity > 50) RIR=6; // extreme
 }
-
