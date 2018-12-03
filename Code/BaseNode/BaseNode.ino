@@ -127,9 +127,7 @@ void loop() {
   /* Check Xbee Rx every 1s               */
   /****************************************/
   if(checkXbeeRx) {
-    noInterrupts();
     checkXbeeRx = false;
-    interrupts();
     getXbeeData();
   }
 
@@ -137,9 +135,7 @@ void loop() {
   /* Check Online Status WSN1, WSN2       */
   /****************************************/
   if(checkWsn) {
-    noInterrupts();
     checkWsn = false;
-    interrupts();
     currentMillis = millis();
     if ((unsigned long)(currentMillis - lastupdateWSN1) >= onlineRate ) {
       onlineFlagWSN1 = 1;
@@ -155,9 +151,7 @@ void loop() {
   /* Refresh values every minute (Timer3) */
   /****************************************/
   if (refreshData) {
-    noInterrupts();
     refreshData = false;
-    interrupts();
     getTimeDate();
     calcTempHum();
     calcWind();
