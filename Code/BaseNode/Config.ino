@@ -1,7 +1,4 @@
 void configDue() {
-  pinMode(onboardLed, OUTPUT);
-  digitalWrite(onboardLed, LOW);
-
   Bridge.begin();
   
   Serial1.begin(9600);          // xBee
@@ -9,10 +6,6 @@ void configDue() {
 
   Timer3.attachInterrupt(refreshIRQ);
   Timer3.start(500000); // µs (0,5s)
-
-  noInterrupts();
-  refreshData = false;
-  interrupts();
 }
 
 /****************************************
@@ -57,22 +50,6 @@ void clearStatisticsMidnight() {
   pressure3hCounter = 0;
   pressureArrayCounter = 0;
   pmArrayCounter = 0;
-}
-
-/********************************************
- * Flash onboard led with pattern           *
- ********************************************/
-void flashLed(int pin, int times, int wait) {
-    
-    for (int i = 0; i < times; i++) {
-      digitalWrite(pin, HIGH);
-      delay(wait);
-      digitalWrite(pin, LOW);
-      
-      if (i + 1 < times) {
-        delay(wait);
-      }
-    }
 }
 
 /********************************************

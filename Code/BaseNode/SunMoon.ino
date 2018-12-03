@@ -27,7 +27,6 @@ void calcSunMoon() {
 /********************************************
  * Calculate Moonphase and moonage          *
  ********************************************/
-//ftp://ftp-archive.freebsd.org/pub/FreeBSD-Archive/old-releases/i386/1.0-RELEASE/ports/xview/calentool2_2X/moon.c
 void calcMoonPhase(double pdate) {
 
   double  Day, N, M, Ec, Lambdasun, ml, MM, MN, Ev, Ae, A3, MmP,

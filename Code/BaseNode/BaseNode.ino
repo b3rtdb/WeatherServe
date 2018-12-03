@@ -11,14 +11,10 @@
   /* Xbee Declarations                    */
   /****************************************/ 
   XBee xbee = XBee();
-  XBeeResponse response = XBeeResponse();
   ZBRxResponse rx = ZBRxResponse();
-  ModemStatusResponse msr = ModemStatusResponse();
-
-  uint8_t payloadXbee[76];                                                    /* array of length 74, 0-73, to broadcast all values */
+  uint8_t payload[76];                                                    /* array of length 74, 0-73, to broadcast all values */
   XBeeAddress64 addr64 = XBeeAddress64(0x0013A200, 0x40A9C935);               /* SH + SL Address of receiving XBee = CLEO  // BROADCAST ADDRESS (0x00000000, 0x0000FFFF) */
-  ZBTxRequest zbTx = ZBTxRequest(addr64, payloadXbee, sizeof(payloadXbee));
-  ZBTxStatusResponse txStatus = ZBTxStatusResponse();
+  ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
 
   int arrayOffsetRX, arrayOffsetTX = 0;
   byte errorWSN1, errorWSN2 = 0B00000000;
@@ -37,11 +33,10 @@
   /* System declarations                  */
   /****************************************/
   volatile unsigned int timerCount = 0; // used to determine 60sec timer count
-  volatile bool refreshData, checkXbeeRx, checkWsn; 
+  volatile bool refreshData, checkXbeeRx, checkWsn = false; 
   unsigned long currentMillis, lastupdateWSN1, lastupdateWSN2 = 0;           /* timer value when last measure update was done of WSNx */
   byte onlineFlagWSN1, onlineFlagWSN2 = 0;                                   /* 0 = undefined, 1 = offline, 2 = online */
   int year, month, day, hour, minute, seconds, DST = 0;
-  #define onboardLed 13
   Process date;
 
 /****************************************/
