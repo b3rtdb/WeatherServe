@@ -161,5 +161,6 @@ void loop() {
     calcSun();
     calcSunMoon();
     xbeeTx();
+    postToInflux();
   }
 }
