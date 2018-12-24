@@ -10,7 +10,6 @@ void postToInflux() {
   cmd += "RHAir value=" + String(RHAir) + "\n";
   cmd += "apparentT value=" + String(apparentT) + "\n";
   cmd += "dewPoint value=" + String(dewPoint) + "\n";
-  cmd += "windRunKm value=" + String(windRunKm) + "\n";
   cmd += "sunHoursDec value=" + String(sunHoursDec) + "\n";
   cmd += "windSpeed value=" + String(windSpeed) + "\n";
   cmd += "windDir value=" + String(windDir) + "\n";
