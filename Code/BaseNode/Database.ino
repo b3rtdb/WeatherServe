@@ -23,10 +23,9 @@ void postToInflux() {
   cmd += "totalRain24h value=" + String(totalRain24h) + "\n";
   cmd += "solarRad value=" + String(solarRad) + "\n";
   cmd += "uvIndex value=" + String(uvIndex) + "\n";
+  cmd += "ClearSkyRad value=" + String(Csr) + "\n";
   cmd += "windGustRec value=" + String(windGustRec) + "\n";
-  cmd += "ETday value=" + String(ETday) + "\n";
-  cmd += "onlineFlagWSN1 value=" + String(onlineFlagWSN1) + "\n";
-  cmd += "onlineFlagWSN2 value=" + String(onlineFlagWSN2) + "'";
+  cmd += "ETday value=" + String(ETday) + "'";
   p.runShellCommand(cmd);
   p.close();
 }
