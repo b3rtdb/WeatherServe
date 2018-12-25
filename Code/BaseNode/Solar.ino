@@ -35,6 +35,7 @@ double calcClearSkyRad() {
   t *= 60;
   t += minute;
   t -= sunOffset;
+  if(DST == 0) t += 60; // correction for summer/winter time
   t /= 60;
   int J = calculateDayOfYear();
   double phi_rad = PI/180.0 * latitude;
