@@ -148,6 +148,7 @@ void calcET() {
     // Hour Angle, STEP 14
     double t = hour;
     t -= ((double)sunOffset/60.0);
+    if(DST == 0) t += 1; // correction for summer/winter time
     t -= 0.5;  // solar angle at midpoint of the hourly angle
     double w = calc_omega(t, J);
     double w1 = w - (PI/24);

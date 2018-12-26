@@ -83,8 +83,11 @@ void getNode2Data() {
   float floatValue = 0;
 
   b2f();
-  floatValue = u.fval;
-  pressure = (unsigned long)((floatValue*100)+pressCorrection);  // Pressure at pos 1
+  floatValue = u.fval;        // Pressure at pos 1
+  signed long tempPress = ((floatValue*100)+pressCorrection)-(signed long)pressure; 
+  if(abs(tempPress)< 30) {
+    pressure = (unsigned long)((floatValue*100)+pressCorrection);
+  }
   
   b2f();
   floatValue = u.fval;
