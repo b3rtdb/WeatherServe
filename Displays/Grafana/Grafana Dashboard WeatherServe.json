@@ -110,6 +110,7 @@
           "fill": 0,
           "legend": true,
           "lines": true,
+          "linewidth": 2,
           "yaxis": 2
         },
         {
@@ -456,7 +457,7 @@
       "decimals": null,
       "fill": 1,
       "gridPos": {
-        "h": 9,
+        "h": 10,
         "w": 12,
         "x": 0,
         "y": 9
@@ -722,7 +723,7 @@
       "decimals": 1,
       "fill": 1,
       "gridPos": {
-        "h": 9,
+        "h": 10,
         "w": 12,
         "x": 12,
         "y": 9
@@ -960,7 +961,7 @@
           "label": "W/m²",
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -990,7 +991,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 18
+        "y": 19
       },
       "id": 8,
       "legend": {
@@ -1204,7 +1205,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 18
+        "y": 19
       },
       "id": 25,
       "legend": {
@@ -1494,5 +1495,5 @@
   "timezone": "browser",
   "title": "WeatherServe",
   "uid": "bQ1eNJZgz",
-  "version": 119
+  "version": 122
 }

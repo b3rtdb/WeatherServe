@@ -130,8 +130,8 @@ void refreshDisplay() {
   /****************************************/
   char bufsunShine[lengthOfFloat+1];
   dtostrf(sunHoursDec, lengthOfFloat, 1, bufsunShine);
-  CleO.StringExt(FONT_TINY, 260, 305, colors2[7], MM, 0, 0, bufsunShine);
-  CleO.StringExt(FONT_TINY, 280, 305, colors2[7], MM, 0, 0, "h");
+  CleO.StringExt(FONT_TINY, 260, bottomCy, colors2[7], MM, 0, 0, bufsunShine);
+  CleO.StringExt(FONT_TINY, 276, bottomCy, colors2[7], MM, 0, 0, "h");
 
   /****************************************/
   /* Display Sunrise & Sunset times       */
@@ -144,58 +144,35 @@ void refreshDisplay() {
    dtostrf(mRising, lengthOfFloat, 0, bufMRising);
    char bufMSetting[lengthOfFloat+1];
    dtostrf(mSetting, lengthOfFloat, 0, bufMSetting);
-   CleO.StringExt(FONT_TINY, 299, 305, colors2[11], MM, 0, 0, bufHRising);
-   CleO.StringExt(FONT_TINY, 304, 305, colors2[11], MM, 0, 0, ":");
+   CleO.StringExt(FONT_TINY, 304, bottomCy, colors2[11], MR, 0, 0, bufHRising);
+   CleO.StringExt(FONT_TINY, 306, bottomCy, colors2[11], MM, 0, 0, ":");
    if(mRising < 10) {
-    CleO.StringExt(FONT_TINY, 309, 305, colors2[11], ML, 0, 0, "0");
-    CleO.StringExt(FONT_TINY, 324, 305, colors2[11], MM, 0, 0, bufMRising);
+    CleO.StringExt(FONT_TINY, 310, bottomCy, colors2[11], ML, 0, 0, "0");
+    CleO.StringExt(FONT_TINY, 317, bottomCy, colors2[11], ML, 0, 0, bufMRising);
    }
    else {
-    CleO.StringExt(FONT_TINY, 321, 305, colors2[11], MM, 0, 0, bufMRising);
+    CleO.StringExt(FONT_TINY, 310, bottomCy, colors2[11], ML, 0, 0, bufMRising);
    }
 
-   CleO.StringExt(FONT_TINY, 344, 305, colors2[11], MM, 0, 0, bufHSetting);
-   CleO.StringExt(FONT_TINY, 352, 305, colors2[11], MM, 0, 0, ":");
+   CleO.StringExt(FONT_TINY, 349, bottomCy, colors2[11], MR, 0, 0, bufHSetting);
+   CleO.StringExt(FONT_TINY, 351, bottomCy, colors2[11], MM, 0, 0, ":");
    if(mSetting < 10) {
-    CleO.StringExt(FONT_TINY, 358, 305, colors2[11], ML, 0, 0, "0");
-    CleO.StringExt(FONT_TINY, 373, 305, colors2[11], MM, 0, 0, bufMSetting);
+    CleO.StringExt(FONT_TINY, 355, bottomCy, colors2[11], ML, 0, 0, "0");
+    CleO.StringExt(FONT_TINY, 362, bottomCy, colors2[11], ML, 0, 0, bufMSetting);
    }
    else {
-    CleO.StringExt(FONT_TINY, 365, 305, colors2[11], MM, 0, 0, bufMSetting);
+    CleO.StringExt(FONT_TINY, 355, bottomCy, colors2[11], ML, 0, 0, bufMSetting);
    }
    
-
 
   /****************************************/
   /* Display Moon Illumination            */
   /****************************************/
   char bufmoonPhase[lengthOfFloat+1];
   dtostrf(moonPhase, lengthOfFloat, 0, bufmoonPhase);
-  CleO.StringExt(FONT_TINY, 215, 305, colors2[10], MM, 0, 0, bufmoonPhase);
-  CleO.StringExt(FONT_TINY, 232, 305, colors2[10], MM, 0, 0, "%");
+  CleO.StringExt(FONT_TINY, 218, bottomCy, colors2[10], MM, 0, 0, bufmoonPhase);
+  CleO.StringExt(FONT_TINY, 231, bottomCy, colors2[10], MM, 0, 0, "%");
 
-  /****************************************/
-  /* Display Error of WSN nodes           */
-  /****************************************/
-  char bufError1[lengthOfFloat+1];
-  dtostrf(errorWSN1, lengthOfFloat, 0, bufError1);
-  char bufError2[lengthOfFloat+1];
-  dtostrf(errorWSN2, lengthOfFloat, 0, bufError2);
-
-  CleO.StringExt(FONT_TINY, 35, mes3Cy, GRAY, ML, 0, 0, "Error WSN1:");
-  CleO.StringExt(FONT_TINY, 128, mes3Cy, GRAY, ML, 0, 0, ",WSN2:");
-  if(errorWSN1 == 0) {
-    CleO.StringExt(FONT_TINY, 120, mes3Cy, GREEN, MM, 0, 0, bufError1);
-  }
-  else {
-    CleO.StringExt(FONT_TINY, 120, mes3Cy, RED, MM, 0, 0, bufError1);
-  }
-  if(errorWSN2 == 0) {
-    CleO.StringExt(FONT_TINY, 182, mes3Cy, GREEN, MM, 0, 0, bufError2);
-  }
-  else {
-    CleO.StringExt(FONT_TINY, 182, mes3Cy, RED, MM, 0, 0, bufError2);
-  }
 
   /****************************************/
   /* Display Prediction                   */
@@ -282,36 +259,56 @@ void refreshDisplay() {
   /****************************************/
   /* Display Wireless Node Status         */
   /****************************************/
+  char bufError1[lengthOfFloat+1];
+  dtostrf(errorWSN1, lengthOfFloat, 0, bufError1);
+  char bufError2[lengthOfFloat+1];
+  dtostrf(errorWSN2, lengthOfFloat, 0, bufError2);
+
+  CleO.StringExt(FONT_TINY, 35, mes3Cy, GRAY, ML, 0, 0, "Error WSN1:");
+  CleO.StringExt(FONT_TINY, 128, mes3Cy, GRAY, ML, 0, 0, ",WSN2:");
+  
   switch(onlineFlagDue) {
     case 0:
-      CleO.StringExt(FONT_TINY, 340, 260, GRAY, MM, 0, 0, "1");
-      CleO.StringExt(FONT_TINY, 355, 260, GRAY, MM, 0, 0, "2");
+      CleO.StringExt(FONT_TINY, err1Cx, mes3Cy, GRAY, MM, 0, 0, bufError1);
+      CleO.StringExt(FONT_TINY, err2Cx, mes3Cy, GRAY, MM, 0, 0, bufError2);
     break;
 
     case 1:
-      CleO.StringExt(FONT_TINY, 340, 260, YELLOW, MM, 0, 0, "1");
-      CleO.StringExt(FONT_TINY, 355, 260, YELLOW, MM, 0, 0, "2");
+      CleO.StringExt(FONT_TINY, err1Cx, mes3Cy, YELLOW, MM, 0, 0, bufError1);
+      CleO.StringExt(FONT_TINY, err2Cx, mes3Cy, YELLOW, MM, 0, 0, bufError2);
     break;
 
     case 2:
       switch(onlineFlagWSN1) {
-        case 0: CleO.StringExt(FONT_TINY, 340, 260, GRAY, MM, 0, 0, "1");
+        case 1:
+          CleO.StringExt(FONT_TINY, err1Cx, mes3Cy, RED, MM, 0, 0, "X");
         break;
-        case 1: CleO.StringExt(FONT_TINY, 340, 260, RED, MM, 0, 0, "1");
-        break;
-        case 2: CleO.StringExt(FONT_TINY, 340, 260, GREEN, MM, 0, 0, "1");
+
+        case 2:
+          if(errorWSN1 == 0) {
+            CleO.StringExt(FONT_TINY, err1Cx, mes3Cy, GREEN, MM, 0, 0, bufError1);
+          }
+          else {
+            CleO.StringExt(FONT_TINY, err1Cx, mes3Cy, RED, MM, 0, 0, bufError1);
+          }
         break;
       }
-
       switch(onlineFlagWSN2) {
-        case 0: CleO.StringExt(FONT_TINY, 355, 260, GRAY, MM, 0, 0, "2");
+        case 1:
+          CleO.StringExt(FONT_TINY, err2Cx, mes3Cy, RED, MM, 0, 0, "X");
         break;
-        case 1: CleO.StringExt(FONT_TINY, 355, 260, RED, MM, 0, 0, "2");
-        break;
-        case 2: CleO.StringExt(FONT_TINY, 355, 260, GREEN, MM, 0, 0, "2");
+
+        case 2:
+          if(errorWSN2 == 0) {
+            CleO.StringExt(FONT_TINY, err2Cx, mes3Cy, GREEN, MM, 0, 0, bufError2);
+          }
+          else {
+            CleO.StringExt(FONT_TINY, err2Cx, mes3Cy, RED, MM, 0, 0, bufError2);
+          }
         break;
       }
     break;
+    
     default: break;
   }
 
