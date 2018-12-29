@@ -13,7 +13,6 @@
   }
   
   void initStats() {
-    lightningDetected = 0;
     pressureStats.clear();
     PM01Stats.clear();
     PM2_5Stats.clear();

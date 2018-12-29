@@ -4,40 +4,9 @@
   void requestSensorData() {  
     pressure = lps25hb.readPressure();
     AirqualityRead();
-    mainRoutineAS3935();
     
     state = 2;   // goto state 2
     statsUpdated = 0;
-  }
-
-
-  /****************************************/
-  /* Main routine for AS3935              */
-  /****************************************/
-  void mainRoutineAS3935() {
-    if(AS3935IrqTriggered) {
-      AS3935IrqTriggered = 0;
-      delay(2);
-      int irqSource = AS3935.interruptSource();
-      if (irqSource & 0b0001) error = error | B00001000;   // Noise level too high, try adjusting noise floor
-      if (irqSource & 0b0100) error = error | B00010000;   // Disturber detected
-      if (irqSource & 0b1000) {                            // Lightning
-        lightningDetected=1;
-        error = error & B11100111;
-        strokeDistance = AS3935.lightningDistanceKm();
-      }
-    }
-    else {
-      error = error & B11100111;
-      strokeDistance = 0;
-    }
-  }
-
-  /****************************************/
-  /* Interrupt routine for AS3935         */
-  /****************************************/
-  void AS3935Irq() {
-    AS3935IrqTriggered = 1;
   }
 
   /****************************************/

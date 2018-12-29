@@ -16,12 +16,8 @@
     f2b();      // avgPM2_5 pos 9-12
     u.fval = avgPM10;
     f2b();      // avgPM10 pos 13-16
-    u.fval = strokeDistance;
-    f2b();      // Strokedistance Lightning pos 17-20
-    
-    payload[arrayOffset] = lightningDetected;       // this is a byte (pos 21)
-    arrayOffset++;
-    payload[arrayOffset] = error;                   // this is a byte (pos 22)
+
+    payload[arrayOffset] = error;                   // this is a byte (pos 17)
     
     xbee.send(zbTx);
     checkTxErrors();

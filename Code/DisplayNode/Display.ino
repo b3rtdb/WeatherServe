@@ -126,25 +126,12 @@ void refreshDisplay() {
   CleO.StringExt(FONT_SANS_2, 140, 150, colors2[1], MM, 0, 0, bufWindRun);
 
   /****************************************/
-  /* Display Lightning                    */
-  /****************************************/
-  if (lightningDetected == 1) {
-   char bufLightning[lengthOfFloat+1];
-   dtostrf(lightningDistance, lengthOfFloat, 0, bufLightning);
-   CleO.StringExt(FONT_SANS_2, 265, 305, colors2[7], MM, 0, 0, bufLightning);
-   CleO.StringExt(FONT_TINY, 280, 305, colors2[7], MM, 0, 0, "km");
-  }
-  else {
-   CleO.StringExt(FONT_TINY, 273, 305, colors2[8], MM, 0, 0, "NO");
-  }
-
-  /****************************************/
   /* Display Sunshine Hours               */
   /****************************************/
   char bufsunShine[lengthOfFloat+1];
   dtostrf(sunHoursDec, lengthOfFloat, 1, bufsunShine);
-  CleO.StringExt(FONT_TINY, 225, 255, colors2[7], MM, 0, 0, bufsunShine);
-  CleO.StringExt(FONT_TINY, 245, 255, colors2[7], MM, 0, 0, "h");
+  CleO.StringExt(FONT_TINY, 260, 305, colors2[7], MM, 0, 0, bufsunShine);
+  CleO.StringExt(FONT_TINY, 280, 305, colors2[7], MM, 0, 0, "h");
 
   /****************************************/
   /* Display Sunrise & Sunset times       */
@@ -157,18 +144,18 @@ void refreshDisplay() {
    dtostrf(mRising, lengthOfFloat, 0, bufMRising);
    char bufMSetting[lengthOfFloat+1];
    dtostrf(mSetting, lengthOfFloat, 0, bufMSetting);
-   CleO.StringExt(FONT_TINY, 304, 305, colors2[11], MM, 0, 0, bufHRising);
-   CleO.StringExt(FONT_TINY, 309, 305, colors2[11], MM, 0, 0, ":");
+   CleO.StringExt(FONT_TINY, 299, 305, colors2[11], MM, 0, 0, bufHRising);
+   CleO.StringExt(FONT_TINY, 304, 305, colors2[11], MM, 0, 0, ":");
    if(mRising < 10) {
-    CleO.StringExt(FONT_TINY, 314, 305, colors2[11], ML, 0, 0, "0");
-    CleO.StringExt(FONT_TINY, 329, 305, colors2[11], MM, 0, 0, bufMRising);
+    CleO.StringExt(FONT_TINY, 309, 305, colors2[11], ML, 0, 0, "0");
+    CleO.StringExt(FONT_TINY, 324, 305, colors2[11], MM, 0, 0, bufMRising);
    }
    else {
     CleO.StringExt(FONT_TINY, 321, 305, colors2[11], MM, 0, 0, bufMRising);
    }
 
    CleO.StringExt(FONT_TINY, 344, 305, colors2[11], MM, 0, 0, bufHSetting);
-   CleO.StringExt(FONT_TINY, 354, 305, colors2[11], MM, 0, 0, ":");
+   CleO.StringExt(FONT_TINY, 352, 305, colors2[11], MM, 0, 0, ":");
    if(mSetting < 10) {
     CleO.StringExt(FONT_TINY, 358, 305, colors2[11], ML, 0, 0, "0");
     CleO.StringExt(FONT_TINY, 373, 305, colors2[11], MM, 0, 0, bufMSetting);
@@ -184,8 +171,8 @@ void refreshDisplay() {
   /****************************************/
   char bufmoonPhase[lengthOfFloat+1];
   dtostrf(moonPhase, lengthOfFloat, 0, bufmoonPhase);
-  CleO.StringExt(FONT_TINY, 220, 305, colors2[10], MM, 0, 0, bufmoonPhase);
-  CleO.StringExt(FONT_TINY, 240, 305, colors2[10], MM, 0, 0, "%");
+  CleO.StringExt(FONT_TINY, 215, 305, colors2[10], MM, 0, 0, bufmoonPhase);
+  CleO.StringExt(FONT_TINY, 232, 305, colors2[10], MM, 0, 0, "%");
 
   /****************************************/
   /* Display Error of WSN nodes           */

@@ -25,7 +25,7 @@
   /****************************************/
   /* Variable declarations                */
   /****************************************/ 
-  byte nodeIdent, lightningDetected, arrayOffset, AQI10, AQI25, AQIuv, RIR, zambrettiNumber, moonPhaseNumber, moonPhase, hRising, hSetting, mRising, mSetting, trend, lightningDistance, errorWSN1, errorWSN2 = 0;
+  byte nodeIdent, arrayOffset, AQI10, AQI25, AQIuv, RIR, zambrettiNumber, moonPhaseNumber, moonPhase, hRising, hSetting, mRising, mSetting, trend, errorWSN1, errorWSN2 = 0;
   float floatStore, tempAir, RHAir, RHGnd, windSpeed, windDir, pressure, tempFeelslike, solarRad, minTempAir, maxTempAir, maxWindSpeed, avgWindDir, avgPm10_24h, avgPm25_24h, totalRain24h, rainIntensity, uvIndex, ETday, windRunKm, sunHoursDec= 0.0;
   double moonAge = 0;
   int intStore = 0;

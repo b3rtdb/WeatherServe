@@ -12,8 +12,8 @@
   /****************************************/ 
   XBee xbee = XBee();
   ZBRxResponse rx = ZBRxResponse();
-  uint8_t payload[76];                                                    /* array of length 74, 0-73, to broadcast all values */
-  XBeeAddress64 addr64 = XBeeAddress64(0x0013A200, 0x40A9C935);               /* SH + SL Address of receiving XBee = CLEO  // BROADCAST ADDRESS (0x00000000, 0x0000FFFF) */
+  uint8_t payload[74];                                                    /* array of length 74, 0-73, to broadcast all values */
+  XBeeAddress64 addr64 = XBeeAddress64(0x00000000, 0x0000FFFF);           /* BROADCAST ADDRESS (0x00000000, 0x0000FFFF) */
   ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
 
   int arrayOffsetRX, arrayOffsetTX = 0;

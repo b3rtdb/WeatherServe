@@ -1,6 +1,3 @@
-#include <Wire.h>
-#include <SPI.h>
-#include <AS3935.h>
 #include <XBee.h>
 #include <Statistic.h>
 #include <ClosedCube_LPS25HB.h>
@@ -23,25 +20,12 @@
   int PM10Value=0;          //define PM10 value of the air detector module
 
   /****************************************/
-  /* Declarations for AS3935              */
-  /****************************************/
-  void printAS3935Registers();
-  byte SPItransfer(byte sendByte);
-  void AS3935Irq();
-  volatile int AS3935IrqTriggered;
-  #define IRQpin 2
-  #define CSpin 48
-  AS3935 AS3935(SPItransfer,CSpin,IRQpin);
-  int strokeDistance=0;
-  byte lightningDetected=0;
-
-  /****************************************/
   /* Zigbee declarations                  */
   /****************************************/  
   XBee xbee = XBee();
   byte arrayOffset = 1;              // used to shift values in the Tx array, start with 1 cause of the node ident 2
   
-  uint8_t payload[23];               // array of length 22, 0-22, to send the sensor values as a nmea string
+  uint8_t payload[18];               // array of length 18, 0-17, to send the sensor values as a nmea string
   // SH + SL Address of receiving XBee (Coordinator)
   XBeeAddress64 addr64 = XBeeAddress64(0x0013a200, 0x40f748cb);
   ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));

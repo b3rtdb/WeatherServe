@@ -87,59 +87,53 @@ void getDueData() {                        // Due status pos 0
     avgPm10_24h = floatStore;          // avg PM10 at pos 43-46
     arrayOffset+= 4;
 
-    lightningDetected = rx.getData(arrayOffset);       // Lightning Detected 1/0 pos 47
-    arrayOffset++;
-
-    lightningDetected = rx.getData(arrayOffset);       // Lightning Distance at pos 48
-    arrayOffset++;
-
     b2f();
     floatStore = u.fval;
-    rainIntensity = floatStore;             // Rain Intensity at pos 49-52
+    rainIntensity = floatStore;             // Rain Intensity at pos 47-50
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    totalRain24h = floatStore;              // Total Rain Today at pos 53-56
+    totalRain24h = floatStore;              // Total Rain Today at pos 51-54
     arrayOffset+= 4;
 
     b2f();
     floatStore = u.fval;
-    tempFeelslike = floatStore;             // feelslike temp at pos 57-60
+    tempFeelslike = floatStore;             // feelslike temp at pos 55-58
     arrayOffset+= 4;
 
     b2f();
     floatStore = u.fval;
-    solarRad = floatStore;                  // Solar Rad at pos 61-64
+    solarRad = floatStore;                  // Solar Rad at pos 59-62
     arrayOffset+= 4;
 
-    uvIndex = rx.getData(arrayOffset);          // uvIndex at pos 65
+    uvIndex = rx.getData(arrayOffset);          // uvIndex at pos 63
     uvIndex /= 10;
     arrayOffset++;
 
-    zambrettiNumber = rx.getData(arrayOffset);  // Zambretti Forecast Number pos 66
+    zambrettiNumber = rx.getData(arrayOffset);  // Zambretti Forecast Number pos 64
     arrayOffset++;
     
-    moonPhase = rx.getData(arrayOffset);        // Moon phase (illuminated) pos 67
+    moonPhase = rx.getData(arrayOffset);        // Moon phase (illuminated) pos 65
     arrayOffset++;
 
-    moonPhaseNumber = rx.getData(arrayOffset);  // Moon phase number pos 68
+    moonPhaseNumber = rx.getData(arrayOffset);  // Moon phase number pos 66
     arrayOffset++;
     
-    hRising = rx.getData(arrayOffset);       // sunrise hour pos 69
+    hRising = rx.getData(arrayOffset);       // sunrise hour pos 67
     arrayOffset++;
-    mRising = rx.getData(arrayOffset);       // sunrise minute pos 70
+    mRising = rx.getData(arrayOffset);       // sunrise minute pos 68
     arrayOffset++;
-    hSetting = rx.getData(arrayOffset);      // sunset hour pos 71
+    hSetting = rx.getData(arrayOffset);      // sunset hour pos 69
     arrayOffset++;
-    mSetting = rx.getData(arrayOffset);      // sunset minute pos 72
+    mSetting = rx.getData(arrayOffset);      // sunset minute pos 70
     arrayOffset++;
-    trend = rx.getData(arrayOffset);         // air pressure trend pos 73
+    trend = rx.getData(arrayOffset);         // air pressure trend pos 71
     
     arrayOffset++;
-    errorWSN1 = rx.getData(arrayOffset);     // Error byte of WSN1 pos 74
+    errorWSN1 = rx.getData(arrayOffset);     // Error byte of WSN1 pos 72
     arrayOffset++;
-    errorWSN2 = rx.getData(arrayOffset);     // Error byte of WSN2 pos 75
+    errorWSN2 = rx.getData(arrayOffset);     // Error byte of WSN2 pos 73
 }
 
 

@@ -162,49 +162,44 @@ void xbeeTx() {     // max payload without fragmentation is 84 bytes
   u.fval = avgPm25_24h;
   f2b();                    // Particulate Matter 2,5 pos 39-42
   u.fval = avgPm10_24h;
-  f2b();                    // Particulate Matter 10 pos 43-46
-  
-  payload[arrayOffsetTX] = lightningDetected;   // Lightning Detected pos 47
-  arrayOffsetTX++;
-  payload[arrayOffsetTX] = lightningDistance;   // Lightning Distance pos 48
-  arrayOffsetTX++;                              
+  f2b();                    // Particulate Matter 10 pos 43-46                            
 
   u.fval = rainIntensity;
-  f2b();                  // Rain Intensity pos 49-52
+  f2b();                    // Rain Intensity pos 47-50
   u.fval = totalRain24h;
-  f2b();                  // Total Rain Today pos 53-56
+  f2b();                    // Total Rain Today pos 51-54
 
   u.fval = apparentT;
-  f2b();                  // Apparent Temperature pos 57-60
+  f2b();                    // Apparent Temperature pos 55-58
   u.fval = solarRad;
-  f2b();                  // Solar Radiation pos 61-64
-  payload[arrayOffsetTX] = (byte)(avgUV10m*10);   // uvIndex pos 65
+  f2b();                    // Solar Radiation pos 59-62
+  payload[arrayOffsetTX] = (byte)(avgUV10m*10);   // uvIndex pos 63
   arrayOffsetTX++;
 
-  payload[arrayOffsetTX] = zambrettiNumber;       // Zambretti Forecast Number pos 66
+  payload[arrayOffsetTX] = zambrettiNumber;       // Zambretti Forecast Number pos 64
   arrayOffsetTX++;
   
-  payload[arrayOffsetTX] = (byte)(moonPhase*100); // Moon phase (illuminated) pos 67
+  payload[arrayOffsetTX] = (byte)(moonPhase*100); // Moon phase (illuminated) pos 65
   arrayOffsetTX++;
   
   payload[arrayOffsetTX] = moonPhaseNumber;
-  arrayOffsetTX++;                          // Moon phase number to determine phase pos 68
+  arrayOffsetTX++;                          // Moon phase number to determine phase pos 66
   
-  payload[arrayOffsetTX] = (byte)hRising;   // sunrise hour pos 69
+  payload[arrayOffsetTX] = (byte)hRising;   // sunrise hour pos 67
   arrayOffsetTX++;
-  payload[arrayOffsetTX] = (byte)mRising;   // sunrise minute pos 70
+  payload[arrayOffsetTX] = (byte)mRising;   // sunrise minute pos 68
   arrayOffsetTX++;
-  payload[arrayOffsetTX] = (byte)hSetting;  // sunset hour pos 71
+  payload[arrayOffsetTX] = (byte)hSetting;  // sunset hour pos 69
   arrayOffsetTX++;
-  payload[arrayOffsetTX] = (byte)mSetting;  // sunset minute pos 72
+  payload[arrayOffsetTX] = (byte)mSetting;  // sunset minute pos 70
   arrayOffsetTX++;
   
-  payload[arrayOffsetTX] = trend;           // air pressure trend pos 73
+  payload[arrayOffsetTX] = trend;           // air pressure trend pos 71
 
   arrayOffsetTX++;
-  payload[arrayOffsetTX] = errorWSN1;       // Error byte of WSN1 pos 74
+  payload[arrayOffsetTX] = errorWSN1;       // Error byte of WSN1 pos 72
   arrayOffsetTX++;
-  payload[arrayOffsetTX] = errorWSN2;       // Error byte of WSN1 pos 75
+  payload[arrayOffsetTX] = errorWSN2;       // Error byte of WSN1 pos 73
 
   xbee.send(zbTx);
 }
