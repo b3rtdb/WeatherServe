@@ -19,7 +19,7 @@
   int arrayOffsetRX, arrayOffsetTX = 0;
   byte errorWSN1, errorWSN2 = 0B00000000;
     /* errorWSN1: 1 = SHT Error, 2 = Fan current Error, 3 = Fan voltage Error */
-    /* errorWSN2: 1 = LPS25HB Error, 2 = PMSensor Error, 4 = AS3935 Tuning NOK, 8 = AS3935 Noise level too high, 16 = AS3935 Disturber detected */
+    /* errorWSN2: 1 = LPS25HB Error, 2 = PMSensor Error */
 
   
   // union to convert float to byte string

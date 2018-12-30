@@ -25,7 +25,7 @@
   XBee xbee = XBee();
   byte arrayOffset = 1;              // used to shift values in the Tx array, start with 1 cause of the node ident 2
   
-  uint8_t payload[18];               // array of length 18, 0-17, to send the sensor values as a nmea string
+  uint8_t payload[18];               // array of length 18, 0-17
   // SH + SL Address of receiving XBee (Coordinator)
   XBeeAddress64 addr64 = XBeeAddress64(0x0013a200, 0x40f748cb);
   ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
@@ -58,7 +58,7 @@
   byte counter = 0;
   volatile byte state = 0;
   volatile unsigned int timerCount = 0; // used to determine 2.5sec timer count
-  byte error = B00000000;               // 1 = LPS25HB error, 2 = PMSensor Error, 4= AS3935 Tuning NOK, 8 = AS3935 Noise level too high, 16 = AS3935 Disturber detected
+  byte error = B00000000;               // 1 = LPS25HB error, 2 = PMSensor Error
 
 /**********************************************************************
  *
