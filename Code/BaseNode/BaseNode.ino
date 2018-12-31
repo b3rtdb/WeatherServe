@@ -13,7 +13,7 @@
   XBee xbee = XBee();
   ZBRxResponse rx = ZBRxResponse();
   uint8_t payload[74];                                                    /* array of length 74, 0-73, to broadcast all values */
-  XBeeAddress64 addr64 = XBeeAddress64(0x00000000, 0x0000FFFF);           /* BROADCAST ADDRESS (0x00000000, 0x0000FFFF) */
+  XBeeAddress64 addr64 = XBeeAddress64(0x0013A200, 0x40A9C935);           /* BROADCAST ADDRESS (0x00000000, 0x0000FFFF) */
   ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
 
   int arrayOffsetRX, arrayOffsetTX = 0;
@@ -38,6 +38,8 @@
   byte onlineFlagWSN1, onlineFlagWSN2 = 0;                                   /* 0 = undefined, 1 = offline, 2 = online */
   int year, month, day, hour, minute, seconds, DST = 0;
   Process date;
+  String localdb = "curl -i -XPOST 'http://10.69.20.25:8086/write?db=WeatherServe&precision=s' --data-binary ";
+  String remotedb = "curl -i -XPOST 'https://corlysis.com:8086/write?db=WeatherServe' -u token:d639197c7aa51d7bd803d62f7b15e46a --data-binary ";
 
 /****************************************/
 /*                                      */
