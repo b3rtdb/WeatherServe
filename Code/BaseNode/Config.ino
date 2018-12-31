@@ -4,6 +4,9 @@ void configDue() {
   Serial1.begin(9600);          // xBee
   xbee.begin(Serial1);
 
+  getTimeDate();
+  calcSunMoon();
+
   Timer3.attachInterrupt(refreshIRQ);
   Timer3.start(500000); // µs (0,5s)
 }
@@ -70,8 +73,6 @@ void getTimeDate() {
   hour = runTimeCommand(command);
   command = "+%M";
   minute = runTimeCommand(command);
-  command = "+%S";
-  seconds = runTimeCommand(command);
   command = "+%z";
   summerWinter = runTimeCommand(command);
   if(summerWinter == 200){  // the return value is 0100 for winter (UTC+1) and 0200 for summer (UTC+2)
@@ -81,6 +82,7 @@ void getTimeDate() {
   
   if(prevDay != day){
       clearStatisticsMidnight();
+      calcSunMoon();
     }
 }
 

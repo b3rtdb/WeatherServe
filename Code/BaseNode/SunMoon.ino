@@ -7,19 +7,14 @@ void calcSunMoon() {
   mSetting = (int)calcSunsetUTC(JD, latitude, longitude);
   mSetting += sunOffset;
   mSetting += (DST*60);
-  mDaylength = mSetting;
   hSetting = mSetting/60;
   mSetting -= (hSetting*60);
   
   mRising = (int)calcSunriseUTC(JD, latitude, longitude);
   mRising += sunOffset;
   mRising += (DST*60);
-  mDaylength -= mRising;
   hRising = mRising/60;
   mRising -= (hRising*60);
-
-  hDaylength = mDaylength/60;
-  mDaylength -= (hDaylength*60);
 
   calcMoonPhase(calcJulianDay());
 }
