@@ -94,21 +94,15 @@ void getNode2Data() {
   
   b2f();
   floatValue = u.fval;
-  if(floatValue < 100) {
-    PM01 = (int)floatValue;   // PM1.0 at pos 5
-  }
+  PM01 = (int)floatValue;   // PM1.0 at pos 5
   
   b2f();
   floatValue = u.fval;
-  if(floatValue < 100) {
-    PM25 = (int)floatValue;   // PM2.5 at pos 9
-  }
+  PM25 = (int)floatValue;   // PM2.5 at pos 9
   
   b2f();
   floatValue = u.fval;
-  if(floatValue < 300) {
-    PM10 = (int)floatValue;   // PM10 at pos 13
-  }
+  PM10 = (int)floatValue;   // PM10 at pos 13
   
   b2f();
   floatValue = u.fval;
