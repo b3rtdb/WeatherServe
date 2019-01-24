@@ -3,65 +3,111 @@
   /**************************************/
   void requestSensorData() {  
     pressure = lps25hb.readPressure();
-    AirqualityRead();
+    oneWireRead();
+    Sps30Read();
     
     state = 2;   // goto state 2
     statsUpdated = 0;
   }
 
   /****************************************/
+  /* Read routine for OneWire sensors     */  
+  /****************************************/
+  void oneWireRead() {
+    oneWireSensors.requestTemperatures(); // Send the command to get temperatures
+    for(int i=0;i<numberOfDevices; i++) {
+      if(oneWireSensors.getAddress(tempDeviceAddress, i)) {
+        error = error & B11111011;
+        float tempC = oneWireSensors.getTempC(tempDeviceAddress);
+        if(tempC == DEVICE_DISCONNECTED_C) {
+          switch(i) {
+            case 0: 
+              error = error | B00001000;  // error with device 0
+              break;
+            case 1: 
+              error = error | B00010000;  // error with device 1
+              break;
+            default:
+              break;
+          }
+          return;
+        }
+        switch(i) {
+          case 0: 
+            tempGnd = tempC;
+            error = error & B11110111;
+            break;
+          case 1: 
+            tempSurface = tempC;
+            error = error & B11101111;
+            break;
+          default:
+            break;
+          }
+      }
+    else error = error | B00000100;  // error with device 0 or 1
+    }
+  }
+
+  /****************************************/
   /* Read routine for PMsensor            */  
   /****************************************/
-  float AirqualityRead() {
-    if(Serial2.find(0x42)){    //start to read when detect 0x42
+  void Sps30Read() {
+    uint8_t buff[60] = {0};
+    float PMArray[10] = {0};
+    float decimal = 0.0;
+    int integer, len = 0;
+  
+    if(Serial2.read()==0x7e) {        // Start with 0x7E
       error = error & B11111101;
-      Serial2.readBytes(buf,LENG);
-      if(buf[0] == 0x4d){
-        if(checkValue(buf,LENG)){
-          PM01Value=transmitPM01(buf); //count PM1.0 value of the air detector module
-          PM2_5Value=transmitPM2_5(buf);//count PM2.5 value of the air detector module
-          PM10Value=transmitPM10(buf); //count PM10 value of the air detector module 
-        }          
-      } 
+      if(Serial2.read()==0) {         // Address is always 0
+        Serial2.read();               // Command (don't do anything with it)
+        errorCode(Serial2.read());    // State
+        len=Serial2.read();           // Read data length
+        int j=0;
+        do {
+          buff[j]=Serial2.read();
+          j++;
+        }
+        while(buff[j-1]!=0x7e);       // Read data+checksum to the 0x7e
+        
+        if (len>0) {                  // Read procedure
+          for(int i=0; i<(j-2);i++) { // Replace special values (byte stuffing)
+            if (buff[i]==0x7d){
+              if (buff[i+1]=0x5E){buff[i]=0x7E;};
+              if (buff[i+1]=0x5D){buff[i]=0x7D;};
+              if (buff[i+1]=0x31){buff[i]=0x11;};
+              if (buff[i+1]=0x33){buff[i]=0x13;};
+        
+              for (int c = i + 1; c < (j-3); c++) {
+                buff[c] = buff[c+1];
+              }
+            }
+          }
+          for(int i=0;i<10;i++) {
+            integer = ((buff[4*i]<<24)|(buff[4*i+1]<<16)|(buff[4*i+2]<<8)|buff[4*i+3]);
+            memcpy(&decimal, &integer, sizeof(integer));
+            PMArray[i] = decimal;
+          }
+          PM01Value = PMArray[0];
+          PM2_5Value = PMArray[1];
+          PM10Value = PMArray[3];
+        }
+      }
     }
     else {
       error = error | B00000010;
-    }
+    }  
   }
 
-  /****************************************/
-  /* Parse data from PM Sensor            */  
-  /****************************************/
-  char checkValue(unsigned char *thebuf, char leng) {  
-    char receiveflag=0;
-    int receiveSum=0;
-   
-    for(int i=0; i<(leng-2); i++){
-      receiveSum=receiveSum+thebuf[i];
-    }
-    receiveSum=receiveSum + 0x42;
-    //check the serial data 
-    if(receiveSum == ((thebuf[leng-2]<<8)+thebuf[leng-1])) {
-      receiveSum = 0;
-      receiveflag = 1;
-    }
-    return receiveflag;
-  }
-  
-  int transmitPM01(unsigned char *thebuf) {
-    int PM01Val;
-    PM01Val=((thebuf[3]<<8) + thebuf[4]); //count PM1.0 value of the air detector module
-    return PM01Val;
-  }
- 
-  int transmitPM2_5(unsigned char *thebuf) {
-    int PM2_5Val;
-    PM2_5Val=((thebuf[5]<<8) + thebuf[6]);//count PM2.5 value of the air detector module
-    return PM2_5Val;
-  }
 
-  int transmitPM10(unsigned char *thebuf) {
-    int PM10Val;
-    PM10Val=((thebuf[7]<<8) + thebuf[8]); //count PM10 value of the air detector module  
-    return PM10Val;
+  void errorCode(uint8_t state) {
+    switch (state) {
+    case 0:
+      error = error & B11111101;
+      break;
+    default:
+      error = error | B00000010;
+      break;
+    }
   }

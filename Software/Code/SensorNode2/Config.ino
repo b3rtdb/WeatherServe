@@ -4,17 +4,19 @@
   void configHardware() {
     Serial.begin(115200);     // Baudrate 115200 for debug HW serial to PC
     Serial1.begin(9600);      // Baudrate 9600 for Zigbee Wireless interface
-    Serial2.begin(9600);      // Baudrate 9600 for Laser Particle Sensor
-    Serial2.setTimeout(1500);    //set the Timeout to 1500ms, longer than the data transmission periodic time of the sensor
+
     xbee.setSerial(Serial1);
     lps25hb.begin(0x5D);
+
+    sps30Start();
+    oneWireStart();
 
     // Setup the timer interupt to request sensor data
     Timer1.initialize(500000);    // µs (0,5s)
     Timer1.attachInterrupt(TimerIRQ);
 
     noInterrupts();
-    timerCount = 0; 
+    timerCount = 0;
     interrupts();
   
     state = 1;
@@ -33,6 +35,38 @@
     }
   }
 
+  /**************************************/
+  /* Search & start 1wire sensors       */
+  /**************************************/
+  void oneWireStart() {
+    oneWireSensors.begin();
+    numberOfDevices = oneWireSensors.getDeviceCount(); // get the number of OneWire sensors, should be 2
+    for(int i=0;i<numberOfDevices; i++) {
+      if(oneWireSensors.getAddress(tempDeviceAddress, i)) {  // get the address of device index 0 and 1
+        oneWireSensors.setResolution(tempDeviceAddress, TEMPERATURE_PRECISION);  // set precision to 12 bits
+        error = error & B11111011;
+      }
+      else {
+        error = error | B00000100;  // check power and cabling
+      }
+    }
+  }
+
+  /**************************************/
+  /* Start SPS30 Sensor (takes 12 sec)  */
+  /**************************************/
+  void sps30Start() {
+    Serial2.begin(115200,SERIAL_8N1);  // Baudrate 115200 for SPS30 PM sensor
+    Serial2.write(buf_rst,6);          // reset
+    delay(1000);
+    Sps30Read();
+    Serial2.write(buf_start,8);        // start
+    delay(1000);
+    Sps30Read();
+    Serial2.write(buf_clean,6);        // clean
+    delay(10000); // cleaning takes 10 seconds
+    
+  }
 
   /**************************************/
   /* Check LPS25HB Sensor               */
