@@ -42,8 +42,8 @@
   const byte mes2Cx = 111;
   const byte mes3Cx = 155;
   const byte mes1Cy = 238;
-  const byte err1Cx = 120;
-  const byte err2Cx = 182;
+  const byte err1Cx = 90;
+  const byte err2Cx = 165;
   const int mes2Cy = 263;
   const int mes3Cy = 288;
   const int windCx = 295;

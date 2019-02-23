@@ -264,8 +264,8 @@ void refreshDisplay() {
   char bufError2[lengthOfFloat+1];
   dtostrf(errorWSN2, lengthOfFloat, 0, bufError2);
 
-  CleO.StringExt(FONT_TINY, 35, mes3Cy, GRAY, ML, 0, 0, "Error WSN1:");
-  CleO.StringExt(FONT_TINY, 128, mes3Cy, GRAY, ML, 0, 0, ",WSN2:");
+  CleO.StringExt(FONT_TINY, 35, mes3Cy, GRAY, ML, 0, 0, "WSN1:");
+  CleO.StringExt(FONT_TINY, 110, mes3Cy, GRAY, ML, 0, 0, "WSN2:");
   
   switch(onlineFlagDue) {
     case 0:
@@ -286,7 +286,7 @@ void refreshDisplay() {
 
         case 2:
           if(errorWSN1 == 0) {
-            CleO.StringExt(FONT_TINY, err1Cx, mes3Cy, GREEN, MM, 0, 0, bufError1);
+            CleO.StringExt(FONT_TINY, err1Cx, mes3Cy, GREEN, MM, 0, 0, "OK");
           }
           else {
             CleO.StringExt(FONT_TINY, err1Cx, mes3Cy, RED, MM, 0, 0, bufError1);
@@ -300,7 +300,7 @@ void refreshDisplay() {
 
         case 2:
           if(errorWSN2 == 0) {
-            CleO.StringExt(FONT_TINY, err2Cx, mes3Cy, GREEN, MM, 0, 0, bufError2);
+            CleO.StringExt(FONT_TINY, err2Cx, mes3Cy, GREEN, MM, 0, 0, "OK");
           }
           else {
             CleO.StringExt(FONT_TINY, err2Cx, mes3Cy, RED, MM, 0, 0, bufError2);

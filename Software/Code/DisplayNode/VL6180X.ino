@@ -10,7 +10,7 @@ void checkWaved() {
 
 void switchOnBacklight() {
   float lux = vl6180.readLux(VL6180X_ALS_GAIN_5);
-  float displayBrightness = (lux/10);
+  float displayBrightness = (lux/8);
   if (displayBrightness < 32) displayBrightness = 32;
   if (displayBrightness > 255) displayBrightness = 255;
   CleO.Display(displayBrightness);  // Backlight ON
