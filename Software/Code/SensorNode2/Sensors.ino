@@ -24,9 +24,6 @@
             case 0: 
               error = error | B00001000;  // error with device 0
               break;
-            case 1: 
-              error = error | B00010000;  // error with device 1
-              break;
             default:
               break;
           }
@@ -34,12 +31,8 @@
         }
         switch(i) {
           case 0: 
-            tempGnd = tempC;
-            error = error & B11110111;
-            break;
-          case 1: 
             tempSurface = tempC;
-            error = error & B11101111;
+            error = error & B11110111;
             break;
           default:
             break;

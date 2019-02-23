@@ -16,12 +16,15 @@
     f2b();      // avgPM2_5 pos 9-12
     u.fval = avgPM10;
     f2b();      // avgPM10 pos 13-16
-    u.fval = avgTempGnd;
-    f2b();      // avgTempGnd pos 17-20
     u.fval = avgTempSurface;
-    f2b();      // avgTempSurface pos 21-24
+    f2b();      // avgTempSurface pos 17-20
 
-    payload[arrayOffset] = error;                   // this is a byte (pos 25)
+    noInterrupts(); //sunCount is set by interrupt, so interrupt needs to be disabled to read it
+    payload[arrayOffset] = sunCount;       // this is a byte (pos 21)
+    interrupts();
+    arrayOffset++;
+
+    payload[arrayOffset] = error;                   // this is a byte (pos 22)
     
     xbee.send(zbTx);
     checkTxErrors();

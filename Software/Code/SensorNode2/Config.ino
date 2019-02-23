@@ -11,12 +11,15 @@
     sps30Start();
     oneWireStart();
 
+    attachInterrupt(digitalPinToInterrupt(sunHoursInterruptPin), sunHoursIRQ, RISING);
+
     // Setup the timer interupt to request sensor data
     Timer1.initialize(500000);    // µs (0,5s)
     Timer1.attachInterrupt(TimerIRQ);
 
     noInterrupts();
     timerCount = 0;
+    sunCount = 0;
     interrupts();
   
     state = 1;
@@ -35,12 +38,20 @@
     }
   }
 
+  /****************************************/
+  /* Interrupt routine for sunHour sensor */
+  /* One Count for each 36seconds         */
+  /****************************************/
+  void sunHoursIRQ() {
+      sunCount++; 
+  } 
+
   /**************************************/
   /* Search & start 1wire sensors       */
   /**************************************/
   void oneWireStart() {
     oneWireSensors.begin();
-    numberOfDevices = oneWireSensors.getDeviceCount(); // get the number of OneWire sensors, should be 2
+    numberOfDevices = oneWireSensors.getDeviceCount(); // get the number of OneWire sensors
     for(int i=0;i<numberOfDevices; i++) {
       if(oneWireSensors.getAddress(tempDeviceAddress, i)) {  // get the address of device index 0 and 1
         oneWireSensors.setResolution(tempDeviceAddress, TEMPERATURE_PRECISION);  // set precision to 12 bits
