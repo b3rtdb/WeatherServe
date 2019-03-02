@@ -4,7 +4,9 @@
             "name": "Win32",
             "includePath": [
                 "C:\\Users\\Bert\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\**",
-                "C:\\Users\\Bert\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\sam\\1.6.11\\**"
+                "C:\\Users\\Bert\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\sam\\1.6.11\\**",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\**",
+                "D:\\Dropbox\\WeatherServe\\Software\\Libraries\\**"
             ],
             "forcedInclude": [
                 "C:\\Users\\Bert\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\sam\\1.6.11\\cores\\arduino\\Arduino.h"
