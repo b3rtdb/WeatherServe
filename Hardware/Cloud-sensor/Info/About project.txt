@@ -1,0 +1,53 @@
+https://create.arduino.cc/projecthub/KFMAKR/ceilometer-3339f0?ref=user&ref_id=822001&offset=1
+
+Germanium disc: https://www.ebay.com/itm/3-1-gram-99-999-Germanium-metalloid-disk-27x1-mm-element-32-sample/132715009294
+Copper bar: https://www.ebay.fr/itm/Anode-electrode-de-cuivre-en-barre-10-cm-x-8-mm-pour-galvanoplastie/222200872664
+Heater: https://www.ebay.fr/i/263937159569
+
+ABOUT THIS PROJECT
+It's a kind of upgrade to my current Arduino's weather station. (Temperature, humidity, Wind speed and direction, rain fall, atmospherical pressure, sun power, luminosity)
+I discovered this sensors and its alternative way of measurement on the following web page: https://chrisramsay.co.uk/tag/cloud-detection/
+
+Used in airport, it's traditionally realize with a laser sensor for which the use is strictly regulated. 
+The Infrared measurement is a good replacement and completely in accordance with the troposphere constant rule between temperature and altitude. 
+I decided to follow Chris's approach and create a full sensor completely compatible with the outdoor conditions. 
+That mean:
+
+>water proof => germanium lens = IR transparency < protect the IR sensors
+
+>heating system against ice => heater plug 12V-4W
+
+>clean up system to remove water, ice or snow => waterproof servo to control a deflector
+
+2.IR MLX90614 (FOV90° & 10°) + 1.IR MLX90614 (FOV90°) for reference compensation due to the Ge Lens + Complete 3D printing body.
+
+In the following pix we could see the main body with the two sensors head with a copper bridge to defrost the Germanium lens. 
+The part is the waterproof servo Hitec. 
+A second MLX90614 is externalized without heating and without additional lens to assume a compensation and re adjust the altitude.
+
+
+
+Tests are running. Heater is running very well and the safety loop also. 
+Bodys are printed with PLA, so they are not really compatible with high temperature. 
+The Heater can overeats 150°C under 12V, this why I decided to split the power supply level (aligned with the servo's needs) and define a safe threshold at 55°C.
+
+_______________________First Tests and result 19&20 January 2019_______________________
+
+24hr outdoor. I placed it outdoor with a full blue sky so that should provide the lower temperature and by conversion the biggest altitude close. 
+This the main facts:
+
+>I created a new control cover , higher to handle the Mega board because it was initially design to a Uno version
+
+>Heater is running very well but high temperature on germanium lens create abnormal deviation to check the object temp.
+	=> program command has been changed to reduce this and maintain a lower temp and reduce the deviation.
+
+>I tested rubber blades, but I should reduce the rotation speed.
+	=> even if the design on the Head and the Ref sensor casing have been designed to provide a nice slope, the 'shock' seem too strong and the blades extracted from the deflector.
+
+>there are still glitches on measurement. I think my wiring is guilty because too 'wild' I placed a photo below
+	=> it's decided I'm going to use Eagle to create my own PCB, and probably replace the Darlington transistors to Finder relays.
+
+>Results sounds good in appearance. The high altitude should be better if the sensor can be place over the roof.
+	=> during this phase I placed it on my terrasse and the 90° angle integrate a part of the house... that create an offset of temperature. 
+	   A part of the recording was also disturb by c... blades are not in place on the deflector, but there were no ice at the morning.
+	   that sound really good.

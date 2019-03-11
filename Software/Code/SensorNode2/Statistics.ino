@@ -10,7 +10,6 @@
       avgPM01 = PM01Stats.average();
       avgPM2_5 = PM2_5Stats.average();
       avgPM10 = PM10Stats.average();
-      avgTempSurface = tempSurfaceStats.average();
   }
   
   void initStats() {
@@ -21,7 +20,6 @@
     PM01Stats.clear();
     PM2_5Stats.clear();
     PM10Stats.clear();
-    tempSurfaceStats.clear();
   }
 
   void updateStats() {
@@ -30,7 +28,6 @@
       PM01Stats.add(PM01Value);
       PM2_5Stats.add(PM2_5Value);
       PM10Stats.add(PM10Value);
-      tempSurfaceStats.add(tempSurface);
       
       statsUpdated = 1;
       counter++;

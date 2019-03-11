@@ -3,43 +3,10 @@
   /**************************************/
   void requestSensorData() {  
     pressure = lps25hb.readPressure();
-    oneWireRead();
     Sps30Read();
     
     state = 2;   // goto state 2
     statsUpdated = 0;
-  }
-
-  /****************************************/
-  /* Read routine for OneWire sensors     */  
-  /****************************************/
-  void oneWireRead() {
-    oneWireSensors.requestTemperatures(); // Send the command to get temperatures
-    for(int i=0;i<numberOfDevices; i++) {
-      if(oneWireSensors.getAddress(tempDeviceAddress, i)) {
-        error = error & B11111011;
-        float tempC = oneWireSensors.getTempC(tempDeviceAddress);
-        if(tempC == DEVICE_DISCONNECTED_C) {
-          switch(i) {
-            case 0: 
-              error = error | B00001000;  // error with device 0
-              break;
-            default:
-              break;
-          }
-          return;
-        }
-        switch(i) {
-          case 0: 
-            tempSurface = tempC;
-            error = error & B11110111;
-            break;
-          default:
-            break;
-          }
-      }
-    else error = error | B00000100;  // error with device 0 or 1
-    }
   }
 
   /****************************************/

@@ -9,7 +9,6 @@
     lps25hb.begin(0x5D);
 
     sps30Start();
-    oneWireStart();
 
     attachInterrupt(digitalPinToInterrupt(sunHoursInterruptPin), sunHoursIRQ, RISING);
 
@@ -45,23 +44,6 @@
   void sunHoursIRQ() {
       sunCount++; 
   } 
-
-  /**************************************/
-  /* Search & start 1wire sensors       */
-  /**************************************/
-  void oneWireStart() {
-    oneWireSensors.begin();
-    numberOfDevices = oneWireSensors.getDeviceCount(); // get the number of OneWire sensors
-    for(int i=0;i<numberOfDevices; i++) {
-      if(oneWireSensors.getAddress(tempDeviceAddress, i)) {  // get the address of device index 0 and 1
-        oneWireSensors.setResolution(tempDeviceAddress, TEMPERATURE_PRECISION);  // set precision to 12 bits
-        error = error & B11111011;
-      }
-      else {
-        error = error | B00000100;  // check power and cabling
-      }
-    }
-  }
 
   /**************************************/
   /* Start SPS30 Sensor (takes 12 sec)  */

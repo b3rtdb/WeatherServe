@@ -1,6 +1,5 @@
 /*
  * PRESSURE: I²C, D21 (SCL), D20 (SDA)
- * DS18B20 SURFACE TEMP: 1-wire, D4
  * SUN HOURS SENSOR: D2 (interrupt 4)
  * XBEE: Serial1 on pins D19 (RX) and D18 (TX)
  * SPS30: Serial2 on pins D17 (RX) and D16 (TX)
@@ -11,19 +10,7 @@
 #include <Statistic.h>
 #include <ClosedCube_LPS25HB.h>
 #include <TimerOne.h>
-#include <OneWire.h>
-#include <DallasTemperature.h>
 
-  /****************************************/
-  /* DS18B20 Gnd Temp Sensors             */
-  /****************************************/
-  #define ONE_WIRE_BUS 4            // D4 as onewire bus
-  #define TEMPERATURE_PRECISION 12  // 12 bits precision
-  OneWire oneWire(ONE_WIRE_BUS);
-  DallasTemperature oneWireSensors(&oneWire);
-  DeviceAddress tempDeviceAddress;;
-  byte  numberOfDevices = 0;
-  float tempSurface;
 
   /****************************************/
   /* LPS25HB Pressure Sensor              */
@@ -49,7 +36,7 @@
   XBee xbee = XBee();
   byte arrayOffset = 1;              // used to shift values in the Tx array, start with 1 cause of the node ident 2
   
-  uint8_t payload[23];               // array of length 23, 0-22
+  uint8_t payload[19];               // array of length 19, 0-18
   // SH + SL Address of receiving XBee (Coordinator)
   XBeeAddress64 addr64 = XBeeAddress64(0x0013a200, 0x40f748cb);
   ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
@@ -89,7 +76,7 @@
   byte counter = 0;
   volatile byte state = 0;
   volatile unsigned int timerCount = 0; // used to determine 2.5sec timer count
-  byte error = B00000000;               // 1 = LPS25HB error, 2 = SPS30 Error, 4 = OneWire Error, 8 = 1wire Dev0 Error
+  byte error = B00000000;               // 1 = LPS25HB error, 2 = SPS30 Error
 
 /**********************************************************************
  *
