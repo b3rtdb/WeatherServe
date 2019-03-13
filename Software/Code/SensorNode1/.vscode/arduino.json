@@ -1,0 +1,8 @@
+{
+    "programmer": "ArduinoISP",
+    "sketch": "SensorNode1\\SensorNode1.ino",
+    "port": "Arduino: Select Serial Port",
+    "board": "arduino:avr:mega",
+    "output": "../build",
+    "configuration": "cpu=atmega2560"
+}
