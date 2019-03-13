@@ -1,6 +1,6 @@
 {
     "programmer": "ArduinoISP",
-    "board": "arduino:avr:mega",
-    "sketch": "SensorNode2\\SensorNode2.ino",
-    "configuration": "cpu=atmega2560"
+    "board": "arduino:sam:arduino_due_x_dbg",
+    "sketch": "BaseNode\\BaseNode.ino",
+    "port": "COM4"
 }

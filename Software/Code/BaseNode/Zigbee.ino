@@ -88,7 +88,7 @@ void getNode2Data() {
     pressure = (unsigned long)((floatValue*100)+pressCorrection);
   }
   signed long tempPress = ((floatValue*100)+pressCorrection)-(signed long)pressure; 
-  if(abs(tempPress)< 30) {
+  if(abs(tempPress)< 60) {
     pressure = (unsigned long)((floatValue*100)+pressCorrection);
   }
   
