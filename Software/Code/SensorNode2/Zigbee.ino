@@ -22,7 +22,7 @@
     interrupts();
     arrayOffset++;
 
-    payload[arrayOffset] = error;                   // this is a byte (pos 18)
+    payload[arrayOffset] = error;          // this is a byte (pos 18)
     
     xbee.send(zbTx);
     checkTxErrors();

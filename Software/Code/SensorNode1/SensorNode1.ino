@@ -6,7 +6,6 @@
  * UV SENSOR: A6 [3V supply]
  * INA219: I²C (0x41), D21 (SCL), D20 (SDA) [5V supply]
  * RAIN SENSOR: D2 (interrupt 4)
- * FAN FARS: D5 ON/OFF control [6V5 supply]
  * XBEE: Serial1 on pins D19 (RX) and D18 (TX)
  * DEBUG: Serial on pins D0 (RX) and D1 (TX)
 */

@@ -60,14 +60,13 @@
     }  
   }
 
-
   void errorCode(uint8_t state) {
     switch (state) {
     case 0:
       error = error & B11111101;
       break;
     default:
-      error = error | B00000010;
+      error = error | B00000100;
       break;
     }
   }

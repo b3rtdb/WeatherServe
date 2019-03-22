@@ -41,10 +41,10 @@ void clearStatisticsMidnight() {
   windGust = windGustRec;
   maxSolarRad = solarRad;
   maxUV = uvIndex;
+  sunHoursTotal = 0;
   ETday = 0;
   windRun = 0;
   radTRHWSArrayCounter = 0;
-  sunHoursMinCounter = 0;
   totalRain24hTicks = 0;
   rainArrayCounter = 0;
   windDirArrayCounter = 0;

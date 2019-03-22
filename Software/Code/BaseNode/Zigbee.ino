@@ -84,13 +84,7 @@ void getNode2Data() {
 
   b2f();
   floatValue = u.fval;        // Pressure at pos 1
-  if(pressure == 0) {
-    pressure = (unsigned long)((floatValue*100)+pressCorrection);
-  }
-  signed long tempPress = ((floatValue*100)+pressCorrection)-(signed long)pressure; 
-  if(abs(tempPress)< 60) {
-    pressure = (unsigned long)((floatValue*100)+pressCorrection);
-  }
+  pressure = (unsigned long)((floatValue*100)+pressCorrection);
   
   b2f();
   floatValue = u.fval;
@@ -104,14 +98,10 @@ void getNode2Data() {
   floatValue = u.fval;
   PM10 = (int)floatValue;   // PM10 at pos 13
   
-  b2f();
-  floatValue = u.fval;
-  lightningDistance = (byte)floatValue;           // Lightning Distance at pos 17
-  
-  lightningDetected = rx.getData(arrayOffsetRX);  // Lightning Detected at pos 21
+  sunCount = rx.getData(arrayOffsetRX);           // sunshine sensor Count at pos 17
   arrayOffsetRX++;
   
-  errorWSN2 = rx.getData(arrayOffsetRX);          // errorbyte WSN2 at pos 22
+  errorWSN2 = rx.getData(arrayOffsetRX);          // errorbyte WSN2 at pos 18
 }
 
   /****************************************/

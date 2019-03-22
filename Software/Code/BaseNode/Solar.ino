@@ -2,6 +2,7 @@ void calcSun() {
   calcET();
   calcUV();
   calcSunHours();
+  Csr = calcClearSkyRad();
   calcMaxSolar();
   }
 
@@ -16,20 +17,16 @@ void calcMaxSolar() {
 
 /********************************************
  * Calculate the hours of sun today         *
- * Defined as ratio Rs/Rso > 75%            *
+ * Every sensor tick is 36 seconds          *
  ********************************************/
 void calcSunHours() {
-  double Rs = solarRad;
-  Csr = calcClearSkyRad();
-  if(Csr != 0) {
-    rdif = (Rs/Csr)*100;
-
-    if(rdif > 75) sunHoursMinCounter++;
-    sunHoursDec = sunHoursMinCounter/60.0;
-  }
-  else rdif = 0;
+    sunHoursTotal += sunCount;
+    sunHoursDec = sunHoursTotal/100;
 }
 
+/********************************************
+ * Calculate Clear Sky Radiation            *
+ ********************************************/
 double calcClearSkyRad() {
   double t = hour;
   t *= 60;
