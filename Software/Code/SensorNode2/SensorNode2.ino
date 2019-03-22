@@ -75,7 +75,7 @@
   byte counter = 0;
   volatile byte state = 0;
   volatile unsigned int timerCount = 0; // used to determine 2.5sec timer count
-  byte error = B00000000;               // 1 = LPS25HB error, 2 = SPS30 Communication Error, 4 = SPS30 Serialnr error, 8 = SPS30 Value error
+  byte error = B00000000;               // 1 = LPS25HB error, 2 = SPS30 Communication Error
 
 /**********************************************************************
  *
