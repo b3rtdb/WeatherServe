@@ -62,8 +62,6 @@
       error = error | B00000010; // unable to reset
     }
     else error = error & B11111101;
-
-    GetSerialSPS30();
   }
 
   /**************************************/
@@ -77,19 +75,4 @@
     else {
       error = error & B11111110;
     }
-  }
-
-  /**************************************/
-  /* Get SPS30 Serial Number            */
-  /**************************************/
-  void GetSerialSPS30() {
-  char buf[32];
-  uint8_t ret;
-
-  ret = sps30.GetSerialNumber(buf, 32);
-  if (ret == ERR_OK) {
-    error = error | B00000100;
-  }
-  else
-    error = error & B11111011;
   }
