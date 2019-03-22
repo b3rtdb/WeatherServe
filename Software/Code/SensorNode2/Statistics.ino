@@ -7,8 +7,9 @@
   /****************************************/
   void calcStats() {
       avgPressure = pressureStats.average();
-      avgPM01 = PM01Stats.average();
-      avgPM2_5 = PM2_5Stats.average();
+      avgPM1 = PM1Stats.average();
+      avgPM2 = PM2Stats.average();
+      avgPM4 = PM4Stats.average();
       avgPM10 = PM10Stats.average();
   }
   
@@ -17,17 +18,19 @@
     sunCount = 0;
     interrupts();
     pressureStats.clear();
-    PM01Stats.clear();
-    PM2_5Stats.clear();
+    PM1Stats.clear();
+    PM2Stats.clear();
+    PM4Stats.clear();
     PM10Stats.clear();
   }
 
   void updateStats() {
     if(statsUpdated == 0) {
       pressureStats.add(pressure);
-      PM01Stats.add(PM01Value);
-      PM2_5Stats.add(PM2_5Value);
-      PM10Stats.add(PM10Value);
+      PM1Stats.add(MassPM1Value);
+      PM2Stats.add(MassPM2Value);
+      PM4Stats.add(MassPM4Value);
+      PM10Stats.add(MassPM10Value);
       
       statsUpdated = 1;
       counter++;

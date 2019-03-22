@@ -10,19 +10,21 @@
         
     u.fval = avgPressure;
     f2b();      // avgPressure pos 1-4
-    u.fval = avgPM01;
-    f2b();      // avgPM01 pos 5-8
-    u.fval = avgPM2_5;
-    f2b();      // avgPM2_5 pos 9-12
+    u.fval = avgPM1;
+    f2b();      // avgPM1 pos 5-8
+    u.fval = avgPM2;
+    f2b();      // avgPM2,5 pos 9-12
+    u.fval = avgPM4;
+    f2b();      // avgPM4 pos 13-16
     u.fval = avgPM10;
-    f2b();      // avgPM10 pos 13-16
+    f2b();      // avgPM10 pos 17-20
 
     noInterrupts(); //sunCount is set by interrupt, so interrupt needs to be disabled to read it
-    payload[arrayOffset] = sunCount;       // this is a byte (pos 17)
+    payload[arrayOffset] = sunCount;       // this is a byte (pos 21)
     interrupts();
     arrayOffset++;
 
-    payload[arrayOffset] = error;          // this is a byte (pos 18)
+    payload[arrayOffset] = error;          // this is a byte (pos 22)
     
     xbee.send(zbTx);
     checkTxErrors();

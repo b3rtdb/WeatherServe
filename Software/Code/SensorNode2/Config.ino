@@ -4,7 +4,6 @@
   void configHardware() {
     Serial.begin(115200);     // Baudrate 115200 for debug HW serial to PC
     Serial1.begin(9600);      // Baudrate 9600 for Zigbee Wireless interface
-    Serial2.begin(115200,SERIAL_8N1);    // Baudrate 115200 for SPS30 PM sensor
 
     xbee.setSerial(Serial1);
     lps25hb.begin(0x5D);
@@ -47,15 +46,24 @@
   } 
 
   /**************************************/
-  /* Start SPS30 Sensor (takes 12 sec)  */
+  /* Start and test SPS30 Sensor        */
   /**************************************/
   void sps30Start() {
-    Serial2.write(buf_rst,6);          // reset
-    delay(1000);
-    Sps30Read();
-    Serial2.write(buf_start,8);        // start
-    delay(1000);
-    Sps30Read();
+    if (sps30.begin(SP30_COMMS) == false) {
+      error = error | B00000010; // unable to open comm channel
+    }
+
+    if (sps30.probe() == false) {
+      error = error | B00000010; // unable to connect to SPS30
+    }
+    else error = error & B11111101;
+
+    if (sps30.reset() == false) {
+      error = error | B00000010; // unable to reset
+    }
+    else error = error & B11111101;
+
+    GetSerialSPS30();
   }
 
   /**************************************/
@@ -69,4 +77,19 @@
     else {
       error = error & B11111110;
     }
+  }
+
+  /**************************************/
+  /* Get SPS30 Serial Number            */
+  /**************************************/
+  void GetSerialSPS30() {
+  char buf[32];
+  uint8_t ret;
+
+  ret = sps30.GetSerialNumber(buf, 32);
+  if (ret == ERR_OK) {
+    error = error | B00000100;
+  }
+  else
+    error = error & B11111011;
   }

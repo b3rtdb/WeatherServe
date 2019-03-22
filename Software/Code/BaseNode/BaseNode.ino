@@ -53,7 +53,7 @@
   byte sunCount,rainSensorCount = 0;
   float tempAir,RHAir,windSpeed,windGustRec,uvIndex = 0.0;
   unsigned long pressure = 0;
-  int windDir,PM01,PM25,PM10,solarRad = 0;
+  int windDir,PM01,PM4,PM25,PM10,solarRad = 0;
 
   /****************************************/
   /* Calculated Variables                 */

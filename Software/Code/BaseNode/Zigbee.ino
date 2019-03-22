@@ -93,15 +93,19 @@ void getNode2Data() {
   b2f();
   floatValue = u.fval;
   PM25 = (int)floatValue;   // PM2.5 at pos 9
+
+  b2f();
+  floatValue = u.fval;
+  PM4 = (int)floatValue;   // PM4 at pos 13
   
   b2f();
   floatValue = u.fval;
-  PM10 = (int)floatValue;   // PM10 at pos 13
+  PM10 = (int)floatValue;   // PM10 at pos 17
   
-  sunCount = rx.getData(arrayOffsetRX);           // sunshine sensor Count at pos 17
+  sunCount = rx.getData(arrayOffsetRX);           // sunshine sensor Count at pos 21
   arrayOffsetRX++;
   
-  errorWSN2 = rx.getData(arrayOffsetRX);          // errorbyte WSN2 at pos 18
+  errorWSN2 = rx.getData(arrayOffsetRX);          // errorbyte WSN2 at pos 22
 }
 
   /****************************************/
