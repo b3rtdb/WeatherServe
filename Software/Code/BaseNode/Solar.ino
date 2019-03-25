@@ -20,8 +20,13 @@ void calcMaxSolar() {
  * Every sensor tick is 36 seconds          *
  ********************************************/
 void calcSunHours() {
-    sunHoursTotal += sunCount;
-    sunHoursDec = sunHoursTotal/100;
+  sunHoursTotal += sunCount;
+  sunHoursDec = sunHoursTotal/100;
+
+  if(sunCount >= 1) {
+    sunMoment = 1;
+  }
+  else sunMoment = 0;
 }
 
 /********************************************

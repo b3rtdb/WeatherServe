@@ -30,6 +30,7 @@ void postdb(String dblocation) {
   cmd += "uvIndex value=" + String(uvIndex) + "\n";
   cmd += "ClearSkyRad value=" + String(Csr) + "\n";
   cmd += "windGustRec value=" + String(windGustRec) + "\n";
+  cmd += "sunMoment value=" + String(sunMoment) + "\n";
   cmd += "ETday value=" + String(ETday) + "'";
   p.runShellCommand(cmd);
   p.close();

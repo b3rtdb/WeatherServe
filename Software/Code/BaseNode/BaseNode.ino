@@ -59,7 +59,7 @@
   /* Calculated Variables                 */
   /****************************************/
   float minTempAir,maxTempAir,windGust,avgWindSpeed10m,avgPm10_24h,avgPm25_24h,totalRain24h,rainIntensity, apparentT, dewPoint, maxUV, avgUV10m, sunHoursDec, sunHoursTotal, windRunKm = 0.0;
-  byte totalRain24hTicks,rainArrayCounter,windDirArrayCounter,windSpeedArrayCounter,uvArrayCounter,windSpeedCounter,pressureArrayCounter,pmArrayCounter,pmCounter,radTRHWSArrayCounter,trend,moonPhaseNumber, zambrettiNumber, pressure3hCounter = 0;
+  byte sunMoment,totalRain24hTicks,rainArrayCounter,windDirArrayCounter,windSpeedArrayCounter,uvArrayCounter,windSpeedCounter,pressureArrayCounter,pmArrayCounter,pmCounter,radTRHWSArrayCounter,trend,moonPhaseNumber, zambrettiNumber, pressure3hCounter = 0;
   signed long pdif = 0;
   int mRising, mSetting, hRising, hSetting, maxSolarRad, windRun, avgWindDir = 0;
   double moonPhase, moonAge, Rmean, Tmean, RHmean, WSmean, ETday, EThour, rdif, Csr = 0;
