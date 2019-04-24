@@ -6,7 +6,10 @@
     Serial1.begin(9600);      // Baudrate 9600 for Zigbee Wireless interface
 
     xbee.setSerial(Serial1);
-    lps25hb.begin(0x5D);
+    
+    pressureSensor.begin();
+    pressureSensor.setFIFOMeanNum(LPS25HB_FIFO_CTRL_M_32);       // Specifies the desired number of moving average samples. Valid values are 2, 4, 8, 16, and 32
+    pressureSensor.setFIFOMode(LPS25HB_FIFO_CTRL_MEAN);          // Sets the FIFO to the MEAN mode, which implements a hardware moving average
 
     sps30Start();
 
@@ -68,11 +71,12 @@
   /* Check LPS25HB Sensor               */
   /**************************************/
   void checkLps25hb() {
-    byte lpsIdent = 0x00;
-    if(lps25hb.whoAmI() != 0xBD) {
-      error = error | B00000001;
+    if(pressureSensor.isConnected() == true) {
+      if(pressureSensor.getID() == 0xBD) {
+        error = error & B11111110;
+      }
     }
     else {
-      error = error & B11111110;
+      error = error | B00000001;
     }
   }

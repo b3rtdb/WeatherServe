@@ -8,7 +8,7 @@
 
 #include <XBee.h>
 #include <Statistic.h>
-#include <ClosedCube_LPS25HB.h>
+#include <SparkFun_LPS25HB_Arduino_Library.h>
 #include <TimerOne.h>
 #include <sps30.h>
 
@@ -16,7 +16,7 @@
   /****************************************/
   /* LPS25HB Pressure Sensor              */
   /****************************************/
-  ClosedCube_LPS25HB lps25hb;
+  LPS25HB pressureSensor;
   float pressure = 0;
 
   /****************************************/

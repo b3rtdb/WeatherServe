@@ -2,7 +2,7 @@
   /* Request data from all sensors      */
   /**************************************/
   void requestSensorData() {  
-    pressure = lps25hb.readPressure();
+    pressure = pressureSensor.getPressure_hPa();
     Sps30Read();
     
     state = 2;   // goto state 2
