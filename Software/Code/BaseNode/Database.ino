@@ -22,12 +22,14 @@ void postdb(String dblocation) {
   cmd += "pressure value=" + String(pressure) + "\n";
   cmd += "PM25 value=" + String(PM25) + "\n";
   cmd += "PM10 value=" + String(PM10) + "\n";
-  cmd += "rainCount value=" + String(rainCount) + "\n";
+  cmd += "totalRain24h value=" + String(totalRain24h) + "\n";
+  cmd += "rainIntensity value=" + String(rainIntensity) + "\n";
   cmd += "solarRad value=" + String(solarRad) + "\n";
   cmd += "uvIndex value=" + String(uvIndex) + "\n";
   cmd += "ClearSkyRad value=" + String(Csr) + "\n";
   cmd += "windGustRec value=" + String(windGustRec) + "\n";
   cmd += "sunMoment value=" + String(sunMoment) + "\n";
+  cmd += "ETday value=" + String(ETday) + "\n";
   cmd += "EThour value=" + String(EThour) + "'";
   p.runShellCommand(cmd);
   p.close();

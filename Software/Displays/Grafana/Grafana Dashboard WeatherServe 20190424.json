@@ -949,10 +949,8 @@
                 "type": "field"
               },
               {
-                "params": [
-                  3
-                ],
-                "type": "top"
+                "params": [],
+                "type": "last"
               }
             ]
           ],
@@ -1022,7 +1020,7 @@
         "max": false,
         "min": false,
         "show": true,
-        "total": true,
+        "total": false,
         "values": true
       },
       "lines": true,
@@ -1037,19 +1035,29 @@
       "seriesOverrides": [
         {
           "alias": "Rain Total",
-          "color": "#bf1b00",
-          "lines": true
+          "bars": false,
+          "color": "#C4162A",
+          "lines": false
         },
         {
           "alias": "Rain Intensity",
           "bars": true,
-          "color": "#1f78c1",
+          "color": "#3274D9",
+          "legend": false,
           "lines": false
         },
         {
-          "alias": "Evapotranspiration",
-          "color": "#ba43a9",
-          "lines": true
+          "alias": "ET Current",
+          "bars": true,
+          "color": "#FF780A",
+          "legend": false,
+          "lines": false
+        },
+        {
+          "alias": "ET Total",
+          "bars": false,
+          "color": "#8F3BB8",
+          "lines": false
         }
       ],
       "spaceLength": 10,
@@ -1072,7 +1080,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "rainCount",
+          "measurement": "totalRain24h",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1086,8 +1094,10 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "last"
+                "params": [
+                  3
+                ],
+                "type": "top"
               }
             ]
           ],
@@ -1109,7 +1119,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "rainCount",
+          "measurement": "rainIntensity",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -1123,15 +1133,17 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "sum"
+                "params": [
+                  3
+                ],
+                "type": "top"
               }
             ]
           ],
           "tags": []
         },
         {
-          "alias": "Evapotranspiration",
+          "alias": "ET Current",
           "groupBy": [
             {
               "params": [
@@ -1160,8 +1172,49 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "sum"
+                "params": [
+                  3
+                ],
+                "type": "top"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "ET Total",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "ETday",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  3
+                ],
+                "type": "top"
               }
             ]
           ],
@@ -1382,7 +1435,7 @@
           "format": "short",
           "label": "µg/m³",
           "logBase": 1,
-          "max": "80",
+          "max": "60",
           "min": null,
           "show": true
         },
@@ -1410,7 +1463,7 @@
   },
   "time": {
     "from": "now/d",
-    "to": "now"
+    "to": "now/d"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -1440,5 +1493,5 @@
   "timezone": "browser",
   "title": "WeatherServe",
   "uid": "bQ1eNJZgz",
-  "version": 133
+  "version": 142
 }
