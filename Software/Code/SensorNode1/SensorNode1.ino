@@ -16,6 +16,8 @@
 #include <Statistic.h>
 #include <TimerOne.h>
 #include <Adafruit_INA219.h>
+#include <SPI.h>
+#include "MCP320X.h"
 
   /****************************************/
   /* Windspeed Sensor                     */
@@ -25,23 +27,20 @@
   float windSpeed, windGust = 0.0;
 
   /****************************************/
-  /* WindDirection Sensor                 */
+  /* MCP3204 ADC 4096mVref                */
   /****************************************/
-  const int windDirectionPin = A2;
+  uint8_t channel = 0;
+  const int PINSLAVE = 46;  // Port PL3
+  
+  // Wind direction, CH0
   float windDir = 0.0;
   byte windDirArrayCounter = 0;
 
-  /****************************************/
-  /* Solar Radiation Sensor  0-3V         */
-  /****************************************/
-  const int solarRadiationPin = A4;
+  // Solar Radiation 0-3V, CH1
   float solarRad = 0.0;
   const float refTemp = 25.0;
 
-  /****************************************/
-  /* UV Radiation Sensor  0-3V            */
-  /****************************************/
-  const int uvRadiationPin = A6;
+  // UV Radiation 0-2.5V, CH2
   float uvRad = 0.0;
 
   /****************************************/

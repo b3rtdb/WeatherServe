@@ -1,0 +1,10 @@
+Some comments regarding the code
+The DGS-H2S 968-036 operating manual of the sensor (version March 2017) is a bit ambiguous regarding the UART communication protocol. On page 5 it states that a command is recognized if it’s received within 1-second from a TRIGGER event. On the next page, we find a 5-seconds interval for a command to be recognized.
+
+I have found that the commands are recognized within an 800-milliseconds interval after the trigger event (before the sensor starts sending back the measured values). As a result, configuring the sensor with a terminal program such TeraTerm is next to impossible.
+
+Also, the commands must NOT be terminated with \r\n or with \n, Just the command letter is enough.
+
+Code examples for other commands will be published soon,
+
+When starting for the first time, you will get some extreme readings. This is because the way this sensor works. In one of the technical documents, I have found a piece of information that compares this sensor with a capacitor, with bias placed across the working and reference electrodes being similar to the voltage across the plates of a capacitor. The high current observed at the sensor startup is like the charging current of a capacitor. As such, it is recommended to leave the sensor run for about one hour after power-up to get accurate readings.

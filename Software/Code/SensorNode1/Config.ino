@@ -12,6 +12,8 @@
     Serial1.begin(9600);          // Baudrate 9600 for Zigbee Wireless interface
     xbee.setSerial(Serial1);
 
+    mcp320xInit(SINGLE, MCP3204, PINSLAVE); // single or differential, 4 channel ADC, CS = 46
+
     ina219.begin();
     ina219.setCalibration_16V_400mA();
   

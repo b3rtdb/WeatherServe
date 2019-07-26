@@ -1,0 +1,30 @@
+Checking the firmware version of the sensor
+To check the firmware version of the sensor one has to connect it to an Arduino Due or an Arduino Uno board, as described in my previous projects, and then run the SerialPassthrough Arduino sketch.
+
+Open serial monitor, then configure it to send only the carriage return.
+
+DGS-H2S - checking firmware version
+DGS-H2S – checking firmware version
+
+Reset the sensor by sending ‘r‘ or ‘R‘. Then try to rapidly send several times the character ‘f’ (lower-case f, without quotation marks), until the sensor responds. If the sensor has the new firmware, it will respond with ‘15SEP17'.  If you have the old version, you will trigger a measurement, and then it will respond with ‘14FEB17'.
+
+Oh, and the SPEC-DGS library is for the firmware version 25SEP17.
+
+New firmware, new behavior
+Some issues and features I have found so far in the new firmware:
+
+When started, the first thing to do is reset the sensor by sending ‘r’ or ‘R’
+The reset works by executing a while(1); loop and waits for the watchdog to reset the sensor. After issuing the reset command one needs to wait for about one second.
+The sensor no longer expects the unlock code 12345/r
+Setting the zero value is simply performed by sending ‘Z’. The sensor will respond with “Setting zero…done”
+Triggering a single measurement works by sending ‘\r’ only
+One can instead put the sensor in continuous mode by sending ‘c’.
+continuous mode is stopped with ‘c’.
+Continous mode is one second only
+The sensor is much faster!!!
+There is a new command ‘A‘ which configures the sensor to perform the average of a given number of measurements. To use this feature, send ‘A‘ , without ‘/r’. The sensor will respond with “Enter Average Total:”. Insert the average value (between 1 and 300), followed by ‘/r’. If successful, the sensor will respond with ‘/r/n’
+The response time of the sensor changes according to the average value. While triggering a single measurement by sending ‘/r’, the sensor responds in 287ms if A=1, and in 375ms if A=300.
+You can check the Average_Total value in the EEPROM dump, by sending ‘e‘
+Recommended values are least 60 for O3/NO2/H2S and 300 for SO.
+There is a sleep command, ‘s‘. Wake up the sensor by sending anything on the serial port. Wait for about one second, then you can issue commands.
+The sensor draws 4.2mA in normal mode. In sleep mode it needs only 26µA.

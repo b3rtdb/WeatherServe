@@ -1,0 +1,25 @@
+#######################################
+# Syntax Coloring Map For LedControl
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+MCP320X	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+mcp320xInit	KEYWORD2
+mcp320xRead	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+MCP3204	LITERAL1
+MCP3208	LITERAL1
+SINGLE	LITERAL1
+DIFFERENTIAL	LITERAL1

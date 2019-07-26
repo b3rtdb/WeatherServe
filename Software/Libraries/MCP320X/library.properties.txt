@@ -1,0 +1,10 @@
+name=MCP320X.h
+version=1.0
+author=Nicolas Gagnon <nic_gagnon7@hotmail.com>
+maintainer=Nicolas Gagnon <nic_gagnon7@hotmail.com>
+sentence= easy use of MCP3204 and MCP3208.
+paragraph=Easy way to read the 12-bits analog value of any channel on the ADC.
+category=ADC
+url=http://ww1.microchip.com/downloads/en/DeviceDoc/21298c.pdf
+architectures=avr
+includes=MCP320X.h
