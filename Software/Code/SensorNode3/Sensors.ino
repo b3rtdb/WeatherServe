@@ -5,15 +5,15 @@
     for(int i=0;i<2;i++) {
       dataStringComplete = 0;
       dataString = "";
-      if(i==1) {
-        Serial2.print("\r"); // trigger measurement of NO2 Sensor
+      if(i==0) {
+        Serial2.print('\r'); // trigger measurement of NO2 Sensor
         dataString = Serial2.readStringUntil('\n');
         if(dataString == "") error = error | B00000001; // something is wrong with the NO2 sensor
         else error = error & B11111110;
         
       }
-      else if(i==2) {
-        Serial3.print("\r"); // trigger measurement of O3 Sensor
+      else if(i==1) {
+        Serial3.print('\r'); // trigger measurement of O3 Sensor
         dataString = Serial3.readStringUntil('\n');
         if(dataString == "") error = error | B00000010; // something is wrong with the O3 sensor
         else error = error & B11111101;
@@ -47,12 +47,12 @@
     Humidity = S_humi.toInt();
     
     switch (sensor) {
-      case 1: SensorSerialNO2 = SensorSerialNo;
+      case 0: SensorSerialNO2 = SensorSerialNo;
               NO2ppb = Concentration;
               TemperatureNO2 = Temperature;
               HumidityNO2 = Humidity;
               break;
-      case 2: SensorSerialO3 = SensorSerialNo;
+      case 1: SensorSerialO3 = SensorSerialNo;
               O3ppb = Concentration;
               TemperatureO3 = Temperature;
               HumidityO3 = Humidity;

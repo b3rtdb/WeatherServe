@@ -12,14 +12,15 @@
   /****************************************/ 
   XBee xbee = XBee();
   ZBRxResponse rx = ZBRxResponse();
-  uint8_t payload[74];                                                    /* array of length 74, 0-73, to broadcast all values */
+  uint8_t payload[84];                                                    /* array of length 84, 0-83, to broadcast all values */
   XBeeAddress64 addr64 = XBeeAddress64(0x0013A200, 0x40A9C935);           /* BROADCAST ADDRESS (0x00000000, 0x0000FFFF) */
   ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
 
   int arrayOffsetRX, arrayOffsetTX = 0;
-  byte errorWSN1, errorWSN2 = 0B00000000;
+  byte errorWSN1, errorWSN2, errorWSN3 = 0B00000000;
     /* errorWSN1: 1 = SHT Error, 2 = Fan current Error, 3 = Fan voltage Error */
     /* errorWSN2: 1 = LPS25HB Error, 2 = PMSensor Error */
+    /* errorWSN3: 1 = NO2 sens Error, 2 = O3 sens Error */
 
   
   // union to convert float to byte string
@@ -34,8 +35,8 @@
   /****************************************/
   volatile unsigned int timerCount = 0; // used to determine 60sec timer count
   volatile bool refreshData, checkXbeeRx, checkWsn = false; 
-  unsigned long currentMillis, lastupdateWSN1, lastupdateWSN2 = 0;           /* timer value when last measure update was done of WSNx */
-  byte onlineFlagWSN1, onlineFlagWSN2 = 0;                                   /* 0 = undefined, 1 = offline, 2 = online */
+  unsigned long currentMillis, lastupdateWSN1, lastupdateWSN2, lastupdateWSN3 = 0;           /* timer value when last measure update was done of WSNx */
+  byte onlineFlagWSN1, onlineFlagWSN2, onlineFlagWSN3 = 0;                                   /* 0 = undefined, 1 = offline, 2 = online */
   int year, month, day, hour, minute, DST = 0;
   Process date;
   String localdb = "curl -i -XPOST 'http://10.69.20.25:8086/write?db=WeatherServe&precision=s' --data-binary ";
@@ -54,6 +55,7 @@
   float tempAir,RHAir,windSpeed,windGustRec,uvIndex = 0.0;
   unsigned long pressure = 0;
   int windDir,PM01,PM4,PM25,PM10,solarRad = 0;
+  float NO2ppb, O3ppb = 0;
 
   /****************************************/
   /* Calculated Variables                 */
@@ -69,6 +71,8 @@
   unsigned long pressureArray[8];
   float windSpeedArray[10], uvArray[10], radArray[60], TArray[60], RHArray[60], wsArray[60];
   int windDirArray[60];
+  byte O3negFlag, NO2negFlag = 0;
+  float avgNO2, avgNO2prev, avgO3, avgO3prev = 0;
 
   /****************************************/
   /* Constants for Calculations           */
@@ -91,6 +95,7 @@
   const byte LutSteady[17] = {1,2,2,2,5,11,14,14,16,16,19,23,23,24,24,24,26};
   const int zambrettiPressCorrArray[16] = {520,420,320,105,-110,-315,-520,-835,-1150,-940,-730,-525,-320,-115,90,305}; /* wind correction for pressure in Pascal */
   const double boltzmann = 2.042E-10;                       /* constant of boltzmann, MJ/m2/h/K4 */
+  const double alpha = 30;                                  /* constant for exponential averaging filter NO2 and O3
  
   /****************************************/
   /* Variables declared as constants      */
@@ -145,6 +150,10 @@ void loop() {
    
     if ((unsigned long)(currentMillis - lastupdateWSN2) >= onlineRate ) {
       onlineFlagWSN2 = 1;
+    }
+
+    if ((unsigned long)(currentMillis - lastupdateWSN3) >= onlineRate ) {
+      onlineFlagWSN3 = 1;
     }
   }
 

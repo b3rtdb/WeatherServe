@@ -2,12 +2,17 @@
   /* subroutines for the statistics       */
   /* recalculate every time a Zigbee send */
   /* occurs, which is by default 1min     */
-  /* Every 6s new data is added, so       */
-  /* always stats of 10 measurements      */
+  /* Every 1s new data is added, so       */
+  /* always stats of 60 measurements      */
   /****************************************/
   void calcStats() {
       avgNO2 = NO2Stats.average();
       avgO3 = O3Stats.average();
+      Serial.print("avg NO2: ");
+      Serial.println(avgNO2);
+      Serial.print("avg O3: ");
+      Serial.println(avgO3);
+      Serial.println("-----");
   }
   
   void initStats() {

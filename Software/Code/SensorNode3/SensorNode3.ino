@@ -48,10 +48,10 @@
   ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
   ZBTxStatusResponse txStatus = ZBTxStatusResponse();
 
-  // union to convert long to byte string
+  // union to convert float to byte string
   union u_tag {
     uint8_t b[4];
-    long lval;
+    float fval;
   } u;
 
   /****************************************/
@@ -95,7 +95,7 @@ void loop(void) {
     default: state = 1; break;
   }
   
-  if (counter > 60) {  // transition from state 2 -> 3
+  if (counter > 24) {  // transition from state 2 -> 3
     state = 3;
   }
 }

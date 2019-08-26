@@ -1,9 +1,17 @@
 /********************************************
- * Calculate the Airquality PM10 & PM2,5    *
- * every 10minutes an average is made       *
- * which is used for a running 24h average  *
+ * Calculate the Airquality                 *
+ * PM10, PM2,5, NO2 and O3                  *
  ********************************************/
 void calcAirQuality() {
+  particulateMatter();
+  pollutants();
+}
+
+/********************************************
+ * Calculate the avg PM10 and PM2,5         *
+ * over 24 hours                            *
+ ********************************************/
+void particulateMatter() {
   pmCounter++;
   if(pmCounter == 10) {
     pmCounter = 0;
@@ -23,4 +31,17 @@ void calcAirQuality() {
   if(pmArrayCounter == 144) {
     pmArrayCounter = 0;
   }
+}
+
+
+/********************************************
+ * Calculate the avg NO2 and O3 with an     *
+ * exponential averaging filter             *
+ ********************************************/
+void pollutants() {
+  avgNO2prev = avgNO2;
+  avgNO2 = alpha * NO2ppb + (100 - alpha) * avgNO2prev;
+
+  avgO3prev = avgO3;
+  avgO3 = alpha * O3ppb + (100 - alpha) * avgO3prev;
 }

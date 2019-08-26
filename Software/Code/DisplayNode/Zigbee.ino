@@ -21,119 +21,133 @@ void getDueData() {                        // Due status pos 0
     arrayOffset++;
     onlineFlagWSN2 = rx.getData(arrayOffset);   // WSN 2 status pos 2
     arrayOffset++;
+    onlineFlagWSN3 = rx.getData(arrayOffset);   // WSN 3 status pos 3
+    arrayOffset++;
             
     b2f();
     floatStore = u.fval;
-    tempAir = floatStore;              // tempAir at pos 3-6
+    tempAir = floatStore;              // tempAir at pos 4-7
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    maxTempAir = floatStore;           // Max tempAir at pos 7-10
+    maxTempAir = floatStore;           // Max tempAir at pos 8-11
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    minTempAir = floatStore;           // Min tempAir at pos 11-14
+    minTempAir = floatStore;           // Min tempAir at pos 12-15
     arrayOffset+= 4;
     
-    RHAir = rx.getData(arrayOffset);        // RHAir at pos 15
+    RHAir = rx.getData(arrayOffset);        // RHAir at pos 16
     arrayOffset++;
-    windRunKm = rx.getData(arrayOffset);    // windRunKm at pos 16
+    windRunKm = rx.getData(arrayOffset);    // windRunKm at pos 17
     arrayOffset++;
-    sunHoursDec = rx.getData(arrayOffset);  // sunHoursDec at pos 17
+    sunHoursDec = rx.getData(arrayOffset);  // sunHoursDec at pos 18
     sunHoursDec /= 10;
     arrayOffset++;
-    ETday = rx.getData(arrayOffset);        // ETday at pos 18
+    ETday = rx.getData(arrayOffset);        // ETday at pos 19
     ETday /= 10;
     arrayOffset++;
     
     b2f();
     floatStore = u.fval;
-    windSpeed = floatStore;            // windspeed at pos 19-22
+    windSpeed = floatStore;            // windspeed at pos 20-23
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    maxWindSpeed = floatStore;         // wind gust at pos 23-26
+    maxWindSpeed = floatStore;         // wind gust at pos 24-27
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    windDir = floatStore;              // winddir at pos 27-30
+    windDir = floatStore;              // winddir at pos 28-31
     windDir += 180;
     if(windDir > 360) windDir -= 360;
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    avgWindDir = floatStore;           // avg winddir at pos 31-34
+    avgWindDir = floatStore;           // avg winddir at pos 32-35
     avgWindDir += 180;
     if(avgWindDir > 360) avgWindDir -= 360;
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    pressure = floatStore;             // pressure at pos 35-38
+    pressure = floatStore;             // pressure at pos 36-39
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    avgPm25_24h = floatStore;          // avg PM2,5 at pos 39-42
+    avgPm25_24h = floatStore;          // avg PM2,5 at pos 40-43
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    avgPm10_24h = floatStore;          // avg PM10 at pos 43-46
+    avgPm10_24h = floatStore;          // avg PM10 at pos 44-47
     arrayOffset+= 4;
 
     b2f();
     floatStore = u.fval;
-    rainIntensity = floatStore;             // Rain Intensity at pos 47-50
+    rainIntensity = floatStore;             // Rain Intensity at pos 48-51
     arrayOffset+= 4;
     
     b2f();
     floatStore = u.fval;
-    totalRain24h = floatStore;              // Total Rain Today at pos 51-54
+    totalRain24h = floatStore;              // Total Rain Today at pos 52-55
     arrayOffset+= 4;
 
     b2f();
     floatStore = u.fval;
-    tempFeelslike = floatStore;             // feelslike temp at pos 55-58
+    tempFeelslike = floatStore;             // feelslike temp at pos 56-59
     arrayOffset+= 4;
 
     b2f();
     floatStore = u.fval;
-    solarRad = floatStore;                  // Solar Rad at pos 59-62
+    solarRad = floatStore;                  // Solar Rad at pos 60-63
     arrayOffset+= 4;
 
-    uvIndex = rx.getData(arrayOffset);          // uvIndex at pos 63
+    uvIndex = rx.getData(arrayOffset);      // uvIndex at pos 64
     uvIndex /= 10;
     arrayOffset++;
 
-    zambrettiNumber = rx.getData(arrayOffset);  // Zambretti Forecast Number pos 64
+    b2f();
+    floatStore = u.fval;
+    avgNO2 = floatStore;                    // avgNO2 at pos 65-68
+    arrayOffset+= 4;
+
+    b2f();
+    floatStore = u.fval;
+    avgO3 = floatStore;                     // avgO3 at pos 69-72
+    arrayOffset+= 4;
+
+    zambrettiNumber = rx.getData(arrayOffset);  // Zambretti Forecast Number pos 73
     arrayOffset++;
     
-    moonPhase = rx.getData(arrayOffset);        // Moon phase (illuminated) pos 65
+    moonPhase = rx.getData(arrayOffset);        // Moon phase (illuminated) pos 74
     arrayOffset++;
 
-    moonPhaseNumber = rx.getData(arrayOffset);  // Moon phase number pos 66
+    moonPhaseNumber = rx.getData(arrayOffset);  // Moon phase number pos 75
     arrayOffset++;
     
-    hRising = rx.getData(arrayOffset);       // sunrise hour pos 67
+    hRising = rx.getData(arrayOffset);       // sunrise hour pos 76
     arrayOffset++;
-    mRising = rx.getData(arrayOffset);       // sunrise minute pos 68
+    mRising = rx.getData(arrayOffset);       // sunrise minute pos 77
     arrayOffset++;
-    hSetting = rx.getData(arrayOffset);      // sunset hour pos 69
+    hSetting = rx.getData(arrayOffset);      // sunset hour pos 78
     arrayOffset++;
-    mSetting = rx.getData(arrayOffset);      // sunset minute pos 70
+    mSetting = rx.getData(arrayOffset);      // sunset minute pos 79
     arrayOffset++;
-    trend = rx.getData(arrayOffset);         // air pressure trend pos 71
+    trend = rx.getData(arrayOffset);         // air pressure trend pos 80
     
     arrayOffset++;
-    errorWSN1 = rx.getData(arrayOffset);     // Error byte of WSN1 pos 72
+    errorWSN1 = rx.getData(arrayOffset);     // Error byte of WSN1 pos 81
     arrayOffset++;
-    errorWSN2 = rx.getData(arrayOffset);     // Error byte of WSN2 pos 73
+    errorWSN2 = rx.getData(arrayOffset);     // Error byte of WSN2 pos 82
+    arrayOffset++;
+    errorWSN2 = rx.getData(arrayOffset);     // Error byte of WSN3 pos 83
 }
 
 

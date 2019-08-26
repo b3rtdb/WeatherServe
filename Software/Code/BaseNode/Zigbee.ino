@@ -18,6 +18,8 @@ void getXbeeData() {
           break;
         case 2: getNode2Data();
           break;
+        case 3: getNode3Data();
+          break;
         default: break;
       }
     }
@@ -109,6 +111,36 @@ void getNode2Data() {
 }
 
   /****************************************/
+  /* Get Data of Wireless Sensor Node 3   */
+  /****************************************/
+void getNode3Data() {
+  onlineFlagWSN3 = 2;
+  lastupdateWSN3 = millis();
+  
+  float floatValue = 0;
+       
+  b2f();
+  floatValue = u.fval;
+  NO2ppb = floatValue;        // avgNO2 at pos 1
+  NO2negFlag = 0;
+  if(NO2ppb < 0) {
+    NO2ppb = 0;
+    NO2negFlag = 1;
+  }
+  
+  b2f();
+  floatValue = u.fval;
+  O3ppb = floatValue;
+  O3negFlag = 0;
+  if(O3ppb < 0) {
+    O3ppb = 0;
+    O3negFlag = 1;           // avgO3 at pos 5
+  }
+  
+  errorWSN3 = rx.getData(arrayOffsetRX);          // errorbyte WSN3 at pos 9
+} 
+  
+  /****************************************/
   /* Broadcast Data to Display Node       */
   /****************************************/
 void xbeeTx() {     // max payload without fragmentation is 84 bytes
@@ -119,75 +151,84 @@ void xbeeTx() {     // max payload without fragmentation is 84 bytes
   arrayOffsetTX++;
   payload[arrayOffsetTX] = onlineFlagWSN2;    // WSN 2 status pos 2
   arrayOffsetTX++;
+  payload[arrayOffsetTX] = onlineFlagWSN3;    // WSN 3 status pos 3
+  arrayOffsetTX++;
 
   u.fval = tempAir;
-  f2b();              // tempAir pos 3-6
+  f2b();              // tempAir pos 4-7
   u.fval = maxTempAir;
-  f2b();              // Max Temp Air pos 7-10
+  f2b();              // Max Temp Air pos 8-11
   u.fval = minTempAir;
-  f2b();              // Min Temp Air pos 11-14
+  f2b();              // Min Temp Air pos 12-15
   
-  payload[arrayOffsetTX] = (byte)RHAir;             // RHAir pos 15
+  payload[arrayOffsetTX] = (byte)RHAir;             // RHAir pos 16
   arrayOffsetTX++;
-  payload[arrayOffsetTX] = (byte)windRunKm;         // WindRun pos 16
+  payload[arrayOffsetTX] = (byte)windRunKm;         // WindRun pos 17
   arrayOffsetTX++;
-  payload[arrayOffsetTX] = (byte)(sunHoursDec*10);  // Sunhours Decimal pos 17
+  payload[arrayOffsetTX] = (byte)(sunHoursDec*10);  // Sunhours Decimal pos 18
   arrayOffsetTX++;
-  payload[arrayOffsetTX] = (byte)(ETday*10);        // ETday pos 18
+  payload[arrayOffsetTX] = (byte)(ETday*10);        // ETday pos 19
   arrayOffsetTX++;
   
   u.fval = avgWindSpeed10m;
-  f2b();                    // Current Windspeed pos 19-22
+  f2b();                    // Current Windspeed pos 20-23
   u.fval = windGust;
-  f2b();                    // WindGust pos 23-26
+  f2b();                    // WindGust pos 24-27
   u.fval = windDir;
-  f2b();                    // Current Wind Direction pos 27-30
+  f2b();                    // Current Wind Direction pos 28-31
   u.fval = avgWindDir;
-  f2b();                    // 60min Average Wind Direction pos 31-34
+  f2b();                    // 60min Average Wind Direction pos 32-35
 
   u.fval = pressure;
-  f2b();                    // pressure (Pa) pos 35-38
+  f2b();                    // pressure (Pa) pos 36-39
   u.fval = avgPm25_24h;
-  f2b();                    // Particulate Matter 2,5 pos 39-42
+  f2b();                    // Particulate Matter 2,5 pos 40-43
   u.fval = avgPm10_24h;
-  f2b();                    // Particulate Matter 10 pos 43-46                            
+  f2b();                    // Particulate Matter 10 pos 44-47                           
 
   u.fval = rainIntensity;
-  f2b();                    // Rain Intensity pos 47-50
+  f2b();                    // Rain Intensity pos 48-51
   u.fval = totalRain24h;
-  f2b();                    // Total Rain Today pos 51-54
+  f2b();                    // Total Rain Today pos 52-55
 
   u.fval = apparentT;
-  f2b();                    // Apparent Temperature pos 55-58
+  f2b();                    // Apparent Temperature pos 56-59
   u.fval = solarRad;
-  f2b();                    // Solar Radiation pos 59-62
-  payload[arrayOffsetTX] = (byte)(avgUV10m*10);   // uvIndex pos 63
+  f2b();                    // Solar Radiation pos 60-63
+  payload[arrayOffsetTX] = (byte)(avgUV10m*10);   // uvIndex pos 64
   arrayOffsetTX++;
 
-  payload[arrayOffsetTX] = zambrettiNumber;       // Zambretti Forecast Number pos 64
+  u.fval = avgNO2;
+  f2b();                    // avgNO2 pos 65-68
+  u.fval = avgO3;
+  f2b();                    // avgO3 pos 69-72
+
+  payload[arrayOffsetTX] = zambrettiNumber;       // Zambretti Forecast Number pos 73
   arrayOffsetTX++;
   
-  payload[arrayOffsetTX] = (byte)(moonPhase*100); // Moon phase (illuminated) pos 65
+  payload[arrayOffsetTX] = (byte)(moonPhase*100); // Moon phase (illuminated) pos 74
   arrayOffsetTX++;
   
   payload[arrayOffsetTX] = moonPhaseNumber;
-  arrayOffsetTX++;                          // Moon phase number to determine phase pos 66
+  arrayOffsetTX++;                          // Moon phase number to determine phase pos 75
   
-  payload[arrayOffsetTX] = (byte)hRising;   // sunrise hour pos 67
+  payload[arrayOffsetTX] = (byte)hRising;   // sunrise hour pos 76
   arrayOffsetTX++;
-  payload[arrayOffsetTX] = (byte)mRising;   // sunrise minute pos 68
+  payload[arrayOffsetTX] = (byte)mRising;   // sunrise minute pos 77
   arrayOffsetTX++;
-  payload[arrayOffsetTX] = (byte)hSetting;  // sunset hour pos 69
+  payload[arrayOffsetTX] = (byte)hSetting;  // sunset hour pos 78
   arrayOffsetTX++;
-  payload[arrayOffsetTX] = (byte)mSetting;  // sunset minute pos 70
+  payload[arrayOffsetTX] = (byte)mSetting;  // sunset minute pos 79
   arrayOffsetTX++;
   
-  payload[arrayOffsetTX] = trend;           // air pressure trend pos 71
+  payload[arrayOffsetTX] = trend;           // air pressure trend pos 80
 
   arrayOffsetTX++;
-  payload[arrayOffsetTX] = errorWSN1;       // Error byte of WSN1 pos 72
+  payload[arrayOffsetTX] = errorWSN1;       // Error byte of WSN1 pos 81
   arrayOffsetTX++;
-  payload[arrayOffsetTX] = errorWSN2;       // Error byte of WSN1 pos 73
+  payload[arrayOffsetTX] = errorWSN2;       // Error byte of WSN2 pos 82
+  arrayOffsetTX++;
+  payload[arrayOffsetTX] = errorWSN3;       // Error byte of WSN3 pos 83
 
   xbee.send(zbTx);
 }

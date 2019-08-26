@@ -25,8 +25,8 @@
   /****************************************/
   /* Variable declarations                */
   /****************************************/ 
-  byte nodeIdent, arrayOffset, AQI10, AQI25, AQIuv, RIR, zambrettiNumber, moonPhaseNumber, moonPhase, hRising, hSetting, mRising, mSetting, trend, errorWSN1, errorWSN2 = 0;
-  float floatStore, tempAir, RHAir, RHGnd, windSpeed, windDir, pressure, tempFeelslike, solarRad, minTempAir, maxTempAir, maxWindSpeed, avgWindDir, avgPm10_24h, avgPm25_24h, totalRain24h, rainIntensity, uvIndex, ETday, windRunKm, sunHoursDec= 0.0;
+  byte nodeIdent, arrayOffset, AQI10, AQI25, AQIuv, RIR, zambrettiNumber, moonPhaseNumber, moonPhase, hRising, hSetting, mRising, mSetting, trend, errorWSN1, errorWSN2, errorWSN3 = 0;
+  float floatStore, tempAir, RHAir, RHGnd, windSpeed, windDir, pressure, tempFeelslike, solarRad, minTempAir, maxTempAir, maxWindSpeed, avgWindDir, avgPm10_24h, avgPm25_24h, totalRain24h, rainIntensity, uvIndex, ETday, windRunKm, sunHoursDec, avgNO2, avgO3 = 0.0;
   double moonAge = 0;
   int intStore = 0;
 
@@ -61,7 +61,7 @@
   const unsigned long ONLINE_RATE = 300000UL;    // in milliseconds, 5min, Coordinator sends data every 1min, so after 5 minutes without data it's offline
   unsigned long lastUpdateDue = 0;               // timer value when last update was done of Due
   unsigned long currentMillis = 0;
-  byte onlineFlagWSN1,onlineFlagWSN2,onlineFlagDue= 0;               // 0 = undefined, 1 = offline, 2 = online
+  byte onlineFlagWSN1,onlineFlagWSN2,onlineFlagWSN3,onlineFlagDue= 0;               // 0 = undefined, 1 = offline, 2 = online
   boolean waved = false;
   #define torad(d) ((d) * (PI / 180.0))       /* Deg->Rad   */
   #define synmonth    29.53058868    /* Synodic month (new Moon to new Moon) */

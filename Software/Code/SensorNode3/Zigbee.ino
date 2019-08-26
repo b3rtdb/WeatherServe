@@ -3,14 +3,21 @@
   /****************************************************/
   void zigbeeTransmit() {
     calcStats();
+    
+    initStats();
+    counter = 0;
+    state = 1;
+    state = 1;
+  }
+
 
     // Header
-    payload[0] = 3;   // wireless sensor node identifier, WSN3
+/*    payload[0] = 3;   // wireless sensor node identifier, WSN3
         
-    u.lval = avgNO2;
-    l2b();      // avgNO2 pos 1-4
-    u.lval = avgO3;
-    l2b();      // avgO3 pos 5-8
+    u.fval = avgNO2;
+    f2b();      // avgNO2 pos 1-4
+    u.fval = avgO3;
+    f2b();      // avgO3 pos 5-8
 
     arrayOffset++;
     payload[arrayOffset] = error;          // this is a byte (pos 9)
@@ -20,23 +27,23 @@
     arrayOffset = 1;
   }
 
-
+*/
   /****************************************************/
   /* Function to convert float into 4 bytes           */  
   /****************************************************/
-  void l2b() {
+/*  void f2b() {
     for (int i=0;i<4;i++){
       payload[i+arrayOffset]=u.b[i];
     }
     arrayOffset +=4;
   }
 
-
+*/
 
   /****************************************************/
   /* Function to check for Xbee TX Errors             */  
   /****************************************************/
-  void checkTxErrors() {
+/*  void checkTxErrors() {
     if (xbee.readPacket(500)) {
       if (xbee.getResponse().getApiId() == ZB_TX_STATUS_RESPONSE) {
         xbee.getResponse().getZBTxStatusResponse(txStatus);
@@ -57,4 +64,4 @@
     else {
       //Serial.println("local XBee did not provide a timely TX Status Response");
     }
-  }
+  } */
