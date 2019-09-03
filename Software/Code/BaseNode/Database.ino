@@ -22,7 +22,7 @@ void postdb(String dblocation) {
   cmd += "pressure value=" + String(pressure) + "\n";
   cmd += "PM25 value=" + String(PM25) + "\n";
   cmd += "PM10 value=" + String(PM10) + "\n";
-  cmd += "totalRain24h value=" + String(totalRain24h) + "\n";
+  cmd += "currentRain value=" + String(currentRain) + "\n";
   cmd += "rainIntensity value=" + String(rainIntensity) + "\n";
   cmd += "solarRad value=" + String(solarRad) + "\n";
   cmd += "uvIndex value=" + String(uvIndex) + "\n";

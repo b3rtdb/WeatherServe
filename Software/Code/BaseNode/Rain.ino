@@ -7,7 +7,9 @@ void calcRain() {
   byte rainIntensityTicks = 0;
   rainArray[rainArrayCounter] = rainSensorCount;      // Rain gauge ticks are kept in rainArray, 15 places (every minute) a 0 or 1 is stored
   rainArrayCounter++;
-           
+
+  currentRain = rainSensorCount*0.2;                  // rain in mm on current moment (every minute)
+  
   totalRain24hTicks += rainSensorCount;               // The Rain gauge ticks are added for the total mm today and are reset with the global reset @ midnight
   totalRain24h = totalRain24hTicks*0.2;               // Recalculate the rain gauge ticks to actual mm
 

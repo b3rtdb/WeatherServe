@@ -2,21 +2,16 @@
   /* Routines for configuration           */  
   /****************************************/
   void configHardware() {
-    pinMode(enableI2C, OUTPUT);    // sets the enableI2C as output
-    digitalWrite(enableI2C,0);     // Set the enableI2C ON (low signal for ADM3260)
     pinMode(rainInterruptPin, INPUT);
     pinMode(windSpeedInterruptPin, INPUT); 
     
     Wire.begin();                 // Setup the I2C
+    
     Serial.begin(115200);         // Baudrate 115200 for debug HW serial to PC
-    Serial3.begin(9600);          // Baudrate 9600 for Zigbee Wireless interface
-    xbee.setSerial(Serial3);
-
-    //ina219.begin();
-    //ina219.setCalibration_16V_400mA();
 
     mcp320xInit(SINGLE, MCP3204, PINSLAVE); // single or differential, 4 channel ADC, CS = 46
-    
+  
+
     attachInterrupt(digitalPinToInterrupt(rainInterruptPin), rainIRQ, FALLING);   // configure the Interrupt for the rainsensor
     attachInterrupt(digitalPinToInterrupt(windSpeedInterruptPin), windRotationIRQ, FALLING);  // configure the Interrupt for the windspeedsensor
 
@@ -29,17 +24,15 @@
     rotations = 0;
     rainCount = 0;
     interrupts();
-
-    initStats();                  // Clear the statistics Arrays
-    state = 1;
   }
+
 
   /****************************************/
   /* Interrupt routine for rainsensor     */
   /* Count rain gauge bucket tips         */
   /****************************************/
   void rainIRQ() {
-      rainCount++; 
+      Serial.println("rain IRQ detected"); 
   } 
 
   /****************************************/
@@ -47,7 +40,7 @@
   /* count ROTATIONS                      */
   /****************************************/
   void windRotationIRQ() {
-      rotations++; 
+      Serial.println("wind IRQ detected"); 
   }
 
   /****************************************/

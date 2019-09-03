@@ -41,7 +41,7 @@ void mcp320xInit(InputType readType, Type mcpType, uint16_t slavePin) {
       break;
   }
 
-  if (slavePin <= 13) {
+  if (slavePin <= 50) {
     CS = slavePin;
     pinMode(CS, OUTPUT);
     digitalWrite(CS, HIGH);

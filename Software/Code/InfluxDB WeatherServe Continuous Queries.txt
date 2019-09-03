@@ -1,0 +1,14 @@
+CREATE RETENTION POLICY "autogen" ON "WeatherServe" DURATION 1w REPLICATION 1 DEFAULT			// 1 week
+CREATE RETENTION POLICY "rp_1h_for_4w" ON "WeatherServe" DURATION 4w REPLICATION 1			// 1 maand
+CREATE RETENTION POLICY "rp_1d_for_1y" ON "WeatherServe" DURATION 365d REPLICATION 1			// 1 jaar
+
+//NOK, wel map voor rp maar verkeerde folder
+CREATE CONTINUOUS QUERY "cq_1h_for_1w" ON "WeatherServe" BEGIN SELECT mean("PM10") AS "mean_PM10", mean("PM25") AS "mean_PM25", mean("RHAir") AS "mean_RHAir", mean("avgWindDir") AS "mean_avgWindDir", mean("pressure") AS "mean_pressure", sum("currentRain") AS "sum_currentRain", mean("solarRad") AS "mean_solarRad", sum("sunMoment") AS "sum_sunMoment", mean("tempAir") AS "mean_tempAir", mean("uvIndex") AS "mean_uvIndex", mean("windSpeed") AS "mean_windSpeed", mean("O3ppb") AS "mean_O3ppb", mean("NO2ppb") AS "mean_NO2ppb" INTO "rp_1h_for_1w"."ds1week" FROM "measurements" GROUP BY time(1h) END
+
+
+// NOK, zelfs geen map voor de rp
+CREATE CONTINUOUS QUERY "cq_1h_for_4w" ON "WeatherServe" BEGIN SELECT mean("PM10") AS "mean_PM10", mean("PM25") AS "mean_PM25", mean("RHAir") AS "mean_RHAir", mean("avgWindDir") AS "mean_avgWindDir", mean("pressure") AS "mean_pressure", sum("currentRain") AS "sum_currentRain", mean("solarRad") AS "mean_solarRad", sum("sunMoment") AS "sum_sunMoment", mean("tempAir") AS "mean_tempAir", mean("uvIndex") AS "mean_uvIndex", mean("windSpeed") AS "mean_windSpeed", mean("O3ppb") AS "mean_O3ppb", mean("NO2ppb") AS "mean_NO2ppb" INTO "rp_1h_for_4w"."measurements" FROM /.*/ GROUP BY time(1h) END
+
+
+
+CREATE CONTINUOUS QUERY cq_1h_for_4w ON WeatherServe BEGIN SELECT mean("PM10") AS mean_PM10, mean("PM25") AS mean_PM25, mean("RHAir") AS mean_RHAir, mean("avgWindDir") AS mean_avgWindDir, mean("pressure") AS mean_pressure, sum("currentRain") AS sum_currentRain, mean("solarRad") AS mean_solarRad, sum("sunMoment") AS sum_sunMoment, mean("tempAir") AS mean_tempAir, mean("uvIndex") AS mean_uvIndex, mean("windSpeed") AS mean_windSpeed, mean("O3ppb") AS mean_O3ppb, mean("NO2ppb") AS mean_NO2ppb INTO rp_1h_for_4w.ds1hour FROM "WeatherServe"."autogen"."measurements" GROUP BY time(1h) END

@@ -30,7 +30,6 @@
     payload[arrayOffset] = error;           // this is a byte (pos 30)
    
     xbee.send(zbTx);
-    flashLed(1, 100);
     checkTxErrors();
     arrayOffset = 1;
   }
@@ -55,13 +54,11 @@
       if (xbee.getResponse().getApiId() == ZB_TX_STATUS_RESPONSE) {
         xbee.getResponse().getZBTxStatusResponse(txStatus);
         if (txStatus.getDeliveryStatus() == SUCCESS) {
-          flashLed(5, 50);
           //Serial.println("Xbee transmit success");
           initStats();
           counter = 0;
           state = 1;
         } else {
-          flashLed(3, 500);
           //Serial.println("remote XBee did not receive our packet");
         }
       }
@@ -71,7 +68,6 @@
       //Serial.println(xbee.getResponse().getErrorCode());
     }
     else {
-      flashLed(2, 50);
       //Serial.println("local XBee did not provide a timely TX Status Response");
     }
   }
