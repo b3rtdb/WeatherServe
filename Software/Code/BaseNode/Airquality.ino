@@ -40,8 +40,8 @@ void particulateMatter() {
  ********************************************/
 void pollutants() {
   avgNO2prev = avgNO2;
-  avgNO2 = alpha * NO2ppb + (100 - alpha) * avgNO2prev;
+  avgNO2 = alpha * NO2ppb + (1.0 - alpha) * avgNO2prev;
 
   avgO3prev = avgO3;
-  avgO3 = alpha * O3ppb + (100 - alpha) * avgO3prev;
+  avgO3 = alpha * O3ppb + (1.0 - alpha) * avgO3prev;
 }

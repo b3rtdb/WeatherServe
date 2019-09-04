@@ -3,11 +3,11 @@
   /****************************************/
   void configHardware() {
     Serial.begin(115200);     // Baudrate 115200 for debug HW serial to PC
- //   Serial1.begin(9600);      // Baudrate 9600 for Zigbee Wireless interface
+    Serial1.begin(9600);      // Baudrate 9600 for Zigbee Wireless interface
     Serial2.begin(9600);      // Baudrate 9600 for NO2 Sensor
     Serial3.begin(9600);      // Baudrate 9600 for O3 Sensor
     
- //   xbee.setSerial(Serial1);
+    xbee.setSerial(Serial1);
     Serial2.setTimeout(1500);
     Serial3.setTimeout(1500);
 
@@ -26,6 +26,8 @@
     initStats();              // Clear the statistics Arrays
 
     SPEC_reset();
+    //ZeroNO2();  // be careful with this !
+    //ZeroO3();   // be careful with this !
     //getEepromNO2();
     //getEepromO3();
   }
@@ -48,6 +50,19 @@
   void SPEC_reset(){
     Serial2.print('r');
     Serial3.print('r');
+    delay(1000);
+  }
+
+  /**************************************/
+  /* Zero NO2 / O3 Sensor               */
+  /**************************************/
+  void ZeroNO2(){
+    Serial2.write('Z');
+    delay(1000);
+  }
+
+  void ZeroO3(){
+    Serial3.write('Z');
     delay(1000);
   }
 

@@ -1,3 +1,5 @@
+// Version v1.0__2019-04-10
+
 /*
  * PRESSURE: I²C, D21 (SCL), D20 (SDA)
  * SUN HOURS SENSOR: D2 (interrupt 4)

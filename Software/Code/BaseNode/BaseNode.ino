@@ -1,3 +1,5 @@
+// Version v1.0__2019-09-03
+
 /********************************************
  *                                          *
  * LIBRARIES                                *
@@ -18,7 +20,7 @@
 
   int arrayOffsetRX, arrayOffsetTX = 0;
   byte errorWSN1, errorWSN2, errorWSN3 = 0B00000000;
-    /* errorWSN1: 1 = SHT Error, 2 = Fan current Error, 3 = Fan voltage Error */
+    /* errorWSN1: 1 = SHT Error */
     /* errorWSN2: 1 = LPS25HB Error, 2 = PMSensor Error */
     /* errorWSN3: 1 = NO2 sens Error, 2 = O3 sens Error */
 
@@ -95,7 +97,7 @@
   const byte LutSteady[17] = {1,2,2,2,5,11,14,14,16,16,19,23,23,24,24,24,26};
   const int zambrettiPressCorrArray[16] = {520,420,320,105,-110,-315,-520,-835,-1150,-940,-730,-525,-320,-115,90,305}; /* wind correction for pressure in Pascal */
   const double boltzmann = 2.042E-10;                       /* constant of boltzmann, MJ/m2/h/K4 */
-  const double alpha = 30;                                  /* constant for exponential averaging filter NO2 and O3
+  const double alpha = 0.3;                                  /* constant for exponential averaging filter NO2 and O3
  
   /****************************************/
   /* Variables declared as constants      */

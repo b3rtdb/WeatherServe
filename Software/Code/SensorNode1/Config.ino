@@ -7,13 +7,10 @@
     pinMode(rainInterruptPin, INPUT);
     pinMode(windSpeedInterruptPin, INPUT); 
     
-    Wire.begin();                 // Setup the I2C
-    Serial.begin(115200);         // Baudrate 115200 for debug HW serial to PC
-    Serial3.begin(9600);          // Baudrate 9600 for Zigbee Wireless interface
+    Wire.begin();                  // Setup the I2C
+    Serial.begin(115200);          // Baudrate 115200 for debug HW serial to PC
+    Serial3.begin(9600);           // Baudrate 9600 for Zigbee Wireless interface
     xbee.setSerial(Serial3);
-
-    //ina219.begin();
-    //ina219.setCalibration_16V_400mA();
 
     mcp320xInit(SINGLE, MCP3204, PINSLAVE); // single or differential, 4 channel ADC, CS = 46
     
@@ -21,7 +18,7 @@
     attachInterrupt(digitalPinToInterrupt(windSpeedInterruptPin), windRotationIRQ, FALLING);  // configure the Interrupt for the windspeedsensor
 
     // Setup the timer interupt for the windspeedsensor & request sensor data
-    Timer1.initialize(500000);    // µs (0,5s)
+    Timer1.initialize(500000);     // µs (0,5s)
     Timer1.attachInterrupt(TimerIRQ);
 
     noInterrupts();
