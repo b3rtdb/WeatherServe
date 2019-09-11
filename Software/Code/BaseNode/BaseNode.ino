@@ -74,7 +74,7 @@
   float windSpeedArray[10], uvArray[10], radArray[60], TArray[60], RHArray[60], wsArray[60];
   int windDirArray[60];
   byte O3negFlag, NO2negFlag = 0;
-  float avgNO2, avgNO2prev, avgO3, avgO3prev = 0;
+  float avgNO2, NO2ppbPrev, avgO3, O3ppbPrev = 0;
 
   /****************************************/
   /* Constants for Calculations           */
@@ -97,7 +97,12 @@
   const byte LutSteady[17] = {1,2,2,2,5,11,14,14,16,16,19,23,23,24,24,24,26};
   const int zambrettiPressCorrArray[16] = {520,420,320,105,-110,-315,-520,-835,-1150,-940,-730,-525,-320,-115,90,305}; /* wind correction for pressure in Pascal */
   const double boltzmann = 2.042E-10;                       /* constant of boltzmann, MJ/m2/h/K4 */
-  const double alpha = 0.3;                                  /* constant for exponential averaging filter NO2 and O3
+  const double alpha = 0.3;                                 /* constant for exponential averaging filter NO2 and O3 */
+  const double calib_no2_a = 0.2;                           /* constants for calibration ax+b */
+  const int calib_no2_b = 18.0;
+  const double calib_O3_a = 1;
+  const double conv_NO2_ppbugm3 = 1.88;
+  const double conv_O3_ppbugm3 = 2.00;
  
   /****************************************/
   /* Variables declared as constants      */

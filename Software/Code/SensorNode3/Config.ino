@@ -26,8 +26,8 @@
     initStats();              // Clear the statistics Arrays
 
     SPEC_reset();
-    //ZeroNO2();  // be careful with this !
-    //ZeroO3();   // be careful with this !
+    //ZeroNO2();
+    //ZeroO3();
     //getEepromNO2();
     //getEepromO3();
   }
@@ -108,8 +108,8 @@
 }
 
 /**************************************/
-  /* Get EEPROM data O3 sensor         */
-  /**************************************/
+/*      Get EEPROM data O3 sensor     */
+/**************************************/
   void getEepromO3() {
     long eepromInt[13];
     String eepromStr[5];
@@ -147,4 +147,3 @@
     Serial.print("= ");
     Serial.println(Sensitivity_Code);
 }
-  

@@ -122,20 +122,10 @@ void getNode3Data() {
   b2f();
   floatValue = u.fval;
   NO2ppb = floatValue;        // avgNO2 at pos 1
-  NO2negFlag = 0;
-  if(NO2ppb < 0) {
-    NO2ppb = 0;
-    NO2negFlag = 1;
-  }
   
   b2f();
   floatValue = u.fval;
-  O3ppb = floatValue;
-  O3negFlag = 0;
-  if(O3ppb < 0) {
-    O3ppb = 0;
-    O3negFlag = 1;           // avgO3 at pos 5
-  }
+  O3ppb = floatValue;         // avgO3 at pos 5
   
   errorWSN3 = rx.getData(arrayOffsetRX);          // errorbyte WSN3 at pos 9
 } 
@@ -198,9 +188,9 @@ void xbeeTx() {     // max payload without fragmentation is 84 bytes
   payload[arrayOffsetTX] = (byte)(avgUV10m*10);   // uvIndex pos 64
   arrayOffsetTX++;
 
-  u.fval = avgNO2;
+  u.fval = NO2ppb;
   f2b();                    // avgNO2 pos 65-68
-  u.fval = avgO3;
+  u.fval = O3ppb;
   f2b();                    // avgO3 pos 69-72
 
   payload[arrayOffsetTX] = zambrettiNumber;       // Zambretti Forecast Number pos 73

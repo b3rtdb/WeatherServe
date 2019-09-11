@@ -37,11 +37,16 @@ void particulateMatter() {
 /********************************************
  * Calculate the avg NO2 and O3 with an     *
  * exponential averaging filter             *
+ * Plus conversion factors & calibration    *
  ********************************************/
 void pollutants() {
-  avgNO2prev = avgNO2;
-  avgNO2 = alpha * NO2ppb + (1.0 - alpha) * avgNO2prev;
+  avgNO2 = alpha * NO2ppb + (1.0 - alpha) * NO2ppbPrev;
+  NO2ppbPrev = NO2ppb;
+  avgNO2 *= calib_no2_a;
+  avgNO2 += calib_no2_b;
 
-  avgO3prev = avgO3;
-  avgO3 = alpha * O3ppb + (1.0 - alpha) * avgO3prev;
+  avgO3 = alpha * O3ppb + (1.0 - alpha) * O3ppbPrev;
+  O3ppbPrev = O3ppb;
+  avgO3 *= conv_O3_ppbugm3;
+  avgO3 *= calib_O3_a;
 }

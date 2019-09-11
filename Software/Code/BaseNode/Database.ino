@@ -15,7 +15,6 @@ void postdb(String dblocation) {
   cmd += "RHAir value=" + String(RHAir) + "\n";
   cmd += "apparentT value=" + String(apparentT) + "\n";
   cmd += "dewPoint value=" + String(dewPoint) + "\n";
-  cmd += "sunHoursDec value=" + String(sunHoursDec) + "\n";
   cmd += "windSpeed value=" + String(windSpeed) + "\n";
   cmd += "windDir value=" + String(windDir) + "\n";
   cmd += "avgWindDir value=" + String(avgWindDir) + "\n";
@@ -31,8 +30,8 @@ void postdb(String dblocation) {
   cmd += "sunMoment value=" + String(sunMoment) + "\n";
   cmd += "ETday value=" + String(ETday) + "\n";
   cmd += "EThour value=" + String(EThour) + "\n";
-  cmd += "NO2ppb value=" + String(avgNO2) + "\n";
-  cmd += "O3ppb value=" + String(avgO3) + "'";
+  cmd += "avgNO2 value=" + String(avgNO2) + "\n";
+  cmd += "avgO3 value=" + String(avgO3) + "'";
   p.runShellCommand(cmd);
   p.close();
 }
