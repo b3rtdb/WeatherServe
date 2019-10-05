@@ -5,12 +5,15 @@
             "includePath": [
                 "C:\\Users\\Bert\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.6.23\\**",
                 "C:\\Users\\Bert\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\**",
-                "C:\\Users\\Bert\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\sam\\1.6.11\\**",
+                "C:\\Users\\Bert\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\sam\\1.6.12\\**",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\**",
-                "D:\\Dropbox\\WeatherServe\\Software\\Libraries\\**"
+                "C:\\Users\\Bert\\Dropbox\\WeatherServe\\Software\\Libraries\\**",
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\**",
+                "C:\\Program Files (x86)\\Arduino\\tools\\**"
             ],
             "forcedInclude": [
-                "C:\\Users\\Bert\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.6.23\\cores\\arduino\\Arduino.h"
+                "C:\\Users\\Bert\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.6.23\\cores\\arduino\\Arduino.h",
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
             ],
             "intelliSenseMode": "msvc-x64"
         }
