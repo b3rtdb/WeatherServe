@@ -49,4 +49,5 @@ void pollutants() {
   O3ppbPrev = O3ppb;
   avgO3 *= conv_O3_ppbugm3;
   avgO3 *= calib_O3_a;
+  avgO3 += calib_O3_b;
 }

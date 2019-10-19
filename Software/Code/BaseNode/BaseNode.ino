@@ -99,8 +99,9 @@
   const double boltzmann = 2.042E-10;                       /* constant of boltzmann, MJ/m2/h/K4 */
   const double alpha = 0.3;                                 /* constant for exponential averaging filter NO2 and O3 */
   const double calib_no2_a = 0.2;                           /* constants for calibration ax+b */
-  const int calib_no2_b = 18.0;
+  const int calib_no2_b = 25.0;
   const double calib_O3_a = 0.73;
+  const int calib_O3_b = 25.0;
   const double conv_NO2_ppbugm3 = 1.88;
   const double conv_O3_ppbugm3 = 2.00;
  
