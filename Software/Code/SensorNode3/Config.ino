@@ -22,8 +22,10 @@
     timerCount = 0;
     interrupts();
   
-    state = 1;
     initStats();              // Clear the statistics Arrays
+    state = 1;
+
+    wdt_enable(WDTO_4S);      // Watchdog timer with 4 Seconds time out
 
     SPEC_reset();
     //ZeroNO2();
@@ -37,6 +39,7 @@
   /* sensor data TIMER                    */
   /****************************************/
   void TimerIRQ() {
+    wdt_reset();
     timerCount++;
     if(timerCount == 5)  {          // Timer interrupt every 1 second  5 x 0,5s = 2.5s
       state = 1;                    // transition from state 2 -> 1

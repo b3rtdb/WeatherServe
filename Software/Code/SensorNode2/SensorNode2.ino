@@ -1,4 +1,5 @@
 // Version v1.0__2019-04-10
+// Version v1.1__2019-11-03 : add watchdog timer 4s
 
 /*
  * PRESSURE: I²C, D21 (SCL), D20 (SDA)
@@ -8,6 +9,7 @@
  * DEBUG: Serial on pins D0 (RX) and D1 (TX)
 */
 
+#include <avr/wdt.h>
 #include <XBee.h>
 #include <Statistic.h>
 #include <SparkFun_LPS25HB_Arduino_Library.h>

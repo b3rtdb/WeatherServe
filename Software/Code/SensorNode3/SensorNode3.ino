@@ -1,3 +1,6 @@
+// Version v1.0__2019-09-11
+// Version v1.1__2019-11-03 : add watchdog timer 4s
+
 /*
  * XBEE: Serial1 on pins D19 (RX) and D18 (TX)
  * NO2: Serial2 on pins D17 (RX) and D16 (TX)
@@ -6,6 +9,7 @@
 */
 //long = 4 bytes
 
+#include <avr/wdt.h>
 #include <XBee.h>
 #include <Statistic.h>
 #include <TimerOne.h>

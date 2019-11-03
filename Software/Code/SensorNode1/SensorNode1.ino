@@ -1,4 +1,5 @@
 // Version v1.0__2019-09-03
+// Version v1.1__2019-11-03 : add watchdog timer 4s
 
 /*
  * SHT25: I²C (0x40), D21 (SCL), D20 (SDA) [3V3 supply via ADM3260] + D5(Power Enable)
@@ -10,6 +11,7 @@
  * XBEE: Serial3 on pins D15 (RX) and D14 (TX)
 */
 
+#include <avr/wdt.h>
 #include <Wire.h>
 #include <SHT2x.h>
 #include <XBee.h>
