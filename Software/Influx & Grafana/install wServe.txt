@@ -1,0 +1,127 @@
+1. format the USB drive
+sudo blkid
+get dev ID of usb drive
+sudo umount /dev/sda1 (if sda1 is usb drive)
+Format as EXT4:
+sudo mkfs.ext4 /dev/sda1
+
+2. automount the USB drive:
+
+sudo blkid
+get UUID of the USB drive
+
+Create a mount point:
+sudo mkdir /mnt/usb
+
+Backup your existing /etc/fstab e.g.:
+sudo cp /etc/fstab /etc/fstab.bak
+
+Open /etc/fstab in your favourite text editor e.g.:
+sudo nano /etc/fstab
+
+Add a line, tweaking mount options and mount point as required:
+UUID=xxxxxxx /mnt/usb               ext4    defaults,nofail  0       0
+
+Use UUID rather than the device node (/dev/sda1) as the device node can change across reboots especially if drives are added or removed.
+Include "nofail" in the mount options to prevent the Pi hanging if it is booted without the drive attached.
+
+
+3. update all Advanced Package Tools (APT)
+sudo apt update
+sudo apt full-upgrade
+
+4. install influx:
+curl -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+echo "deb https://repos.influxdata.com/debian stretch stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
+sudo apt update
+sudo apt install influxdb
+sudo systemctl enable influxdb
+sudo systemctl start influxdb
+
+Make new init.sh file in /usr/lib/influxdb/scripts:
+--- /usr/lib/influxdb/scripts/init.sh	2019-04-16 17:01:13.000000000 -0700
++++ /etc/init.d/influxdb	2019-06-26 13:09:15.000000000 -0700
+@@ -63,6 +64,7 @@
+ 
+ if [ ! -f "$STDOUT" ]; then
+     mkdir -p $(dirname $STDOUT)
++    chown $USER:$GROUP $(dirname $STDOUT)
+ fi
+ 
+ if [ -z "$STDERR" ]; then
+@@ -71,6 +73,7 @@
+ 
+ if [ ! -f "$STDERR" ]; then
+     mkdir -p $(dirname $STDERR)
++    chown $USER:$GROUP $(dirname $STDERR)
+ fi
+ 
+ # Override init script variables with DEFAULT values
+
+5. change the influxdb.conf file
+The file is stored in /etc/influxdb/influxdb.conf
+
+[meta]
+  # Where the metadata/raft database is stored
+  dir = "/var/lib/influxdb/meta"
+
+[data]
+  # The directory where the TSM storage engine stores TSM files.
+  dir = "/mnt/usb/influxdb/data"
+
+  # The directory where the TSM storage engine stores WAL files.
+  wal-dir = "/mnt/usb/influxdb/wal"
+
+[retention]
+  # Determines whether retention policy enforcement enabled.
+   enabled = true
+
+[http]
+  # Determines whether HTTP endpoint is enabled.
+   enabled = true
+
+  # Determines whether the Flux query endpoint is enabled.
+  # flux-enabled = false
+
+  # The bind address used by the HTTP service.
+   bind-address = ":8086"
+
+[[udp]]
+   enabled = false
+
+[continuous_queries]
+  # Determines whether the continuous query service is enabled.
+   enabled = true
+
+!!When using non-standard directories for InfluxDB data and configurations, also be sure to set filesystem permissions correctly:
+chown influxdb:influxdb /mnt/usb
+
+
+6. install Grafana
+Grafana needs: libfontconfig1
+Install with: sudo apt-get install libfontconfig1
+If it fails, try: sudo apt --fix-broken install
+It will most likely need other font libraries.
+
+Download Grafana:
+Instructions at: https://grafana.com/grafana/download?platform=arm
+
+find out ARM version: cat /proc/cpuinfo
+for RPI3: get ARMv7:
+wget https://dl.grafana.com/oss/release/grafana_6.5.1_armhf.deb
+sudo dpkg -i grafana_6.5.1_armhf.deb
+
+sudo systemctl enable grafana-server
+sudo systemctl start grafana-server
+
+Grafana runs standard on port 3000
+
+find out Raspbian version: cat /etc/os-release
+
+Check if influx is running fine:
+journalctl -u influxdb
+
+7. Login to influx
+CREATE DATABASE "WeatherServe"
+
+8. import JSON dashboard in Grafana
