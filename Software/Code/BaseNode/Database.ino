@@ -19,8 +19,8 @@ void postdb(String dblocation) {
   cmd += "windDir value=" + String(windDir) + "\n";
   cmd += "avgWindDir value=" + String(avgWindDir) + "\n";
   cmd += "pressure value=" + String(pressure) + "\n";
-  cmd += "PM25 value=" + String(PM25) + "\n";
-  cmd += "PM10 value=" + String(PM10) + "\n";
+  cmd += "PM25 value=" + String(avgPM25) + "\n";
+  cmd += "PM10 value=" + String(avgPM10) + "\n";
   cmd += "currentRain value=" + String(currentRain) + "\n";
   cmd += "rainIntensity value=" + String(rainIntensity) + "\n";
   cmd += "solarRad value=" + String(solarRad) + "\n";

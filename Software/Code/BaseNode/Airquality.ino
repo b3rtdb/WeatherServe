@@ -13,10 +13,21 @@ void calcAirQuality() {
  ********************************************/
 void particulateMatter() {
   pmCounter++;
+  
+  // calibration of values
+  PM25 *= calib_PM25_a;
+  PM25 += calib_PM25_b;
+  avgPM25 = alpha * PM25 + (1.0 - alpha) * PM25Prev;
+  PM25Prev = PM25;
+  PM10 *= calib_PM10_a;
+  PM10 += calib_PM10_b;
+  avgPM10 = alpha * PM10 + (1.0 - alpha) * PM10Prev;
+  PM10Prev = PM10;
+  
   if(pmCounter == 10) {
     pmCounter = 0;
-    pm25Array[pmArrayCounter] = PM25;
-    pm10Array[pmArrayCounter] = PM10;
+    pm25Array[pmArrayCounter] = avgPM25;
+    pm10Array[pmArrayCounter] = avgPM10;
     pmArrayCounter++;
 
     for (byte i = 0; i<144; i++) {
