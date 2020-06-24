@@ -188,10 +188,10 @@ void xbeeTx() {     // max payload without fragmentation is 84 bytes
   payload[arrayOffsetTX] = (byte)(avgUV10m*10);   // uvIndex pos 64
   arrayOffsetTX++;
 
-  u.fval = NO2ppb;
-  f2b();                    // avgNO2 pos 65-68
-  u.fval = O3ppb;
-  f2b();                    // avgO3 pos 69-72
+  u.fval = dewPoint;
+  f2b();                    // dewpoint pos 65-68
+  u.fval = frostPoint;
+  f2b();                    // frostpoint pos 69-72
 
   payload[arrayOffsetTX] = zambrettiNumber;       // Zambretti Forecast Number pos 73
   arrayOffsetTX++;

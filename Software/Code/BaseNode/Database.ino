@@ -8,6 +8,7 @@ void postToInflux() {
 }
 
 void postdb(String dblocation) {
+  calcEThr();
   Process p;
   String cmd;
   cmd = dblocation;
@@ -28,8 +29,8 @@ void postdb(String dblocation) {
   cmd += "ClearSkyRad value=" + String(Csr) + "\n";
   cmd += "windGustRec value=" + String(windGustRec) + "\n";
   cmd += "sunMoment value=" + String(sunMoment) + "\n";
-  cmd += "ETday value=" + String(ETday) + "\n";
   cmd += "EThour value=" + String(EThour) + "\n";
+  cmd += "EThr value=" + String(EThr) + "\n";
   cmd += "avgNO2 value=" + String(avgNO2) + "\n";
   cmd += "avgO3 value=" + String(avgO3) + "'";
   p.runShellCommand(cmd);

@@ -7,6 +7,17 @@ void calcSun() {
   }
 
   /****************************************/
+  /* Calculation of EThr for database     */
+  /****************************************/
+void calcEThr() {
+  if(ETCalculated == true) {
+    ETCalculated = false;
+    EThr = EThour;
+  }
+  else EThr = 0;
+}
+
+  /****************************************/
   /* Calculation of Max Solar Irradiance  */
   /****************************************/
 void calcMaxSolar() {
@@ -188,7 +199,8 @@ void calcET() {
     double ETWind = PT * TT * (es - ea);
     EThour = ETWind + ETRad;
     if (EThour < 0.0) EThour = 0.0;
-    ETday += EThour; 
+    ETday += EThour;  // use ETday for visual purpose (display), and EThr for database purpose
+    ETCalculated = true;
   }
 }
 

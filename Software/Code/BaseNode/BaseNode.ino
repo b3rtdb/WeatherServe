@@ -62,11 +62,12 @@
   /****************************************/
   /* Calculated Variables                 */
   /****************************************/
-  float minTempAir,maxTempAir,windGust,avgWindSpeed10m,avgPm10_24h,avgPm25_24h,totalRain24h,currentRain,rainIntensity, apparentT, dewPoint, maxUV, avgUV10m, sunHoursDec, sunHoursTotal, windRunKm = 0.0;
+  float minTempAir,maxTempAir,windGust,avgWindSpeed10m,avgPm10_24h,avgPm25_24h,totalRain24h,currentRain,rainIntensity, apparentT, dewPoint, frostPoint, maxUV, avgUV10m, sunHoursDec, sunHoursTotal, windRunKm = 0.0;
   byte sunMoment,totalRain24hTicks,rainArrayCounter,windDirArrayCounter,windSpeedArrayCounter,uvArrayCounter,windSpeedCounter,pressureArrayCounter,pmArrayCounter,pmCounter,radTRHWSArrayCounter,trend,moonPhaseNumber, zambrettiNumber, pressure3hCounter = 0;
   signed long pdif = 0;
   int mRising, mSetting, hRising, hSetting, maxSolarRad, windRun, avgWindDir = 0;
-  double moonPhase, moonAge, Rmean, Tmean, RHmean, WSmean, ETday, EThour, rdif, Csr = 0;
+  double moonPhase, moonAge, Rmean, Tmean, RHmean, WSmean, ETday, EThr, EThour, rdif, Csr = 0;
+  bool ETCalculated = false;
   
   byte rainArray[15];
   int pm25Array[144], pm10Array[144];
@@ -97,6 +98,8 @@
   const byte LutSteady[17] = {1,2,2,2,5,11,14,14,16,16,19,23,23,24,24,24,26};
   const int zambrettiPressCorrArray[16] = {520,420,320,105,-110,-315,-520,-835,-1150,-940,-730,-525,-320,-115,90,305}; /* wind correction for pressure in Pascal */
   const double boltzmann = 2.042E-10;                       /* constant of boltzmann, MJ/m2/h/K4 */
+  const float kelvinzero = 273.15;
+  
   const double alpha = 0.4;                                 /* constant for exponential averaging filter NO2 and O3 */ //change 2019/12/19: from 0.3 to 0.4
   const double calib_no2_a = 0.2;                           /* constants for calibration ax+b */
   const int calib_no2_b = 40.0; //change 2019/12/19: from 25.0 to 40.0
