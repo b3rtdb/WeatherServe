@@ -2,6 +2,7 @@ void calcTempHum() {
   calcMinMaxT();
   calcApparentT();
   calcDewpoint();
+  calcFrostpoint();
 }
 
   /****************************************/
@@ -39,4 +40,15 @@ void calcMinMaxT() {
     float H = 0;
     H = (log10(RHAir)-2.0)/0.4343+(17.62*tempAir)/(243.12+tempAir);
     dewPoint = 243.12*H/(17.62-H);
+  }
+
+  /****************************************/
+  /* Calc of frostpoint                   */
+  /****************************************/
+  void calcFrostpoint() {
+    float H = 0;
+    float dewPointKelvin = dewPoint + kelvinzero;
+    float tempAirKelvin = tempAir + kelvinzero;
+    H = dewPointKelvin - tempAirKelvin + (2671.02 / ((2954.61/tempAirKelvin) + 2.193665 * log10(tempAirKelvin) - 13.3448));
+    frostPoint = H - kelvinzero;
   }
